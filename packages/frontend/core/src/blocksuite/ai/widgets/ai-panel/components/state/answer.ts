@@ -1,7 +1,6 @@
 import { WithDisposable } from '@blocksuite/affine/global/lit';
 import type { EditorHost } from '@blocksuite/affine/std';
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import type { AIPanelAnswerConfig, CopyConfig } from '../../type.js';
@@ -25,7 +24,7 @@ export class AIPanelAnswer extends WithDisposable(LitElement) {
       align-items: flex-start;
       gap: 4px;
       align-self: stretch;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
       padding: 0 12px;
     }
 

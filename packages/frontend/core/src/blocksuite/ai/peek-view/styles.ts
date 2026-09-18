@@ -1,5 +1,4 @@
-import { baseTheme } from '@toeverything/theme';
-import { css, unsafeCSS } from 'lit';
+import { css } from 'lit';
 
 export const PeekViewStyles = css`
   :host {
@@ -16,7 +15,7 @@ export const PeekViewStyles = css`
     flex-direction: column;
     box-sizing: border-box;
     padding: 24px 120px 16px 120px;
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(--affine-font-sans-family);
   }
 
   .ai-chat-messages-container {

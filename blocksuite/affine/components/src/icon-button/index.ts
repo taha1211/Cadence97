@@ -43,7 +43,10 @@ export class IconButton extends LitElement {
       background: transparent;
       cursor: pointer;
       user-select: none;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
       color: var(--affine-text-primary-color);
       pointer-events: auto;
       padding: 4px;

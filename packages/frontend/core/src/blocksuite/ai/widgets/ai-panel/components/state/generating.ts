@@ -4,8 +4,7 @@ import {
 } from '@blocksuite/affine/components/icons';
 import { WithDisposable } from '@blocksuite/affine/global/lit';
 import type { ColorScheme } from '@blocksuite/affine/model';
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import type { AIPanelGeneratingConfig } from '../../type.js';
@@ -16,7 +15,7 @@ export class AIPanelGenerating extends WithDisposable(LitElement) {
       width: 100%;
       padding: 0 12px;
       box-sizing: border-box;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
     }
 
     .generating-tip {

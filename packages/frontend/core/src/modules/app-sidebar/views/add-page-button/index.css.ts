@@ -1,14 +1,14 @@
-import { cssVar } from '@toeverything/theme';
-import { cssVarV2 } from '@toeverything/theme/v2';
-import { style } from '@vanilla-extract/css';
+import { cadence } from '@affine/component/theme/tokens';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const root = style({
-  width: 30,
-  height: 30,
-  borderRadius: 8,
-  boxShadow: cssVar('buttonShadow'),
+  width: 40,
+  height: 40,
+  borderRadius: 14,
+  boxShadow: 'none',
   borderWidth: 0,
-  background: cssVarV2('button/iconButtonSolid'),
+  background: cadence.primaryContainer,
+  color: cadence.onPrimaryContainer,
 });
 
 export const withAskRoot = style([
@@ -19,12 +19,16 @@ export const withAskRoot = style([
   },
 ]);
 
+globalStyle(`${root} svg`, {
+  color: cadence.onPrimaryContainer,
+});
+
 export const withAskContent = style({
   fontSize: 16,
   display: 'flex',
   alignItems: 'center',
   gap: 4,
-  color: cssVarV2.icon.primary,
+  color: cadence.onPrimaryContainer,
 });
 
 export const templateMenu = style({

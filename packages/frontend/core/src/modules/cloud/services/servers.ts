@@ -28,7 +28,7 @@ export class ServersService extends Service {
           const server = this.framework.createEntity(Server, {
             serverMetadata: metadata,
           });
-          server.revalidateConfig();
+          if (server.id !== 'affine-cloud') server.revalidateConfig();
           server.scope.eventBus.emit(ServerStarted, server);
           const ref = this.serverPool.put(metadata.id, server);
           return ref;

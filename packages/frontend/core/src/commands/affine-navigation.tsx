@@ -104,21 +104,6 @@ export function registerAffineNavigationCommands({
 
   unsubs.push(
     registerAffineCommand({
-      id: 'affine:open-account',
-      category: 'affine:navigation',
-      icon: <ArrowRightBigIcon />,
-      label: t['com.affine.cmdk.affine.navigation.open-account-settings'](),
-      run() {
-        track.$.cmdk.settings.openSettings({ to: 'account' });
-        workspaceDialogService.open('setting', {
-          activeTab: 'account',
-        });
-      },
-    })
-  );
-
-  unsubs.push(
-    registerAffineCommand({
       id: 'affine:goto-trash',
       category: 'affine:navigation',
       icon: <ArrowRightBigIcon />,

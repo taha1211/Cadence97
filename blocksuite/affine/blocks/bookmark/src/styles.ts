@@ -116,7 +116,10 @@ export const styles = css`
     text-overflow: ellipsis;
     color: var(--affine-text-secondary-color);
 
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(
+      --affine-font-sans-family,
+      ${unsafeCSS(baseTheme.fontSansFamily)}
+    );
     font-size: var(--affine-font-xs);
     font-style: normal;
     font-weight: 400;

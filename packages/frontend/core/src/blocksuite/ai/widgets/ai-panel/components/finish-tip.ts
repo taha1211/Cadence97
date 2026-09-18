@@ -6,8 +6,7 @@ import {
 import { WithDisposable } from '@blocksuite/affine/global/lit';
 import { NotificationProvider } from '@blocksuite/affine/shared/services';
 import type { EditorHost } from '@blocksuite/affine/std';
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import type { CopyConfig } from '../type.js';
@@ -15,7 +14,7 @@ import type { CopyConfig } from '../type.js';
 export class AIFinishTip extends WithDisposable(LitElement) {
   static override styles = css`
     :host {
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
     }
     .finish-tip {
       display: flex;

@@ -54,7 +54,10 @@ export class AffineFootnoteNode extends WithDisposable(ShadowlessElement) {
         border-radius: 50%;
         text-align: center;
         text-overflow: ellipsis;
-        font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+        font-family: var(
+          --affine-font-sans-family,
+          ${unsafeCSS(baseTheme.fontSansFamily)}
+        );
         transition: background 0.3s ease-in-out;
         transform: translateY(-0.2em);
       }

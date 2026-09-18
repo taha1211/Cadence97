@@ -11,7 +11,8 @@ export const docIconPickerTrigger = style({
       lineHeight: 1,
     },
     '&[data-icon-type="emoji"]': {
-      fontFamily: 'Inter',
+      fontFamily:
+        '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif',
     },
     '&::after': {
       display: 'none',

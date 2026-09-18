@@ -53,5 +53,5 @@ export const progressNumberStyle = css({
   width: '25px',
   color: 'var(--affine-text-secondary-color)',
   fontSize: '14px',
-  fontFamily: baseTheme.fontSansFamily,
+  fontFamily: `var(--affine-font-sans-family, ${baseTheme.fontSansFamily})`,
 });

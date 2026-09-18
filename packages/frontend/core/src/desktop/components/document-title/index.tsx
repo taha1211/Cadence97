@@ -12,10 +12,11 @@ export const DocumentTitle = () => {
 
   useEffect(() => {
     const prefix = notificationCount > 0 ? `(${notificationCount}) ` : '';
-    document.title = prefix + (viewTitle ? `${viewTitle} · AFFiNE` : 'AFFiNE');
+    document.title =
+      prefix + (viewTitle ? `${viewTitle} · Cadence97` : 'Cadence97');
 
     return () => {
-      document.title = 'AFFiNE';
+      document.title = 'Cadence97';
     };
   }, [notificationCount, viewTitle]);
 

@@ -72,7 +72,10 @@ const styles = css`
     width: 100%;
     padding: 0 2px 0 30px;
     border: none;
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(
+      --affine-font-sans-family,
+      ${unsafeCSS(baseTheme.fontSansFamily)}
+    );
     font-size: var(--affine-font-sm);
     box-sizing: border-box;
     color: inherit;

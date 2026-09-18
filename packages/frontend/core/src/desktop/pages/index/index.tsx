@@ -1,10 +1,7 @@
 import { DefaultServerService } from '@affine/core/modules/cloud';
 import { DesktopApiService } from '@affine/core/modules/desktop-api';
 import { WorkspacesService } from '@affine/core/modules/workspace';
-import {
-  buildShowcaseWorkspace,
-  createFirstAppData,
-} from '@affine/core/utils/first-app-data';
+import { createFirstAppData } from '@affine/core/utils/first-app-data';
 import { ServerFeature } from '@affine/graphql';
 import {
   useLiveData,
@@ -16,10 +13,8 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
-  useRef,
   useState,
 } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import {
   RouteLogic,
@@ -71,24 +66,6 @@ export const Component = ({
   const listIsLoading = useLiveData(workspacesService.list.isRevalidating$);
 
   const { openPage, jumpToPage, jumpToSignIn } = useNavigateHelper();
-  const [searchParams] = useSearchParams();
-
-  const createOnceRef = useRef(false);
-
-  const createCloudWorkspace = useCallback(() => {
-    if (createOnceRef.current) return;
-    createOnceRef.current = true;
-    // TODO: support selfhosted
-    buildShowcaseWorkspace(workspacesService, 'affine-cloud', 'AFFiNE Cloud')
-      .then(({ meta, defaultDocId }) => {
-        if (defaultDocId) {
-          jumpToPage(meta.id, defaultDocId);
-        } else {
-          openPage(meta.id, defaultIndexRoute);
-        }
-      })
-      .catch(err => console.error('Failed to create cloud workspace', err));
-  }, [defaultIndexRoute, jumpToPage, openPage, workspacesService]);
 
   useLayoutEffect(() => {
     if (!navigating) {
@@ -105,41 +82,18 @@ export const Component = ({
       return;
     }
 
-    // check is user logged in && has cloud workspace
-    if (searchParams.get('initCloud') === 'true') {
-      if (loggedIn) {
-        if (list.every(w => w.flavour !== 'affine-cloud')) {
-          createCloudWorkspace();
-          return;
-        }
-
-        // open first cloud workspace
-        const openWorkspace =
-          list.find(w => w.flavour === 'affine-cloud') ?? list[0];
-        openPage(openWorkspace.id, defaultIndexRoute);
-      } else {
-        return;
-      }
-    } else {
-      if (list.length === 0) {
-        if (BUILD_CONFIG.isMobileEdition && enableLocalWorkspace) {
-          return;
-        }
-        setNavigating(false);
-        return;
-      }
-      // open last workspace
-      const lastId = localStorage.getItem('last_workspace_id');
-
-      const openWorkspace = list.find(w => w.id === lastId) ?? list[0];
-      openPage(openWorkspace.id, defaultIndexRoute, RouteLogic.REPLACE);
+    if (list.length === 0) {
+      if (BUILD_CONFIG.isMobileEdition && enableLocalWorkspace) return;
+      setNavigating(false);
+      return;
     }
+    const lastId = localStorage.getItem('last_workspace_id');
+    const openWorkspace = list.find(w => w.id === lastId) ?? list[0];
+    openPage(openWorkspace.id, defaultIndexRoute, RouteLogic.REPLACE);
   }, [
     enableLocalWorkspace,
-    createCloudWorkspace,
     list,
     openPage,
-    searchParams,
     jumpToSignIn,
     listIsLoading,
     loggedIn,

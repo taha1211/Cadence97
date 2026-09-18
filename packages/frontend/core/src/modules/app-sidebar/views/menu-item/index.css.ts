@@ -1,3 +1,4 @@
+import { cadence } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
@@ -7,44 +8,44 @@ export const linkItemRoot = style({
 export const root = style({
   display: 'inline-flex',
   alignItems: 'center',
-  borderRadius: '4px',
+  borderRadius: '20px',
   textAlign: 'left',
   color: 'inherit',
   width: '100%',
-  minHeight: '30px',
+  minHeight: '40px',
   userSelect: 'none',
   cursor: 'pointer',
-  padding: '0 2px 0 0',
+  padding: '0 10px',
   fontSize: cssVar('fontSm'),
   marginTop: '4px',
   position: 'relative',
+  transition: 'background-color 160ms ease, color 160ms ease',
+  '@media': {
+    '(prefers-reduced-motion: reduce)': { transition: 'none' },
+  },
   selectors: {
     '&:hover': {
       background: cssVarV2.layer.background.hoverOverlay,
     },
     '&[data-active="true"]': {
-      background: cssVarV2.layer.background.hoverOverlay,
+      background: cadence.primaryContainer,
+      color: cadence.onPrimaryContainer,
+      fontWeight: 600,
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: 2,
     },
     '&[data-disabled="true"]': {
       cursor: 'default',
       color: cssVarV2.text.disable,
       pointerEvents: 'none',
     },
-    // this is not visible in dark mode
-    // '&[data-active="true"]:hover': {
-    //   background:
-    //     // make this a variable?
-    //     'linear-gradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04)), rgba(0, 0, 0, 0.04)',
-    // },
     '&[data-collapsible="true"]': {
+      minHeight: '32px',
+      borderRadius: '12px',
       paddingLeft: '4px',
       paddingRight: '4px',
-    },
-    '&[data-collapsible="false"]:is([data-active="true"], :hover)': {
-      width: 'calc(100% + 8px + 8px)',
-      transform: 'translateX(-8px)',
-      paddingLeft: '8px',
-      paddingRight: '10px',
     },
     [`${linkItemRoot}:first-of-type &`]: {
       marginTop: '0px',
@@ -63,17 +64,23 @@ export const postfix = style({
   opacity: 0,
   pointerEvents: 'none',
   selectors: {
-    [`${root}:hover &, &[data-postfix-display="always"]`]: {
-      justifySelf: 'flex-end',
-      position: 'initial',
-      opacity: 1,
-      pointerEvents: 'all',
-    },
+    [`${root}:hover &, ${root}:focus-within &, &[data-postfix-display="always"]`]:
+      {
+        justifySelf: 'flex-end',
+        position: 'initial',
+        opacity: 1,
+        pointerEvents: 'all',
+      },
   },
 });
 export const icon = style({
   color: cssVarV2('icon/primary'),
   fontSize: '20px',
+  selectors: {
+    [`${root}[data-active="true"] &`]: {
+      color: cadence.onPrimaryContainer,
+    },
+  },
 });
 export const collapsedIconContainer = style({
   width: '16px',

@@ -26,7 +26,10 @@ export class CitationCard extends SignalWatcher(WithDisposable(LitElement)) {
       padding: 4px 8px;
       background-color: ${unsafeCSSVarV2('layer/background/primary')};
       border: 0.5px solid ${unsafeCSSVarV2('layer/insideBorder/border')};
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
       cursor: pointer;
     }
 

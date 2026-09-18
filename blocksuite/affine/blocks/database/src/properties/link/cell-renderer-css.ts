@@ -72,7 +72,7 @@ export const linkEditingStyle = css({
   width: '100%',
   padding: '0',
   border: 'none',
-  fontFamily: baseTheme.fontSansFamily,
+  fontFamily: `var(--affine-font-sans-family, ${baseTheme.fontSansFamily})`,
   color: 'var(--affine-text-primary-color)',
   fontWeight: 400,
   backgroundColor: 'transparent',

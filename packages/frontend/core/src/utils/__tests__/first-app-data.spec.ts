@@ -3,44 +3,31 @@
  */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-const importDocs = vi.fn();
-const docsServiceToken = Symbol('DocsService');
-const organizeServiceToken = Symbol('OrganizeService');
-
+const initDoc = vi.fn(
+  (_store: unknown, _props: unknown, _options: unknown) => {}
+);
 vi.mock('../../blocksuite/block-suite-editor', () => ({}));
-vi.mock('@blocksuite/affine/widgets/linked-doc', () => ({
-  ZipTransformer: {
-    importDocs,
+vi.mock('../../blocksuite/initialization', () => ({
+  initDocFromProps: initDoc,
+}));
+vi.mock('@blocksuite/affine/store', () => ({
+  Text: class Text {
+    constructor(readonly text: string) {}
+    toString() {
+      return this.text;
+    }
   },
 }));
-vi.mock('@affine/templates/onboarding.zip', () => ({
-  default: '/onboarding.zip',
-}));
-vi.mock('../../modules/doc', () => ({
-  DocsService: docsServiceToken,
-}));
-vi.mock('../../modules/organize', () => ({
-  OrganizeService: organizeServiceToken,
-}));
-vi.mock('../../modules/workspace', () => ({
-  getAFFiNEWorkspaceSchema: () => 'schema',
-}));
-
 const originalBuildConfig = globalThis.BUILD_CONFIG;
-
 beforeEach(() => {
   localStorage.clear();
-  importDocs.mockReset();
-  vi.stubGlobal(
-    'fetch',
-    vi.fn(async () => new Response(new Blob()))
-  );
+  initDoc.mockReset();
+  vi.stubGlobal('fetch', vi.fn());
   vi.stubGlobal('BUILD_CONFIG', {
     ...originalBuildConfig,
     isMobileEdition: false,
   });
 });
-
 afterEach(() => {
   vi.unstubAllGlobals();
 });
@@ -63,25 +50,20 @@ function createWorkspacesService({
         return meta;
       })
   );
-  const waitForDocReady = vi.fn(async () => {});
+  const setMeta = vi.fn();
+  const setDocMeta = vi.fn();
+  const collection = {
+    meta: { initialize: vi.fn(), setDocMeta },
+    doc: { getMap: () => ({ set: setMeta }) },
+    createDoc: () => ({ id: 'cadence-welcome', getStore: () => ({}) }),
+  };
   const create = vi.fn(
     async (
       flavour: string,
-      setup: (docCollection: {
-        meta: { initialize: () => void };
-        doc: { getMap: () => { set: (key: string, value: string) => void } };
-      }) => Promise<void>
+      setup: (initialCollection: typeof collection) => Promise<void>
     ) => {
-      const meta = await createMock(flavour);
-      await setup({
-        meta: { initialize: vi.fn() },
-        doc: {
-          getMap: () => ({
-            set: vi.fn(),
-          }),
-        },
-      });
-      return meta;
+      await setup(collection);
+      return await createMock(flavour);
     }
   );
   const service = {
@@ -93,43 +75,11 @@ function createWorkspacesService({
       },
     },
     create,
-    open: ({ metadata }: { metadata: { id: string } }) => ({
-      workspace: {
-        id: metadata.id,
-        engine: {
-          doc: {
-            waitForDocReady,
-          },
-        },
-        scope: {
-          get: (token: symbol) => {
-            if (token === docsServiceToken) {
-              return {
-                list: {
-                  ['docs$']: {
-                    value: [
-                      {
-                        id: 'getting-started',
-                        ['title$']: { value: 'Getting Started' },
-                      },
-                    ],
-                  },
-                },
-              };
-            }
-            throw new Error('Unexpected service token');
-          },
-        },
-      },
-      dispose: vi.fn(),
+    open: vi.fn(() => {
+      throw new Error('Initial content must be saved by the workspace factory');
     }),
   };
-
-  return {
-    service,
-    createMock,
-    workspaces,
-  };
+  return { service, createMock, workspaces, setMeta, setDocMeta };
 }
 
 describe('createFirstAppData', () => {
@@ -153,7 +103,7 @@ describe('createFirstAppData', () => {
 
     await expect(createFirstAppData(service as never)).resolves.toMatchObject({
       meta: { id: 'workspace-1', flavour: 'local' },
-      defaultPageId: 'getting-started',
+      defaultPageId: 'cadence-welcome',
     });
     expect(createMock).toHaveBeenCalledOnce();
     expect(localStorage.getItem('is-first-open')).toBe('false');
@@ -195,16 +145,17 @@ describe('createFirstAppData', () => {
 
     const first = createFirstAppData(service as never);
     const second = createFirstAppData(service as never);
+    await vi.waitFor(() => expect(resolveCreate).toBeDefined());
     resolveCreate?.({ id: 'workspace-1', flavour: 'local' });
 
     await expect(Promise.all([first, second])).resolves.toEqual([
       {
         meta: { id: 'workspace-1', flavour: 'local' },
-        defaultPageId: 'getting-started',
+        defaultPageId: 'cadence-welcome',
       },
       {
         meta: { id: 'workspace-1', flavour: 'local' },
-        defaultPageId: 'getting-started',
+        defaultPageId: 'cadence-welcome',
       },
     ]);
     expect(createMock).toHaveBeenCalledOnce();
@@ -226,6 +177,49 @@ describe('createFirstAppData', () => {
     await expect(createFirstAppData(service as never)).rejects.toThrow(error);
     await expect(createFirstAppData(service as never)).rejects.toThrow(error);
     expect(createMock).toHaveBeenCalledTimes(2);
+    expect(localStorage.getItem('is-first-open')).toBeNull();
+  });
+});
+
+describe('Cadence97 starter workspace', () => {
+  test('saves welcome content in the initial workspace without fetching onboarding or opening a sync engine', async () => {
+    const { buildShowcaseWorkspace } = await import('../first-app-data');
+    const { service, createMock, setMeta, setDocMeta } =
+      createWorkspacesService();
+    const result = await buildShowcaseWorkspace(
+      service as never,
+      'local',
+      'My workspace'
+    );
+    expect(createMock).toHaveBeenCalledWith('local');
+    expect(setMeta).toHaveBeenCalledWith('name', 'My workspace');
+    expect(setDocMeta).toHaveBeenCalledWith('cadence-welcome', {
+      title: 'Welcome to Cadence97',
+    });
+    expect(result.defaultDocId).toBe('cadence-welcome');
+    expect(initDoc).toHaveBeenCalledWith(expect.anything(), expect.anything(), {
+      title: 'Welcome to Cadence97',
+    });
+    const props = initDoc.mock.calls[0][1] as {
+      paragraph: { text: { toString(): string } };
+    };
+    expect(props.paragraph.text.toString()).toContain(
+      'Your work is stored in this browser'
+    );
+    expect(fetch).not.toHaveBeenCalled();
+    expect(service.open).not.toHaveBeenCalled();
+  });
+
+  test('does not publish a workspace or first-open marker when welcome creation fails', async () => {
+    const { createFirstAppData } = await import('../first-app-data');
+    const { service, createMock } = createWorkspacesService();
+    initDoc.mockImplementationOnce(() => {
+      throw new Error('document failed');
+    });
+    await expect(createFirstAppData(service as never)).rejects.toThrow(
+      'document failed'
+    );
+    expect(createMock).not.toHaveBeenCalled();
     expect(localStorage.getItem('is-first-open')).toBeNull();
   });
 });

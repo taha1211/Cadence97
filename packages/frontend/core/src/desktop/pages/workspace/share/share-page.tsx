@@ -27,7 +27,6 @@ import { useI18n } from '@affine/i18n';
 import { DisposableGroup } from '@blocksuite/affine/global/disposable';
 import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
 import { type DocMode, DocModes } from '@blocksuite/affine/model';
-import { Logo1Icon } from '@blocksuite/icons/rc';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -429,16 +428,11 @@ const SharePageFooter = () => {
     return null;
   }
   return (
-    <a
-      href="https://affine.pro"
-      target="_blank"
-      className={styles.link}
-      rel="noreferrer"
-    >
+    <a href="/" target="_blank" className={styles.link} rel="noreferrer">
       <span className={styles.linkText}>
         {t['com.affine.share-page.footer.built-with']()}
       </span>
-      <Logo1Icon fontSize={20} />
+      <img src="/cadence-icon.svg" alt="Cadence97" width={20} height={20} />
     </a>
   );
 };

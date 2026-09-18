@@ -1,10 +1,11 @@
+import { cadence } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
 export const sidebarContainerInner = style({
   display: 'flex',
-  background: cssVar('backgroundPrimaryColor'),
+  background: cadence.surfaceContainer,
   flexDirection: 'column',
   overflow: 'hidden',
   height: '100%',

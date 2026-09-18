@@ -1,3 +1,4 @@
+import { cadence } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
@@ -14,14 +15,14 @@ export const navWrapperStyle = style({
       borderRight: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
     },
     '&[data-is-floating="true"], &[data-is-electron="false"]': {
-      backgroundColor: cssVarV2('layer/background/primary'),
+      backgroundColor: cadence.surfaceContainer,
     },
   },
 });
 export const hoverNavWrapperStyle = style({
   selectors: {
     '&[data-is-floating="true"]': {
-      backgroundColor: cssVarV2('layer/background/primary'),
+      backgroundColor: cadence.surfaceContainer,
       height: 'calc(100% - 60px)',
       marginTop: '52px',
       marginLeft: '4px',

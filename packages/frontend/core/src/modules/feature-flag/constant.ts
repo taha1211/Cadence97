@@ -11,11 +11,10 @@ export const AFFINE_FLAGS = {
     category: 'affine',
     displayName:
       'com.affine.settings.workspace.experimental-features.enable-ai.name',
-    description:
-      'com.affine.settings.workspace.experimental-features.enable-ai.description',
     hide: true,
-    configurable: true,
-    defaultState: true,
+    description: 'Hosted AI is not part of Cadence97.',
+    defaultState: false,
+    configurable: false,
   },
   enable_ai_network_search: {
     category: 'affine',
@@ -25,16 +24,17 @@ export const AFFINE_FLAGS = {
       'com.affine.settings.workspace.experimental-features.enable-ai-network-search.description',
     hide: true,
     configurable: false,
-    defaultState: true,
+    defaultState: false,
   },
   enable_ai_playground: {
+    hide: true,
     category: 'affine',
     displayName:
       'com.affine.settings.workspace.experimental-features.enable-ai-model-switch.name',
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-model-switch.description',
-    configurable: isCanaryBuild,
-    defaultState: isCanaryBuild,
+    configurable: false,
+    defaultState: false,
   },
   enable_edgeless_text: {
     category: 'blocksuite',
@@ -57,6 +57,7 @@ export const AFFINE_FLAGS = {
     defaultState: true,
   },
   enable_ai_chat_block: {
+    hide: true,
     category: 'blocksuite',
     bsFlag: 'enable_ai_chat_block',
     displayName:
@@ -64,9 +65,10 @@ export const AFFINE_FLAGS = {
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-chat-block.description',
     configurable: false,
-    defaultState: true,
+    defaultState: false,
   },
   enable_ai_onboarding: {
+    hide: true,
     category: 'blocksuite',
     bsFlag: 'enable_ai_onboarding',
     displayName:
@@ -74,7 +76,7 @@ export const AFFINE_FLAGS = {
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-onboarding.description',
     configurable: false,
-    defaultState: true,
+    defaultState: false,
   },
   enable_mind_map_import: {
     category: 'blocksuite',
@@ -198,11 +200,12 @@ export const AFFINE_FLAGS = {
     defaultState: false,
   },
   enable_mobile_ai_button: {
+    hide: true,
     category: 'affine',
     displayName: 'Enable AI Button',
     description: 'Enable AI Button on mobile',
-    configurable: isMobile && isIOS,
-    defaultState: isMobile && isIOS,
+    configurable: false,
+    defaultState: false,
   },
   enable_mermaid_wasm_native_renderer: {
     category: 'affine',

@@ -1,7 +1,6 @@
 import { WithDisposable } from '@blocksuite/affine/global/lit';
 import type { EditorHost } from '@blocksuite/affine/std';
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 
@@ -18,7 +17,7 @@ export class AIPanelError extends WithDisposable(LitElement) {
       flex-direction: column;
       gap: 8px;
       padding: 0;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
     }
 
     .error {

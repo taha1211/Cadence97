@@ -66,7 +66,7 @@ export const content = style({
   minHeight: '450px',
 });
 export const question = style({
-  fontFamily: 'Inter',
+  fontFamily: cssVar('fontSansFamily'),
   fontSize: cssVar('fontH1'),
   fontStyle: 'normal',
   fontWeight: 600,

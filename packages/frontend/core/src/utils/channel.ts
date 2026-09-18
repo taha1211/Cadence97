@@ -27,17 +27,17 @@ export const channelToScheme = {
 } as Record<Channel, Scheme>;
 
 export const appIconMap = {
-  stable: '/imgs/app-icon-stable.ico',
-  canary: '/imgs/app-icon-canary.ico',
-  beta: '/imgs/app-icon-beta.ico',
-  internal: '/imgs/app-icon-internal.ico',
+  stable: '/cadence-icon.svg',
+  canary: '/cadence-icon.svg',
+  beta: '/cadence-icon.svg',
+  internal: '/cadence-icon.svg',
 } satisfies Record<Channel, string>;
 
 export const appNames = {
-  stable: 'AFFiNE',
-  canary: 'AFFiNE Canary',
-  beta: 'AFFiNE Beta',
-  internal: 'AFFiNE Internal',
+  stable: 'Cadence97',
+  canary: 'Cadence97 Canary',
+  beta: 'Cadence97 Beta',
+  internal: 'Cadence97 Internal',
 } satisfies Record<Channel, string>;
 
 export const appSchemaUrl = z.custom<string>(

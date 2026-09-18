@@ -64,50 +64,12 @@ export const topLevelRoutes = [
         path: '/expired',
         lazy: () => import('./pages/expired'),
       },
-      {
-        path: '/invite/:inviteId',
-        lazy: () => import('./pages/invite'),
-      },
-      {
-        path: '/upgrade-success',
-        lazy: () => import('./pages/upgrade-success'),
-      },
-      {
-        path: '/upgrade-success/team',
-        lazy: () => import('./pages/upgrade-success/team'),
-      },
-      {
-        path: '/upgrade-success/self-hosted-team',
-        lazy: () => import('./pages/upgrade-success/self-host-team'),
-      },
-      {
-        path: '/ai-upgrade-success',
-        lazy: () => import('./pages/ai-upgrade-success'),
-      },
-      {
-        path: '/onboarding',
-        lazy: () => import('./pages/onboarding'),
-      },
+
       {
         path: '/redirect-proxy',
         lazy: () => import('./pages/redirect'),
       },
-      {
-        path: '/subscribe',
-        lazy: () => import('./pages/subscribe'),
-      },
-      {
-        path: '/upgrade-to-team',
-        lazy: () => import('./pages/upgrade-to-team'),
-      },
-      {
-        path: '/try-cloud',
-        loader: () => {
-          return redirect(
-            `/sign-in?redirect_uri=${encodeURIComponent('/?initCloud=true')}`
-          );
-        },
-      },
+
       {
         path: '/theme-editor',
         lazy: () => import('./pages/theme-editor'),
@@ -140,49 +102,7 @@ export const topLevelRoutes = [
           );
         },
       },
-      {
-        path: '/auth/:authType',
-        lazy: () => import(/* webpackChunkName: "auth" */ './pages/auth/auth'),
-      },
-      {
-        path: '/sign-In',
-        lazy: () =>
-          import(/* webpackChunkName: "auth" */ './pages/auth/sign-in'),
-      },
-      {
-        path: '/magic-link',
-        lazy: () =>
-          import(/* webpackChunkName: "auth" */ './pages/auth/magic-link'),
-      },
-      {
-        path: '/oauth/login',
-        lazy: () =>
-          import(/* webpackChunkName: "auth" */ './pages/auth/oauth-login'),
-      },
-      {
-        path: '/oauth/callback',
-        lazy: () =>
-          import(/* webpackChunkName: "auth" */ './pages/auth/oauth-callback'),
-      },
-      // deprecated, keep for old client compatibility
-      // TODO(@forehalo): remove
-      {
-        path: '/desktop-signin',
-        lazy: () =>
-          import(/* webpackChunkName: "auth" */ './pages/auth/oauth-login'),
-      },
-      // deprecated, keep for old client compatibility
-      // use '/sign-in'
-      // TODO(@forehalo): remove
-      {
-        path: '/signIn',
-        lazy: () =>
-          import(/* webpackChunkName: "auth" */ './pages/auth/sign-in'),
-      },
-      {
-        path: '/open-app/:action',
-        lazy: () => import('./pages/open-app'),
-      },
+
       {
         path: CATCH_ALL_ROUTE_PATH,
         lazy: () => import('./pages/404'),

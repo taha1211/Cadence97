@@ -24,7 +24,10 @@ const styles = css`
     align-items: stretch;
 
     height: 100%;
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(
+      --affine-font-sans-family,
+      ${unsafeCSS(baseTheme.fontSansFamily)}
+    );
     padding: 8px;
   }
 

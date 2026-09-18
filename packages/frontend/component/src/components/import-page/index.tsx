@@ -45,16 +45,7 @@ export const ImportPage = ({
     </IconButton>
     <div className={importPageBodyStyle}>
       <div className="title">Import</div>
-      <span>
-        AFFiNE will gradually support more and more file types for import.&nbsp;
-        <a
-          href="https://affine.pro/redirect/discord"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Provide feedback.
-        </a>
-      </span>
+      <span>Import documents from Markdown, HTML, or Notion.</span>
     </div>
     <div className={importPageButtonContainerStyle}>
       <BlockCard
@@ -72,7 +63,7 @@ export const ImportPage = ({
         title="Notion"
         right={
           <Tooltip
-            content={'Learn how to Import your Notion pages into AFFiNE.'}
+            content={'Learn how to Import your Notion pages into Cadence97.'}
           >
             <HelpIcon width={20} height={20} />
           </Tooltip>

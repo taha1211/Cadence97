@@ -1,5 +1,4 @@
-import { baseTheme } from '@toeverything/theme';
-import { css, unsafeCSS } from 'lit';
+import { css } from 'lit';
 
 export const AIChatBlockStyles = css`
   .affine-ai-chat-block-container {
@@ -14,7 +13,7 @@ export const AIChatBlockStyles = css`
     color: var(--affine-text-primary-color);
     line-height: 22px;
     font-size: var(--affine-font-sm);
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(--affine-font-sans-family);
     border-radius: 8px;
     user-select: none;
     pointer-events: none;

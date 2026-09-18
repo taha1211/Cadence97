@@ -7,12 +7,9 @@ import {
 import type { WORKSPACE_DIALOG_SCHEMA } from '@affine/core/modules/dialogs/constant';
 import { useLiveData, useService } from '@toeverything/infra';
 
-import { ChangePasswordDialog } from './change-password';
 import { CollectionEditorDialog } from './collection-editor';
 import { CreateWorkspaceDialog } from './create-workspace';
-import { DeletedAccountDialog } from './deleted-account';
 import { DocInfoDialog } from './doc-info';
-import { EnableCloudDialog } from './enable-cloud';
 import { ImportDialog } from './import';
 import { ImportTemplateDialog } from './import-template';
 import { ImportWorkspaceDialog } from './import-workspace';
@@ -21,18 +18,11 @@ import { DateSelectorDialog } from './selectors/date';
 import { DocSelectorDialog } from './selectors/doc';
 import { TagSelectorDialog } from './selectors/tag';
 import { SettingDialog } from './setting';
-import { SignInDialog } from './sign-in';
-import { VerifyEmailDialog } from './verify-email';
 
 const GLOBAL_DIALOGS = {
   'create-workspace': CreateWorkspaceDialog,
   'import-workspace': ImportWorkspaceDialog,
   'import-template': ImportTemplateDialog,
-  'sign-in': SignInDialog,
-  'change-password': ChangePasswordDialog,
-  'verify-email': VerifyEmailDialog,
-  'enable-cloud': EnableCloudDialog,
-  'deleted-account': DeletedAccountDialog,
 } satisfies {
   [key in keyof GLOBAL_DIALOG_SCHEMA]?: React.FC<
     DialogComponentProps<GLOBAL_DIALOG_SCHEMA[key]>

@@ -41,7 +41,10 @@ export class EmbedIframeIdleCard extends WithDisposable(LitElement) {
         font-style: normal;
         font-weight: 400;
         line-height: 24px; /* 160% */
-        font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+        font-family: var(
+          --affine-font-sans-family,
+          ${unsafeCSS(baseTheme.fontSansFamily)}
+        );
         color: ${unsafeCSSVarV2('text/secondary')};
         white-space: nowrap;
         overflow: hidden;

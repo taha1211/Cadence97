@@ -32,7 +32,7 @@ export const tagSelectInputContainerStyle = css({
 export const tagSelectInputStyle = css({
   flex: '1 1 0',
   border: 'none',
-  fontFamily: baseTheme.fontSansFamily,
+  fontFamily: `var(--affine-font-sans-family, ${baseTheme.fontSansFamily})`,
   color: cssVarV2('text/primary'),
   backgroundColor: 'transparent',
   lineHeight: '22px',

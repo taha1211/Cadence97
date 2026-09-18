@@ -5,8 +5,7 @@ import { unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
 import { type EditorHost } from '@blocksuite/affine/std';
 import { InformationIcon, ToggleDownIcon } from '@blocksuite/icons/lit';
 import { signal } from '@preact/signals-core';
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import {
@@ -32,7 +31,7 @@ export class AIErrorWrapper extends SignalWatcher(WithDisposable(LitElement)) {
       border-radius: 4px;
       padding: 8px 8px 12px 8px;
       background-color: ${unsafeCSSVarV2('aI/errorBackground')};
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
 
       .content {
         align-items: flex-start;

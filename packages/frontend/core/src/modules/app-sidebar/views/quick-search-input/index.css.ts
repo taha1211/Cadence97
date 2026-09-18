@@ -1,25 +1,39 @@
+import { cadence } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 export const root = style({
   display: 'inline-flex',
   alignItems: 'center',
-  borderRadius: '4px',
+  borderRadius: '20px',
+  border: 'none',
+  color: cssVarV2('text/primary'),
+  background: cadence.surfaceContainerHigh,
+  textAlign: 'left',
   fontSize: cssVar('fontSm'),
   width: '100%',
-  height: '30px',
+  height: '40px',
   userSelect: 'none',
   cursor: 'pointer',
-  padding: '0 12px 0 8px',
+  padding: '0 12px',
   position: 'relative',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   ':hover': {
-    background: cssVarV2('layer/background/hoverOverlay'),
+    background: cadence.primaryContainer,
+  },
+  ':focus-visible': {
+    outline: `2px solid ${cadence.primary}`,
+    outlineOffset: 2,
+  },
+  transition: 'background-color 160ms ease',
+  '@media': {
+    '(prefers-reduced-motion: reduce)': { transition: 'none' },
   },
 });
 export const icon = style({
-  marginRight: '12px',
+  marginRight: '8px',
+  flexShrink: 0,
   color: cssVarV2('icon/primary'),
   fontSize: '20px',
 });

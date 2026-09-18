@@ -70,7 +70,10 @@ export class EdgelessZoomToolbar extends WithDisposable(LitElement) {
       font-size: 12px;
       font-weight: 500;
       text-align: center;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
     }
 
     .zoom-percent:hover {

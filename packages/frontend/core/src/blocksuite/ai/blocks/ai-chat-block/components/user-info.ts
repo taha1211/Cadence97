@@ -1,5 +1,4 @@
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import { css, html, LitElement, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import type {
@@ -46,7 +45,7 @@ export class UserInfo extends LitElement {
       .user-name {
         color: var(--affine-text-primary-color);
         text-align: justify;
-        font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+        font-family: var(--affine-font-sans-family);
         font-size: var(--affine-font-sm);
         font-style: normal;
         font-weight: 500;

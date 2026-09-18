@@ -38,7 +38,10 @@ export class EmbedIframeErrorCard extends WithDisposable(LitElement) {
       border-radius: 8px;
       border: 1px solid ${unsafeCSSVarV2('layer/insideBorder/border')};
       background: ${unsafeCSSVarV2('layer/background/secondary')};
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
       user-select: none;
 
       .error-content {

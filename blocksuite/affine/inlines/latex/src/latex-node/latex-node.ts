@@ -60,7 +60,7 @@ export class AffineLatexNode extends SignalWatcher(
       background: ${unsafeCSSVarV2('chip/label/red')};
 
       color: ${unsafeCSSVarV2('text/highlight/fg/red')};
-      font-family: Inter;
+      font-family: var(--affine-font-sans-family, Inter);
       font-size: 12px;
       font-weight: 500;
       line-height: normal;
@@ -76,7 +76,7 @@ export class AffineLatexNode extends SignalWatcher(
       background: ${unsafeCSSVarV2('layer/background/secondary')};
 
       color: ${unsafeCSSVarV2('text/secondary')};
-      font-family: Inter;
+      font-family: var(--affine-font-sans-family, Inter);
       font-size: 12px;
       font-weight: 500;
       line-height: normal;

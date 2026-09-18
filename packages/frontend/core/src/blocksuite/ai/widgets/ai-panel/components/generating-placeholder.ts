@@ -1,15 +1,7 @@
 import { LoadingIcon } from '@blocksuite/affine/components/icons';
 import { WithDisposable } from '@blocksuite/affine/global/lit';
 import { unsafeCSSVar } from '@blocksuite/affine/shared/theme';
-import { baseTheme } from '@toeverything/theme';
-import {
-  css,
-  html,
-  LitElement,
-  nothing,
-  type PropertyValues,
-  unsafeCSS,
-} from 'lit';
+import { css, html, LitElement, nothing, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class GeneratingPlaceholder extends WithDisposable(LitElement) {
@@ -35,7 +27,7 @@ export class GeneratingPlaceholder extends WithDisposable(LitElement) {
     .generating-header,
     .loading-progress {
       color: ${unsafeCSSVar('textSecondaryColor')};
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
     }
 
     .generating-body {

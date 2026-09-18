@@ -34,7 +34,7 @@ export class PreviewButton extends WithDisposable(SignalWatcher(LitElement)) {
       gap: 4px;
       border-radius: 4px;
       color: ${unsafeCSSVarV2('text/primary')};
-      font-family: Inter;
+      font-family: var(--affine-font-sans-family, Inter);
       font-size: 12px;
       font-style: normal;
       font-weight: 500;

@@ -36,7 +36,10 @@ export class AdapterPanel extends SignalWatcher(WithDisposable(LitElement)) {
       height: 100%;
       background-color: var(--affine-background-primary-color);
       box-sizing: border-box;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
     }
   `;
 

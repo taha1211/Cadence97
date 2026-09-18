@@ -36,7 +36,10 @@ export class EdgelessTemplatePanel extends WithDisposable(LitElement) {
   static override styles = css`
     :host {
       position: absolute;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
       z-index: 1;
     }
 

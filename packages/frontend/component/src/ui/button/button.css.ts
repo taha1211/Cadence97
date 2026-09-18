@@ -2,6 +2,8 @@ import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, globalStyle, style } from '@vanilla-extract/css';
 
+import { cadence } from '../../theme/tokens.css';
+
 // Using variables can override externally, without considering the priority of selectors.
 // size vars
 export const hVar = createVar('height');
@@ -37,8 +39,18 @@ export const button = style({
   justifyContent: 'center',
   userSelect: 'none',
   outline: 0,
-  borderRadius: 8,
-  transition: 'all .3s',
+  borderRadius: 999,
+  transition:
+    'background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, scale 160ms cubic-bezier(0.2, 0, 0, 1)',
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      transition: 'none',
+      selectors: {
+        '&::before': { transition: 'none' },
+        '&:active:not([data-disabled]):not([data-loading])': { scale: '1' },
+      },
+    },
+  },
   ['WebkitAppRegion' as string]: 'no-drag',
 
   // hover layer
@@ -47,7 +59,7 @@ export const button = style({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    transition: 'inherit',
+    transition: 'opacity 160ms ease',
     borderRadius: 'inherit',
     opacity: 0,
     left: '50%',
@@ -84,25 +96,26 @@ export const button = style({
     },
     '&:hover:before': { opacity: 1 },
     '&[data-block]': { display: 'flex' },
+    '&:active:not([data-disabled]):not([data-loading])': {
+      scale: '0.96',
+    },
 
     // size
     '&[data-size="default"]': {
       vars: {
-        [hVar]: '28px', // line-height + paddingY * 2 (to ignore border width)
-        [paddingVar]: '0px 8px',
+        [hVar]: '32px',
         [iconSizeVar]: '16px',
-        [paddingVar]: '4px 12px',
-        [fontSizeVar]: cssVar('fontXs'),
+        [paddingVar]: '6px 14px',
+        [fontSizeVar]: cssVar('fontSm'),
         [fontWeightVar]: '500',
         [lineHeightVar]: '20px',
       },
     },
     '&[data-size="large"]': {
       vars: {
-        [hVar]: '32px',
-        [paddingVar]: '0px 8px',
+        [hVar]: '40px',
         [iconSizeVar]: '20px',
-        [paddingVar]: '4px 12px',
+        [paddingVar]: '8px 18px',
         [fontSizeVar]: '15px',
         [fontWeightVar]: '500',
         [lineHeightVar]: '24px',
@@ -110,11 +123,10 @@ export const button = style({
     },
     '&[data-size="extraLarge"]': {
       vars: {
-        [hVar]: '40px',
-        [paddingVar]: '0px 8px',
+        [hVar]: '48px',
         [iconSizeVar]: '24px',
-        [paddingVar]: '8px 18px',
-        [fontSizeVar]: '15',
+        [paddingVar]: '12px 24px',
+        [fontSizeVar]: '15px',
         [fontWeightVar]: '600',
         [lineHeightVar]: '24px',
       },
@@ -123,18 +135,18 @@ export const button = style({
     // type
     '&[data-variant="primary"]': {
       vars: {
-        [bgVar]: cssVarV2('button/primary'),
-        [textVar]: cssVarV2('button/pureWhiteText'),
-        [iconColorVar]: cssVarV2('button/pureWhiteText'),
-        [borderColorVar]: cssVarV2.layer.insideBorder.blackBorder,
+        [bgVar]: cadence.primary,
+        [textVar]: cadence.onPrimary,
+        [iconColorVar]: cadence.onPrimary,
+        [borderColorVar]: 'transparent',
       },
     },
     '&[data-variant="secondary"]': {
       vars: {
-        [bgVar]: cssVarV2('button/secondary'),
+        [bgVar]: cadence.surfaceContainerHigh,
         [textVar]: cssVarV2('text/primary'),
         [iconColorVar]: cssVarV2('icon/primary'),
-        [borderColorVar]: cssVarV2.layer.insideBorder.blackBorder,
+        [borderColorVar]: 'transparent',
       },
     },
     '&[data-variant="plain"]': {
@@ -181,11 +193,9 @@ export const button = style({
       top: 0,
       left: 0,
       borderRadius: 'inherit',
-      boxShadow: `0 0 0 1px ${cssVarV2('layer/insideBorder/primaryBorder')}`,
-    },
-    '&[data-mobile=true]:focus-visible::after': {
-      content: 'none',
-      display: 'none',
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: 2,
+      pointerEvents: 'none',
     },
   },
 });
@@ -221,7 +231,7 @@ export const iconButton = style({
     '--shadow':
       '0px 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)',
   },
-  borderRadius: 4,
+  borderRadius: 10,
   selectors: {
     '[data-theme="dark"] &': {
       vars: {

@@ -7,7 +7,10 @@ export const styles = css`
     width: 480px;
     left: calc(50% - 480px / 2);
     top: calc(50% - 270px / 2);
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(
+      --affine-font-sans-family,
+      ${unsafeCSS(baseTheme.fontSansFamily)}
+    );
     font-size: var(--affine-font-base);
     line-height: var(--affine-line-height);
     padding: 12px 40px 36px;

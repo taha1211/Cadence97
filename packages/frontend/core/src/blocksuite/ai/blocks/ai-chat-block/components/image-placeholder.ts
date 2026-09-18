@@ -1,5 +1,4 @@
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import { css, html, LitElement, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class ImagePlaceholder extends LitElement {
@@ -23,7 +22,7 @@ export class ImagePlaceholder extends LitElement {
       color: var(--affine-placeholder-color, #c0bfc1);
       text-align: justify;
       /* light/smBold */
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
       font-size: var(--affine-font-sm);
       font-style: normal;
       font-weight: 600;

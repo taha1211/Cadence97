@@ -6,8 +6,7 @@ import {
   PropTypes,
   requiredProperties,
 } from '@blocksuite/affine/std';
-import { baseTheme } from '@toeverything/theme';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 
@@ -32,7 +31,7 @@ export class AISubItemList extends WithDisposable(LitElement) {
       box-shadow: var(--affine-shadow-2);
       border-radius: 8px;
       z-index: var(--affine-z-index-popover);
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(--affine-font-sans-family);
       color: var(--affine-text-primary-color);
       text-align: justify;
       font-feature-settings:

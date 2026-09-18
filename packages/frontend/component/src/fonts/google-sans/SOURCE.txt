@@ -1,0 +1,214 @@
+Google Sans
+===========
+
+Upstream: https://github.com/googlefonts/googlesans
+License: SIL Open Font License 1.1 (OFL.txt, from upstream v14.000; trailing whitespace normalized).
+Distribution: official Google Fonts CSS API, retrieved 2026-09-18.
+CSS endpoint: https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap
+
+Roman and true italic variable fonts: weight 400–700, optical size 17–18.
+Unicode ranges are preserved from Google Fonts. Browsers download only the
+subsets needed for the current text. All assets are local for offline use;
+no runtime request to Google Fonts or another font service is required.
+Inter remains available for existing explicit document/canvas font choices.
+
+Original asset URLs (Google Fonts v70):
+google-sans-armenian-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCajshW7d0wve4.woff2
+SHA256 eeca2f756e8cbfd47f532cbf633eb8a568b1764e7064e866d0c81da8beeb0695
+
+google-sans-bengali-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCYjshW7d0wve4.woff2
+SHA256 fc6bc370b12f0aee2fa1ef8efeb34848187cb88b1598db57241f68684db46825
+
+google-sans-canadian-aboriginal-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCljshW7d0wve4.woff2
+SHA256 dd89f72b6f4287a099b9a5a06429dd238024115106b940e8dbfffdce5f6c3754
+
+google-sans-cyrillic-ext-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCHjshW7d0wve4.woff2
+SHA256 686805a12b397e011f91bbfbeb76155b2adb49e974676e89c02503ebfed97d97
+
+google-sans-cyrillic-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCOjshW7d0wve4.woff2
+SHA256 cef0b4dc5ace9fbd4cb79347bf79c10bb1594843df728308938f9ba2dbd168bd
+
+google-sans-devanagari-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCLjshW7d0wve4.woff2
+SHA256 0e68abe0a17aaa438069403a11d261fc27020a45f32c39ae0de860c42bab7c92
+
+google-sans-ethiopic-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCbjshW7d0wve4.woff2
+SHA256 12fc00b4250d99a3b9c3e4db3641b9821ee80fdf94629118e9fdcefc4d992efb
+
+google-sans-georgian-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCVjshW7d0wve4.woff2
+SHA256 9e8ab2541ec28b14b57e5f30669e9e301abe3de5b0b5e238a0a028b3e87d6d49
+
+google-sans-greek-ext-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCGjshW7d0wve4.woff2
+SHA256 ecffce74fffeddd3d819a1c1e2e9ae737476ebce6bfbb8b89268c54d04150f4e
+
+google-sans-greek-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCJjshW7d0wve4.woff2
+SHA256 b6130afab6e60dedbdafa48219989ae3a3f18cc5ea84ec32ffe223bdbcfd115c
+
+google-sans-gujarati-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCRjshW7d0wve4.woff2
+SHA256 f7d5007512c12fc1a3ce36f3df84984771ba178ba8f07e846af2f2e219865bfb
+
+google-sans-gurmukhi-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCpjshW7d0wve4.woff2
+SHA256 7c8884761844af1aedd3093ad570e0d58d3bf05b7d4d05ab4c455d40e5b16b6e
+
+google-sans-hebrew-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCIjshW7d0wve4.woff2
+SHA256 a38079ecd09084eb99b5db944d619f2b8e768c2645637c4911c67d149d4961d7
+
+google-sans-khmer-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCBjshW7d0wve4.woff2
+SHA256 ad75fa77de5b942697e2fe93a898658fc4be7f8a59b8fae5dd16a75e6bc366c5
+
+google-sans-lao-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCDjshW7d0wve4.woff2
+SHA256 05411eaf2d184fecf0263a51a0c47106935b3db591820babc3e4087697f74cb6
+
+google-sans-malayalam-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCSjshW7d0wve4.woff2
+SHA256 4b0185a069e8f8b7ae9f8c3b9e4b293ccc4568b0df66c4a8a6802f8d08b55433
+
+google-sans-oriya-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCTjshW7d0wve4.woff2
+SHA256 08752fc51a9deb5ac42edc6c986a522c1c21e12ce27ac38af0226667bbe2d368
+
+google-sans-sinhala-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCXjshW7d0wve4.woff2
+SHA256 f42b82962f2ff6727f1107ba872cdd94ff96cf23de13a183de41e98be540dae4
+
+google-sans-symbols-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTDkjshW7d0wve4.woff2
+SHA256 fe4018d77229203878d78a44aa3c134d3ab6817ec71d00581118d72c8e8d7841
+
+google-sans-tamil-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCcjshW7d0wve4.woff2
+SHA256 422c21ee4e1aedca67dccc746769af2ad0b78e7ee65b20a99697a4e49a3e3d62
+
+google-sans-telugu-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCWjshW7d0wve4.woff2
+SHA256 c067ae4c6995ce7e6981dc1aac2dc1ce203eab1c4b315d6a3f848e9c4fc5262f
+
+google-sans-thai-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCejshW7d0wve4.woff2
+SHA256 45698b90ac4f7073eeaa41824f0b5d4477b78ab4cb2293a66ab86650729fb844
+
+google-sans-vietnamese-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCFjshW7d0wve4.woff2
+SHA256 75fcf5e1dd7d9973d407ef511b71143588ae6af9d52c731d34c1c44697406c94
+
+google-sans-latin-ext-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCEjshW7d0wve4.woff2
+SHA256 55b85d61ffe1789015b292ff45a0a9e24ab093098acb4b98c4fc9bd2d26316c6
+
+google-sans-latin-italic.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaXrENHsxJlGDuGo1OIlL3L2JB874GPhFI9_IqmuTCKjshW7d0w.woff2
+SHA256 3437642baa90c72f5c8f9df5eac4feb72af7519d0a5e72a2488461baf8789bfe
+
+google-sans-armenian-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2rgCIhM907-0x.woff2
+SHA256 d06cfb569a3a0397894c703a2417c0e163aee477b2320f406eddabacfdf94c99
+
+google-sans-bengali-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2rACIhM907-0x.woff2
+SHA256 fa86bcbf3ac83c0928ec86bc700a57a01f56730fa6e46e87fa87c9f62782e68b
+
+google-sans-canadian-aboriginal-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2kQCIhM907-0x.woff2
+SHA256 25520f28053710cad90ba328886b43c411fc002c1a5ddaf001f753414a5c069a
+
+google-sans-cyrillic-ext-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2swCIhM907-0x.woff2
+SHA256 ddcb0ac55d4dad0f22ea256c39b403e420fd8cc9077f7527f2e04884568b3bb6
+
+google-sans-cyrillic-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2ugCIhM907-0x.woff2
+SHA256 6744e8f4d9dc1a941abf3e519dd3467daf0adecdacef41e36893bb2533d564fc
+
+google-sans-devanagari-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vwCIhM907-0x.woff2
+SHA256 c9154950bdfe1a154f74e64e0f74fa0504db593161f43c69de8025256a3d0a4d
+
+google-sans-ethiopic-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2rwCIhM907-0x.woff2
+SHA256 7dc6391bc179098f2893314ba418d5f7986d55baea2003666472d431641ff5b4
+
+google-sans-georgian-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2oQCIhM907-0x.woff2
+SHA256 704fd661d344c9474c13bd4967ede96735a852c735bb7f05350f4ede7213da11
+
+google-sans-greek-ext-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2sgCIhM907-0x.woff2
+SHA256 2ff26be4b72b03646a4cec27b9f62a7fbe05dec47f7b25440b6d1014b187f6ec
+
+google-sans-greek-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vQCIhM907-0x.woff2
+SHA256 0c2b44f11b626a7246904c6de9e2d99647306b3811a9b79d5e95cea62c3c40fe
+
+google-sans-gujarati-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2pQCIhM907-0x.woff2
+SHA256 9835539e125f25aa000fb8dc13e7507f2647ddc9832e30e4c8bdc0034109e53e
+
+google-sans-gurmukhi-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2nQCIhM907-0x.woff2
+SHA256 13fa8a04841caff4e03d6b56c3d61befcd9ebc5734acc41d42734cfb19c2c00c
+
+google-sans-hebrew-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vACIhM907-0x.woff2
+SHA256 81982628060bdaa1360bc4a6b3a0d92a2658ec453aa976ed5b6b21892ea3e599
+
+google-sans-khmer-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2tQCIhM907-0x.woff2
+SHA256 50f136a96dd5d822e56348051b654b5cc4b4fe89de0dca81a865827601fba0a3
+
+google-sans-lao-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2twCIhM907-0x.woff2
+SHA256 cf95c90b103b7010e326ef4376371582e0a6b4cf03bc42c4a4a7a4f1afb2ebe3
+
+google-sans-malayalam-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2pgCIhM907-0x.woff2
+SHA256 81f4a1c54c47dab4c6bf6659673a5de64ef54384df7223c7081b7591d3c8aeef
+
+google-sans-oriya-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2pwCIhM907-0x.woff2
+SHA256 47012575864821fea5b90a45c28707605a1b167e37bc357a49e7892be60b840f
+
+google-sans-sinhala-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2owCIhM907-0x.woff2
+SHA256 f8f08a31d40b6459dbf3bee038399874afd77fbf12b3d66142bf6707c8c3d890
+
+google-sans-symbols-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq20ACIhM907-0x.woff2
+SHA256 025b5b05f98d1311173acec8955e273f8ce7122180c14d722ab084a862c147f2
+
+google-sans-tamil-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2qACIhM907-0x.woff2
+SHA256 db8ca7b4d70e1d838e5dc61f92352ed4bc475c1475c684c2688c796a149858fc
+
+google-sans-telugu-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2ogCIhM907-0x.woff2
+SHA256 51d5160167dadf2212ed921b1c4366cfb158fc1346f77d2cc37716e2a8caebd8
+
+google-sans-thai-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2qgCIhM907-0x.woff2
+SHA256 89d401a250425f2942189b765be13393d42d91d06ea49d1115175b6b015a1ea2
+
+google-sans-vietnamese-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2sQCIhM907-0x.woff2
+SHA256 d8fde6dfe1ce1dc8be1da5a37a7fd43add420375912d013f4b819901ba32cd6b
+
+google-sans-latin-ext-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2sACIhM907-0x.woff2
+SHA256 80a6783f032d241b95ba30abd5e5c9d5095cef6d9df6e85ed296d158c63dc3a5
+
+google-sans-latin-normal.woff2
+https://fonts.gstatic.com/s/googlesans/v70/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCIhM907w.woff2
+SHA256 e2dc987e1942d874afbe7137ece1df285f4e90e1aea833aba1acf512b3dba79d

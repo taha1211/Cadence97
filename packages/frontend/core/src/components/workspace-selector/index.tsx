@@ -164,42 +164,15 @@ export const WorkspaceNavigator = ({
           }
         });
 
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          closeInactiveViews();
-          jumpToPage(workspaceMetadata.id, 'all');
-          return new Promise(resolve =>
-            setTimeout(resolve, 150)
-          ); /* start transition after 150ms */
-        });
-      } else {
-        closeInactiveViews();
-        jumpToPage(workspaceMetadata.id, 'all');
-      }
+      closeInactiveViews();
+      jumpToPage(workspaceMetadata.id, 'all');
     },
     [jumpToPage, onSelectWorkspace, workbench]
   );
   const handleCreatedWorkspace = useCallback(
     (payload: { metadata: WorkspaceMetadata; defaultDocId?: string }) => {
       onCreatedWorkspace?.(payload);
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          if (payload.defaultDocId) {
-            jumpToPage(payload.metadata.id, payload.defaultDocId);
-          } else {
-            jumpToPage(payload.metadata.id, 'all');
-          }
-          return new Promise(resolve =>
-            setTimeout(resolve, 150)
-          ); /* start transition after 150ms */
-        });
-      } else {
-        if (payload.defaultDocId) {
-          jumpToPage(payload.metadata.id, payload.defaultDocId);
-        } else {
-          jumpToPage(payload.metadata.id, 'all');
-        }
-      }
+      jumpToPage(payload.metadata.id, payload.defaultDocId ?? 'all');
     },
     [jumpToPage, onCreatedWorkspace]
   );

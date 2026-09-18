@@ -22,7 +22,10 @@ export const styles = css`
     padding: 8px 4px 8px 8px;
     width: 280px;
     overflow-y: auto;
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(
+      --affine-font-sans-family,
+      ${unsafeCSS(baseTheme.fontSansFamily)}
+    );
 
     background: ${unsafeCSSVarV2('layer/background/overlayPanel')};
     box-shadow: ${unsafeCSSVar('overlayPanelShadow')};

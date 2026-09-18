@@ -1,11 +1,11 @@
 import { useI18n } from '@affine/i18n';
 import { SearchIcon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
-import type { HTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 
 import * as styles from './index.css';
 
-interface QuickSearchInputProps extends HTMLAttributes<HTMLDivElement> {
+interface QuickSearchInputProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
 }
 
@@ -14,16 +14,16 @@ export function QuickSearchInput({ onClick, ...props }: QuickSearchInputProps) {
   const t = useI18n();
 
   return (
-    <div
+    <button
       {...props}
+      type="button"
       className={clsx([props.className, styles.root])}
       onClick={onClick}
-      tabIndex={0}
     >
-      <SearchIcon className={styles.icon} />
+      <SearchIcon className={styles.icon} aria-hidden="true" />
       <span className={styles.quickSearchBarEllipsisStyle}>
         {t['Quick search']()}
       </span>
-    </div>
+    </button>
   );
 }

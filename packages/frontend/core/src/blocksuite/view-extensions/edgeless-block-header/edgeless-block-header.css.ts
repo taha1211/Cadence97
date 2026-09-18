@@ -1,3 +1,4 @@
+import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
@@ -32,7 +33,7 @@ export const titleIcon = style({
 const title = style({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  fontFamily: 'Inter',
+  fontFamily: cssVar('fontSansFamily'),
 });
 
 export const noteTitle = style([

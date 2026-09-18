@@ -64,6 +64,7 @@ export class ServerListStore extends Store {
       .watch<ServerConfig>(`serverConfig:${serverId}`)
       .pipe(
         map(config => {
+          if (serverId === 'affine-cloud') return BUILD_IN_SERVERS[0].config;
           if (!config) {
             return BUILD_IN_SERVERS.find(server => server.id === serverId)
               ?.config;
@@ -75,6 +76,7 @@ export class ServerListStore extends Store {
   }
 
   getServerConfig(serverId: string) {
+    if (serverId === 'affine-cloud') return BUILD_IN_SERVERS[0].config;
     return (
       this.globalStateService.globalState.get<ServerConfig>(
         `serverConfig:${serverId}`

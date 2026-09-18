@@ -25,7 +25,7 @@ export const toast = (
   const styles = `
     max-width: 480px;
     text-align: center;
-    font-family: ${baseTheme.fontSansFamily};
+    font-family: var(--affine-font-sans-family, ${baseTheme.fontSansFamily});
     font-size: var(--affine-font-sm);
     padding: 6px 12px;
     margin: 10px 0 0 0;

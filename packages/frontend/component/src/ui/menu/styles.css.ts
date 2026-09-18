@@ -2,13 +2,15 @@ import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, style } from '@vanilla-extract/css';
 
+import { cadence } from '../../theme/tokens.css';
+
 export const iconColor = createVar('iconColor');
 export const labelColor = createVar('labelColor');
 export const bgColor = createVar('bgColor');
 
 export const menuContent = style({
   minWidth: '180px',
-  borderRadius: '8px',
+  borderRadius: '20px',
   padding: '8px',
   fontSize: cssVar('fontSm'),
   fontWeight: '400',
@@ -40,8 +42,9 @@ export const menuItem = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: 8,
-  padding: '4px',
-  borderRadius: 4,
+  padding: '7px 10px',
+  borderRadius: 12,
+  minHeight: 36,
   lineHeight: '22px',
   border: 'none',
   outline: 'none',
@@ -63,10 +66,10 @@ export const menuItem = style({
       vars: {
         [bgColor]: cssVar('hoverColor'),
       },
-      outline: 'none !important',
     },
     '&:focus-visible': {
-      outline: '1px solid ' + cssVarV2('layer/insideBorder/primaryBorder'),
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: -2,
     },
     '&.danger:hover': {
       vars: {
@@ -84,7 +87,9 @@ export const menuItem = style({
     },
     '&.checked, &.selected': {
       vars: {
-        [iconColor]: cssVar('primaryColor'),
+        [iconColor]: cadence.onPrimaryContainer,
+        [labelColor]: cadence.onPrimaryContainer,
+        [bgColor]: cadence.primaryContainer,
       },
     },
   },

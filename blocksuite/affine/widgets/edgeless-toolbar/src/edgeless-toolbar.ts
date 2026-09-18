@@ -64,7 +64,10 @@ export const EDGELESS_TOOLBAR_WIDGET = 'edgeless-toolbar-widget';
 export class EdgelessToolbarWidget extends WidgetComponent<RootBlockModel> {
   static override styles = css`
     :host {
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
       position: absolute;
       z-index: 1;
       left: calc(50%);

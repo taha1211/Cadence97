@@ -22,7 +22,7 @@ export class AffineMention extends SignalWatcher(
         'liga' off,
         'clig' off;
       /* Client/baseMedium */
-      font-family: Inter;
+      font-family: var(--affine-font-sans-family, Inter);
       font-size: var(--affine-font-size-base);
       font-style: normal;
       font-weight: 500;

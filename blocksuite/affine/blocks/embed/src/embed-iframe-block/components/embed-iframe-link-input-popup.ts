@@ -41,7 +41,10 @@ export class EmbedIframeLinkInputPopup extends EmbedIframeLinkInputBase {
       border-radius: 8px;
       background: ${unsafeCSSVarV2('layer/background/overlayPanel')};
       box-shadow: ${unsafeCSSVar('overlayPanelShadow')};
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
     }
 
     .link-input-popup-content-wrapper {

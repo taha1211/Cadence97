@@ -82,15 +82,18 @@ export class AuthService extends Service {
   }
 
   private onServerStarted() {
+    if (this.serverService.server.id === 'affine-cloud') return;
     this.session.revalidate();
     this.subscribeProfile();
   }
 
   private onApplicationFocused() {
+    if (this.serverService.server.id === 'affine-cloud') return;
     this.session.revalidate();
   }
 
   private subscribeProfile() {
+    if (this.serverService.server.id === 'affine-cloud') return;
     this.profileSubscription?.unsubscribe();
     this.profileSubscription = undefined;
     if (!this.session.account$.value) return;

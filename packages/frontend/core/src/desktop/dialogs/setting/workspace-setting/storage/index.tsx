@@ -1,65 +1,34 @@
 import {
   SettingHeader,
+  SettingRow,
   SettingWrapper,
 } from '@affine/component/setting-components';
-import { WorkspacePermissionService } from '@affine/core/modules/permissions';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import { useLiveData, useService } from '@toeverything/infra';
+import { useService } from '@toeverything/infra';
 
-import { EnableCloudPanel } from '../preference/enable-cloud';
-import { BlobManagementPanel } from './blob-management';
 import { DesktopExportPanel } from './export';
-import { WorkspaceQuotaPanel } from './workspace-quota';
 
-export const WorkspaceSettingStorage = ({
-  onCloseSetting,
-}: {
+export const WorkspaceSettingStorage = (_props: {
   onCloseSetting: () => void;
 }) => {
   const t = useI18n();
   const workspace = useService(WorkspaceService).workspace;
-  const workspacePermissionService = useService(
-    WorkspacePermissionService
-  ).permission;
-  const isTeam = useLiveData(workspacePermissionService.isTeam$);
-  const isOwner = useLiveData(workspacePermissionService.isOwner$);
-
-  const canExport = !isTeam || isOwner;
   return (
     <>
       <SettingHeader
         title={t['Storage']()}
-        subtitle={t['com.affine.settings.workspace.storage.subtitle']()}
+        subtitle="Your workspace is stored on this device."
       />
-      {workspace.flavour === 'local' ? (
-        <>
-          <EnableCloudPanel onCloseSetting={onCloseSetting} />{' '}
-          {BUILD_CONFIG.isElectron && (
-            <SettingWrapper>
-              <DesktopExportPanel workspace={workspace} />
-            </SettingWrapper>
-          )}
-        </>
-      ) : (
-        <>
-          {isTeam ? (
-            <SettingWrapper>
-              <WorkspaceQuotaPanel />
-            </SettingWrapper>
-          ) : null}
-
-          {BUILD_CONFIG.isElectron && canExport && (
-            <SettingWrapper>
-              <DesktopExportPanel workspace={workspace} />
-            </SettingWrapper>
-          )}
-
-          <SettingWrapper>
-            <BlobManagementPanel />
-          </SettingWrapper>
-        </>
-      )}
+      <SettingWrapper title="Local storage">
+        <SettingRow
+          name="Keep a copy of your work"
+          desc="Open a document and choose Export to save it as Markdown, HTML, PNG, or a snapshot. Choose Print to save a PDF. Browser data can be removed when you clear site data or when the device runs out of space."
+        />
+        {BUILD_CONFIG.isElectron && (
+          <DesktopExportPanel workspace={workspace} />
+        )}
+      </SettingWrapper>
     </>
   );
 };

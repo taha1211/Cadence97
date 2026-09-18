@@ -17,7 +17,10 @@ export class MobileZoomRuler extends WithDisposable(LitElement) {
     :host {
       display: flex;
       pointer-events: auto;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
     }
 
     .zoom-pill {

@@ -177,7 +177,7 @@ export const modalContent = style({
   position: 'relative',
   backgroundColor: cssVar('backgroundOverlayPanelColor'),
   boxShadow: cssVar('popoverShadow'),
-  borderRadius: '12px',
+  borderRadius: '24px',
   // :focus-visible will set outline
   outline: 'none',
 
@@ -201,9 +201,9 @@ export const closeButton = style({
   zIndex: cssVar('zIndexModal'),
 });
 export const modalHeader = style({
-  fontSize: cssVar('fontH6'),
+  fontSize: cssVar('fontH4'),
   fontWeight: '600',
-  lineHeight: '1.45',
+  lineHeight: '1.3',
   marginBottom: '12px',
 });
 export const modalDescription = style({

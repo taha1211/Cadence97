@@ -111,7 +111,10 @@ export class EdgelessAutoCompletePanel extends WithDisposable(LitElement) {
       padding: 4px 0;
       text-align: center;
       border-radius: 8px;
-      font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+      font-family: var(
+        --affine-font-sans-family,
+        ${unsafeCSS(baseTheme.fontSansFamily)}
+      );
       font-size: 12px;
       font-style: normal;
       font-weight: 500;

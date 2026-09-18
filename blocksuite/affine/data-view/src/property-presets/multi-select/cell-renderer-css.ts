@@ -8,7 +8,7 @@ export const multiSelectStyle = css({
   height: '100%',
   padding: '0',
   border: 'none',
-  fontFamily: baseTheme.fontSansFamily,
+  fontFamily: `var(--affine-font-sans-family, ${baseTheme.fontSansFamily})`,
   fontSize: 'var(--data-view-cell-text-size)',
   lineHeight: 'var(--data-view-cell-text-line-height)',
   color: 'var(--affine-text-primary-color)',

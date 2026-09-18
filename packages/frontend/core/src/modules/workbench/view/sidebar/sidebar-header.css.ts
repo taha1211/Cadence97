@@ -1,4 +1,4 @@
-import { cssVar } from '@toeverything/theme';
+import { cadence } from '@affine/component/theme/tokens';
 import { style } from '@vanilla-extract/css';
 
 export const header = style({
@@ -10,7 +10,7 @@ export const header = style({
   padding: '0 16px',
   zIndex: 1,
   gap: '12px',
-  background: cssVar('backgroundPrimaryColor'),
+  background: cadence.surfaceContainer,
   '@media': {
     print: {
       display: 'none',

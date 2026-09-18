@@ -22,7 +22,10 @@ export const linkedDocPopoverStyles = css`
     left: 0;
     top: 0;
     box-sizing: border-box;
-    font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+    font-family: var(
+      --affine-font-sans-family,
+      ${unsafeCSS(baseTheme.fontSansFamily)}
+    );
     font-size: var(--affine-font-base);
     padding: 8px;
     display: flex;

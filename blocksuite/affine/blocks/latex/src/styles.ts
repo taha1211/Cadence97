@@ -22,7 +22,7 @@ export const latexBlockStyles = css`
 
   .latex-block-error-placeholder {
     color: ${unsafeCSSVarV2('text/highlight/fg/red')};
-    font-family: Inter;
+    font-family: var(--affine-font-sans-family, Inter);
     font-size: 12px;
     font-weight: 500;
     line-height: normal;
@@ -31,7 +31,7 @@ export const latexBlockStyles = css`
 
   .latex-block-empty-placeholder {
     color: ${unsafeCSSVarV2('text/secondary')};
-    font-family: Inter;
+    font-family: var(--affine-font-sans-family, Inter);
     font-size: 12px;
     font-weight: 500;
     line-height: normal;

@@ -141,7 +141,7 @@ export const styles = css`
         color: inherit;
         font-weight: 600;
         font-size: 14px;
-        font-family: ${unsafeCSS(baseTheme.fontSansFamily)};
+        font-family: var(--affine-font-sans-family, ${unsafeCSS(baseTheme.fontSansFamily)});
         background: transparent;
     }
 
