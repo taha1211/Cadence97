@@ -14,6 +14,7 @@ import { useTheme } from 'next-themes';
 import { useCallback, useMemo } from 'react';
 
 import { useAppSettingHelper } from '../../../../../components/hooks/affine/use-app-setting-helper';
+import { AccentPicker } from './accent-picker';
 import { settingWrapper } from './style.css';
 import { ThemeEditorSetting } from './theme-editor-setting';
 
@@ -178,6 +179,12 @@ export const AppearanceSettings = () => {
           desc={t['com.affine.appearanceSettings.color.description']()}
         >
           <ThemeSettings />
+        </SettingRow>
+        <SettingRow
+          name={t['com.affine.appearanceSettings.accent.title']()}
+          desc={t['com.affine.appearanceSettings.accent.description']()}
+        >
+          <AccentPicker />
         </SettingRow>
         <SettingRow
           name={t['com.affine.appearanceSettings.language.title']()}

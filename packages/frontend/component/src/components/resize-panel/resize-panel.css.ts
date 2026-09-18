@@ -1,5 +1,7 @@
 import { cssVar } from '@toeverything/theme';
 import { createVar, style } from '@vanilla-extract/css';
+
+import { motion } from '../../theme/tokens.css';
 export const panelWidthVar = createVar('panel-width');
 export const resizeHandleOffsetVar = createVar('resize-handle-offset');
 export const resizeHandleVerticalPadding = createVar(
@@ -37,7 +39,18 @@ export const root = style({
         transform: `translateX(calc(${panelWidthVar} * -1))`,
       },
     '&[data-enable-animation="true"]': {
-      transition: `margin-left ${animationTimeout}, margin-right ${animationTimeout}, transform ${animationTimeout}, background ${animationTimeout}`,
+      // The panel slides on a spatial spring, so it settles with a small
+      // overshoot. The duration stays in JS because it also drives unmounting.
+      transition: ['margin-left', 'margin-right', 'transform']
+        .map(
+          property =>
+            `${property} ${animationTimeout} ${motion.spatialDefault.easing}`
+        )
+        .concat(`background ${animationTimeout}`)
+        .join(', '),
+      '@media': {
+        '(prefers-reduced-motion: reduce)': { transition: 'none' },
+      },
     },
     '&[data-transition-state="exited"]': {
       // avoid focus on hidden panel

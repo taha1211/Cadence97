@@ -1,3 +1,4 @@
+import { cadence, shape } from '@affine/component/theme/tokens';
 import { cssVar, lightCssVariables } from '@toeverything/theme';
 import { globalStyle, style } from '@vanilla-extract/css';
 
@@ -7,7 +8,7 @@ export const appStyle = style({
   height: '100dvh',
   flexGrow: '1',
   display: 'flex',
-  backgroundColor: cssVar('backgroundPrimaryColor'),
+  backgroundColor: cadence.frame,
   selectors: {
     '&.blur-background': {
       backgroundColor: 'transparent',
@@ -82,7 +83,7 @@ export const mainContainerStyle = style({
 
   selectors: {
     '&[data-client-border="true"]': {
-      borderRadius: 6,
+      borderRadius: shape.large,
       padding: '8px',
       '@media': {
         print: {

@@ -1,4 +1,4 @@
-import { cadence } from '@affine/component/theme/tokens';
+import { cadence, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
@@ -13,8 +13,8 @@ export const sidebarContainerInner = style({
   borderRadius: 'inherit',
   selectors: {
     ['[data-client-border=true] &']: {
-      borderRadius: 6,
-      border: `0.5px solid ${cssVarV2.layer.insideBorder.border}`,
+      borderRadius: shape.large,
+      border: `0.5px solid ${cadence.outlineVariant}`,
     },
     ['[data-client-border=true][data-is-floating="true"] &']: {
       boxShadow: cssVar('shadow3'),

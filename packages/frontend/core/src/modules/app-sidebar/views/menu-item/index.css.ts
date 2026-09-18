@@ -32,6 +32,10 @@ export const root = style({
       color: cadence.onPrimaryContainer,
       fontWeight: 600,
     },
+    // The shared sliding pill paints the selection instead.
+    '[data-active-indicator="true"] &[data-active="true"]': {
+      background: 'transparent',
+    },
     '&:focus-visible': {
       outline: `2px solid ${cadence.primary}`,
       outlineOffset: 2,

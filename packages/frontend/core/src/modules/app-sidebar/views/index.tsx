@@ -18,6 +18,7 @@ import { WorkbenchService } from '../../workbench';
 import { allowedSplitViewEntityTypes } from '../../workbench/view/split-view/types';
 import { WorkspaceService } from '../../workspace';
 import { AppSidebarService } from '../services/app-sidebar';
+import { ActiveIndicator } from './active-indicator';
 import * as styles from './fallback.css';
 import {
   hoverNavWrapperStyle,
@@ -176,6 +177,7 @@ export function AppSidebar({ children }: PropsWithChildren) {
         data-is-electron={BUILD_CONFIG.isElectron}
       >
         <nav className={navStyle} data-testid="app-sidebar">
+          <ActiveIndicator />
           {!BUILD_CONFIG.isElectron && sidebarState !== 'floating' && (
             <SidebarHeader />
           )}

@@ -1,6 +1,9 @@
 import { cssVar } from '@toeverything/theme';
 import { createVar, style } from '@vanilla-extract/css';
 
+import { springTransition } from '../../theme/motion';
+import { cadence, motion } from '../../theme/tokens.css';
+
 export const switchHeightVar = createVar('switchSize');
 export const switchPaddingVar = createVar('switchPadding');
 const switchWidthVar = createVar('switchWidth');
@@ -28,10 +31,10 @@ export const switchStyle = style({
   width: switchWidthVar,
   background: cssVar('toggleDisableBackgroundColor'),
   borderRadius: '37px',
-  transition: '200ms all',
+  transition: springTransition(motion.effectsDefault, 'background'),
   selectors: {
     '&:before': {
-      transition: 'all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51)',
+      transition: springTransition(motion.spatialFast, 'transform'),
       content: '""',
       position: 'absolute',
       width: dotSizeVar,
@@ -44,7 +47,7 @@ export const switchStyle = style({
   },
 });
 export const switchCheckedStyle = style({
-  background: cssVar('primaryColor'),
+  background: cadence.primary,
   selectors: {
     '&:before': {
       borderColor: cssVar('pureBlack10'),

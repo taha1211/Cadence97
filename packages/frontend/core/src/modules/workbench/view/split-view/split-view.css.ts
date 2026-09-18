@@ -1,5 +1,10 @@
+import { cadence, shape } from '@affine/component/theme/tokens';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, fallbackVar, keyframes, style } from '@vanilla-extract/css';
+
+// A soft two-layer lift so the document reads as a card resting on the frame.
+const cardShadow =
+  '0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 16px -4px rgba(0, 0, 0, 0.1)';
 
 const gap = createVar();
 const borderRadius = createVar();
@@ -51,7 +56,8 @@ export const splitViewPanel = style({
         borderRight: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
       },
     '[data-client-border="true"] &': {
-      border: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
+      border: `0.5px solid ${cadence.outlineVariant}`,
+      boxShadow: cardShadow,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
       borderTopRightRadius: borderRadius,
@@ -196,7 +202,7 @@ export const resizeHandle = style({
 export const splitViewRoot = style({
   vars: {
     [gap]: '0px',
-    [borderRadius]: '6px',
+    [borderRadius]: shape.large,
     [resizeHandleWidth]: '10px',
     [dropIndicatorWidth]: '2px',
     [dropIndicatorOpacity]: '0',

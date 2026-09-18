@@ -18,7 +18,14 @@ export type AppSetting = {
   enableTelemetry: boolean;
   showLinkedDocInSidebar: boolean;
   disableImageAntialiasing: boolean;
+  /** OKLCH hue angle (0-360) that seeds every Cadence frame color. */
+  accentHue: number;
+  /** Multiplier on the frame's saturation. 0 is graphite, 1 is the default. */
+  accentChroma: number;
 };
+
+export const DEFAULT_ACCENT_HUE = 258;
+export const DEFAULT_ACCENT_CHROMA = 1;
 export const windowFrameStyleOptions: AppSetting['windowFrameStyle'][] = [
   'frameless',
   'NativeTitleBar',
@@ -28,7 +35,7 @@ export const APP_SETTINGS_STORAGE_KEY = 'affine-settings';
 const appSettingBaseAtom = atomWithStorage<AppSetting>(
   APP_SETTINGS_STORAGE_KEY,
   {
-    clientBorder: BUILD_CONFIG.isElectron && !environment.isWindows,
+    clientBorder: true,
     windowFrameStyle: 'frameless',
     enableBlurBackground: BUILD_CONFIG.isElectron && environment.isMacOs,
     enableNoisyBackground: true,
@@ -37,6 +44,8 @@ const appSettingBaseAtom = atomWithStorage<AppSetting>(
     enableTelemetry: true,
     showLinkedDocInSidebar: true,
     disableImageAntialiasing: false,
+    accentHue: DEFAULT_ACCENT_HUE,
+    accentChroma: DEFAULT_ACCENT_CHROMA,
   },
   undefined,
   {
@@ -71,7 +80,12 @@ export const appSettingAtom = atom<
 >(
   get => {
     get(appSettingEffect);
-    return get(appSettingBaseAtom);
+    const settings = get(appSettingBaseAtom);
+    // The document always sits as a card inside the frame on the web, where
+    // there is no toggle. Settings saved before that change may hold `false`.
+    return BUILD_CONFIG.isElectron
+      ? settings
+      : { ...settings, clientBorder: true };
   },
   (_get, set, apply) => {
     set(appSettingBaseAtom, prev => {

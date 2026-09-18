@@ -1,3 +1,4 @@
+import { cadence, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, keyframes, style } from '@vanilla-extract/css';
@@ -8,7 +9,7 @@ export const linkItemRoot = style({
 export const itemRoot = style({
   display: 'inline-flex',
   alignItems: 'center',
-  borderRadius: '4px',
+  borderRadius: shape.small,
   textAlign: 'left',
   color: 'inherit',
   width: '100%',
@@ -25,6 +26,12 @@ export const itemRoot = style({
     },
     '&[data-active="true"]': {
       background: cssVar('hoverColor'),
+      color: cadence.onPrimaryContainer,
+      fontWeight: 500,
+    },
+    // The shared sliding pill paints the selection instead.
+    '[data-active-indicator="true"] &[data-active="true"]': {
+      background: 'transparent',
     },
     '&[data-disabled="true"]': {
       cursor: 'default',

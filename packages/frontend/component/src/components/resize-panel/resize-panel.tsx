@@ -167,7 +167,8 @@ const ResizeHandle = ({
   );
 };
 
-const animationTimeout = 300;
+// Matches the settle time of the `spatialDefault` spring token.
+const animationTimeout = 350;
 
 export const ResizePanel = forwardRef<HTMLDivElement, ResizePanelProps>(
   function ResizePanel(

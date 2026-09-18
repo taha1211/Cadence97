@@ -1,4 +1,4 @@
-import { cadence } from '@affine/component/theme/tokens';
+import { cadence, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
@@ -14,27 +14,32 @@ export const navWrapperStyle = style({
     '&[data-has-border=true]': {
       borderRight: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
     },
-    '&[data-is-floating="true"], &[data-is-electron="false"]': {
-      backgroundColor: cadence.surfaceContainer,
+    // Docked, the sidebar sits directly on the frame. Floating, it needs its
+    // own surface because it overlaps the document card.
+    '&[data-is-electron="false"]': {
+      backgroundColor: 'transparent',
+    },
+    '&[data-is-floating="true"]': {
+      backgroundColor: cadence.frame,
     },
   },
 });
 export const hoverNavWrapperStyle = style({
   selectors: {
     '&[data-is-floating="true"]': {
-      backgroundColor: cadence.surfaceContainer,
+      backgroundColor: cadence.frame,
       height: 'calc(100% - 60px)',
       marginTop: '52px',
       marginLeft: '4px',
       boxShadow: cssVar('--affine-popover-shadow'),
-      borderRadius: '6px',
+      borderRadius: shape.large,
     },
     '&[data-is-floating="true"][data-is-electron="true"]': {
       height: '100%',
       marginTop: '-4px',
     },
     '&[data-is-floating="true"][data-client-border="true"]': {
-      backgroundColor: cssVarV2('layer/background/overlayPanel'),
+      backgroundColor: cadence.frame,
     },
     '&[data-is-floating="true"][data-client-border="true"]::before': {
       content: '""',
