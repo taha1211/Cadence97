@@ -59,6 +59,7 @@ export const CollapsibleSection = ({
   return (
     <Collapsible.Root
       data-collapsed={collapsed}
+      data-sidebar-region={path.join('/')}
       className={clsx(root, className)}
       open={!collapsed}
       data-testid={testId}

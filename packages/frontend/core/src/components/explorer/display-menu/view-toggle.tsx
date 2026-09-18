@@ -45,14 +45,13 @@ export const ViewToggle = ({
 
   return (
     <RadioGroup
-      itemHeight={24}
-      gap={8}
-      padding={0}
+      itemHeight={26}
+      gap={2}
+      padding={3}
       items={views}
       value={view}
       onChange={handleViewChange}
       className={styles.viewToggle}
-      borderRadius={4}
       indicatorClassName={styles.viewToggleIndicator}
     />
   );

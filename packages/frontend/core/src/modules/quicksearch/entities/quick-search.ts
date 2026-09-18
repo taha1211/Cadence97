@@ -9,6 +9,11 @@ import type {
 import type { QuickSearchItem } from '../types/item';
 import type { QuickSearchOptions } from '../types/options';
 
+export type QuickSearchSubmitOptions = {
+  /** The user held the modifier key: open aside instead of in place. */
+  aside?: boolean;
+};
+
 export class QuickSearch extends Entity {
   constructor() {
     super();
@@ -17,7 +22,10 @@ export class QuickSearch extends Entity {
     query: string;
     sessions: QuickSearchSession<any, any>[];
     options: QuickSearchOptions;
-    callback: (result: QuickSearchItem | null) => void;
+    callback: (
+      result: QuickSearchItem | null,
+      submitOptions?: QuickSearchSubmitOptions
+    ) => void;
   } | null>(null);
 
   readonly items$ = this.state$
@@ -58,7 +66,10 @@ export class QuickSearch extends Entity {
 
   show = <const Sources extends any[]>(
     sources: Sources,
-    cb: (result: QuickSearchSourceItemType<Sources[number]> | null) => void,
+    cb: (
+      result: QuickSearchSourceItemType<Sources[number]> | null,
+      submitOptions?: QuickSearchSubmitOptions
+    ) => void,
     options: QuickSearchOptions = {}
   ) => {
     if (this.state$.value) {
@@ -109,13 +120,16 @@ export class QuickSearch extends Entity {
     this.state$.next(null);
   }
 
-  submit(result: QuickSearchItem | null) {
+  submit(
+    result: QuickSearchItem | null,
+    submitOptions?: QuickSearchSubmitOptions
+  ) {
     if (result && result.beforeSubmit && !result.beforeSubmit?.()) {
       return;
     }
     if (this.state$.value?.callback) {
       this.state$.value.sessions.forEach(session => session.dispose?.());
-      this.state$.value.callback(result);
+      this.state$.value.callback(result, submitOptions);
     }
     this.state$.next(null);
   }

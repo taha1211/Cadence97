@@ -1,5 +1,4 @@
 import { cadence, shape } from '@affine/component/theme/tokens';
-import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 export const navWrapperStyle = style({
@@ -31,8 +30,12 @@ export const hoverNavWrapperStyle = style({
       height: 'calc(100% - 60px)',
       marginTop: '52px',
       marginLeft: '4px',
-      boxShadow: cssVar('--affine-popover-shadow'),
+      // Peeking, the sidebar is a card of its own floating over the document.
+      boxShadow:
+        '0 2px 6px rgba(0, 0, 0, 0.08), 0 16px 40px -8px rgba(0, 0, 0, 0.28)',
+      border: `0.5px solid ${cadence.outlineVariant}`,
       borderRadius: shape.large,
+      overflow: 'hidden',
     },
     '&[data-is-floating="true"][data-is-electron="true"]': {
       height: '100%',

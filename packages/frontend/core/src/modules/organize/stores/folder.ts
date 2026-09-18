@@ -21,6 +21,29 @@ export class FolderStore extends Store {
     return this.dbService.db.folders.isLoading$;
   }
 
+  /**
+   * Folder names from the root down to the folder holding `docId`, or an
+   * empty array when the doc sits in no folder. A doc linked from several
+   * folders reports the first link.
+   */
+  getDocFolderPath(docId: string): string[] {
+    const link = this.dbService.db.folders.find({
+      type: 'doc',
+      data: docId,
+    })[0];
+    const path: string[] = [];
+    const visited = new Set<string>();
+    let current = link?.parentId;
+    while (current && !visited.has(current)) {
+      visited.add(current);
+      const folder = this.dbService.db.folders.get(current);
+      if (!folder) break;
+      path.unshift(folder.data);
+      current = folder.parentId;
+    }
+    return path;
+  }
+
   isAncestor(childId: string, ancestorId: string): boolean {
     if (childId === ancestorId) {
       return false;

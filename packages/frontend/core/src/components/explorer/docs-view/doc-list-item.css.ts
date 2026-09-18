@@ -1,40 +1,54 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
+import { checkboxRestRadius } from '@affine/component/ui/checkbox';
 import { cssVarV2 } from '@toeverything/theme/v2';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
+
+import { dateDocListInlineProperty } from '../../workspace-property-types/created-updated-at.css';
 
 export const root = style({
   width: '100%',
   height: '100%',
 });
 
+// A dragged doc has weight: it tilts a little and casts a deeper shadow.
 export const dragPreview = style({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
   padding: '8px 16px 8px 12px',
-  background: cssVarV2.layer.background.primary,
-  borderRadius: 4,
-  border: `1px solid ${cssVarV2.layer.insideBorder.border}`,
+  background: cadence.surfaceContainer,
+  borderRadius: shape.medium,
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  boxShadow:
+    '0 2px 6px rgba(0, 0, 0, 0.1), 0 16px 32px -8px rgba(0, 0, 0, 0.3)',
+  rotate: '-3deg',
   fontSize: 14,
+  fontWeight: 500,
 });
 export const dragPreviewIcon = style({
   fontSize: 24,
 });
 
 export const listViewRoot = style({
-  padding: '0px 4px',
+  padding: '0px 8px',
   width: '100%',
   height: '100%',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   gap: 8,
-  borderRadius: 4,
+  borderRadius: shape.medium,
   overflow: 'hidden',
+  transition: springTransition(motion.effectsFast, 'background-color'),
   containerName: 'list-view-root',
   containerType: 'size',
   selectors: {
     '&:hover': {
       backgroundColor: cssVarV2.layer.background.hoverOverlay,
+    },
+    [`${root}[data-selected="true"] &`]: {
+      backgroundColor: cadence.primaryContainer,
     },
   },
 });
@@ -59,6 +73,9 @@ export const listDragHandle = style([
   },
 ]);
 export const listSelect = style({
+  // Marks selection, so it rests as a circle and relaxes into a rounded
+  // square when chosen, like the accent swatches.
+  vars: { [checkboxRestRadius]: '50%' },
   width: 0,
   height: 24,
   fontSize: 20,
@@ -72,7 +89,7 @@ export const listSelect = style({
   overflow: 'hidden',
   alignItems: 'center',
   justifyContent: 'end',
-  transition: 'width 0.25s ease, margin-left 0.25s ease',
+  transition: springTransition(motion.effectsDefault, 'width', 'margin-left'),
   // when select mode is on, the whole item can be clicked,
   // the selection will be handled by the parent, the checkbox here just for the visual effect
   pointerEvents: 'none',
@@ -84,11 +101,15 @@ export const listSelect = style({
   },
 });
 
+// The same tile a doc wears in quick search, so it looks alike in both places.
 export const listIcon = style({
-  width: 24,
-  height: 24,
-  fontSize: 24,
-  color: cssVarV2.icon.primary,
+  width: 32,
+  height: 32,
+  fontSize: 18,
+  flexShrink: 0,
+  borderRadius: 10,
+  background: cadence.primaryContainer,
+  color: cadence.onPrimaryContainer,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -131,19 +152,20 @@ const ellipsis = style({
 export const listTitle = style([
   ellipsis,
   {
-    fontSize: 14,
+    fontSize: 15,
     lineHeight: '22px',
     fontWeight: 500,
     color: cssVarV2.text.primary,
   },
 ]);
+// The title leads and the preview stays quiet beneath it.
 export const listPreview = style([
   ellipsis,
   {
     fontSize: 12,
-    lineHeight: '20px',
+    lineHeight: '18px',
     fontWeight: 400,
-    color: cssVarV2.text.secondary,
+    color: cssVarV2.text.tertiary,
   },
 ]);
 
@@ -173,52 +195,69 @@ export const listHide560 = style({
 export const cardViewRoot = style({
   vars: {
     '--ring-color': 'transparent',
-    '--light-shadow':
-      '0px 0px 0px 1px var(--ring-color), 0px 2px 3px rgba(0,0,0,.05)',
-    '--dark-shadow':
-      '0px 0px 0px 1px var(--ring-color), 0px 2px 3px rgba(0,0,0,.05)',
-    '--light-shadow-hover':
-      '0px 0px 0px 1px var(--ring-color), 0px 4px 6px rgba(0,0,0,.1)',
-    '--dark-shadow-hover':
-      '0px 0px 0px 1px var(--ring-color), 0px 4px 6px rgba(0,0,0,.1)',
   },
   width: '100%',
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-  padding: 16,
-  borderRadius: 12,
-  backgroundColor: cssVarV2.layer.background.mobile.secondary,
-  border: `0.5px solid ${cssVarV2.layer.insideBorder.border}`,
-  // TODO: use variable
-  boxShadow: '0px 0px 0px 1px var(--ring-color), 0px 0px 3px rgba(0,0,0,.05)',
+  padding: '0 16px 16px',
+  borderRadius: shape.large,
+  backgroundColor: cadence.surfaceContainer,
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  boxShadow: '0 0 0 2px var(--ring-color), 0 1px 2px rgba(0, 0, 0, 0.05)',
   overflow: 'hidden',
-  transition: 'box-shadow 0.23s ease, border-color 0.23s ease',
+  // The card rises toward the pointer on a spring and settles back the same
+  // way.
+  transition: [
+    springTransition(motion.spatialFast, 'translate'),
+    springTransition(motion.effectsDefault, 'box-shadow', 'border-color'),
+  ].join(', '),
   selectors: {
     [`${root}[data-selected="true"] &`]: {
       vars: {
-        '--ring-color': cssVarV2.layer.insideBorder.primaryBorder,
+        '--ring-color': cadence.primary,
       },
     },
     '&:hover': {
-      borderColor: cssVarV2.pagelist.hoverBorder,
-    },
-    '[data-theme="light"] &': {
-      boxShadow: 'var(--light-shadow)',
-    },
-    '[data-theme="light"] &:hover': {
-      boxShadow: 'var(--light-shadow-hover)',
-    },
-    '[data-theme="dark"] &': {
-      boxShadow: 'var(--dark-shadow)',
-    },
-    '[data-theme="dark"] &:hover': {
-      boxShadow: 'var(--dark-shadow-hover)',
+      translate: '0 -2px',
+      boxShadow:
+        '0 0 0 2px var(--ring-color), 0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 24px -8px rgba(0, 0, 0, 0.18)',
     },
   },
 });
+// The card's face: a tinted band with the doc's icon set large in a tile.
+export const cardViewCover = style({
+  flexShrink: 0,
+  height: 56,
+  margin: '0 -16px',
+  padding: '0 16px',
+  display: 'flex',
+  alignItems: 'flex-end',
+  background: cadence.primaryContainer,
+});
+export const cardViewCoverIcon = style({
+  width: 40,
+  height: 40,
+  marginBottom: -14,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: 22,
+  lineHeight: 0,
+  borderRadius: shape.medium,
+  background: cadence.surfaceContainer,
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  color: cadence.onPrimaryContainer,
+});
+// In a list the dates line up as a column. On a card they read as a sentence,
+// so they start at the left edge.
+globalStyle(`${cardViewRoot} ${dateDocListInlineProperty}`, {
+  width: 'auto',
+  justifyContent: 'flex-start',
+});
 export const cardViewHeader = style({
+  marginTop: 14,
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
@@ -231,8 +270,8 @@ export const cardViewIcon = style({
   lineHeight: 0,
 });
 export const cardViewTitle = style({
-  fontSize: 18,
-  lineHeight: '26px',
+  fontSize: 16,
+  lineHeight: '24px',
   fontWeight: 600,
   color: cssVarV2.text.primary,
   letterSpacing: '-0.24px',
@@ -248,13 +287,14 @@ export const cardPreviewContainer = style({
   fontSize: 12,
   lineHeight: '20px',
   fontWeight: 400,
-  color: cssVarV2.text.primary,
+  color: cssVarV2.text.secondary,
   minHeight: 20,
   flexGrow: 1,
   flexShrink: 1,
   overflow: 'hidden',
 });
 export const cardViewCheckbox = style({
+  vars: { [checkboxRestRadius]: '50%' },
   width: 20,
   height: 20,
   fontSize: 16,

@@ -1,9 +1,12 @@
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
+import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, keyframes, style } from '@vanilla-extract/css';
+
 const contentShow = keyframes({
   from: {
     opacity: 0,
-    transform: 'translateY(-2%) scale(0.96)',
+    transform: 'translateY(-8px) scale(0.96)',
   },
   to: {
     opacity: 1,
@@ -11,20 +14,37 @@ const contentShow = keyframes({
   },
 });
 const contentHide = keyframes({
-  to: {
-    opacity: 0,
-    transform: 'translateY(-2%) scale(0.96)',
-  },
   from: {
     opacity: 1,
     transform: 'translateY(0) scale(1)',
   },
+  to: {
+    opacity: 0,
+    transform: 'translateY(-4px) scale(0.98)',
+  },
 });
+const scrimShow = keyframes({ from: { opacity: 0 }, to: { opacity: 1 } });
+const scrimHide = keyframes({ from: { opacity: 1 }, to: { opacity: 0 } });
+
+// How long the panel takes to leave. It also drives unmounting from JS, and it
+// is deliberately shorter than the entrance: arriving may take a moment, but
+// leaving must never hold the user up.
+export const animationTimeout = createVar();
+
+// A soft scrim separates the palette from the page without hiding it.
 export const modalOverlay = style({
   position: 'fixed',
   inset: 0,
-  backgroundColor: 'transparent',
+  backgroundColor: cssVarV2('layer/background/modal'),
   zIndex: cssVar('zIndexModal'),
+  selectors: {
+    '&[data-state=entered], &[data-state=entering]': {
+      animation: `${scrimShow} ${motion.effectsDefault.duration} ${motion.effectsDefault.easing} both`,
+    },
+    '&[data-state=exited], &[data-state=exiting]': {
+      animation: `${scrimHide} ${animationTimeout} ${motion.effectsFast.easing} both`,
+    },
+  },
 });
 export const modalContentWrapper = style({
   position: 'fixed',
@@ -33,38 +53,42 @@ export const modalContentWrapper = style({
   alignItems: 'flex-start',
   justifyContent: 'center',
   zIndex: cssVar('zIndexModal'),
-  padding: '13vh 16px 16px',
+  // About a fifth of the way down, where the eye already rests.
+  padding: '18vh 16px 16px',
+  pointerEvents: 'none',
 });
 
-export const animationTimeout = createVar();
-
 export const modalContent = style({
-  width: 640,
-  // height: 530,
-  backgroundColor: cssVar('backgroundOverlayPanelColor'),
-  boxShadow: cssVar('cmdShadow'),
-  borderRadius: '12px',
-  maxWidth: 'calc(100vw - 50px)',
+  width: 720,
+  backgroundColor: cadence.surfaceContainer,
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  boxShadow:
+    '0 2px 6px rgba(0, 0, 0, 0.08), 0 24px 64px -12px rgba(0, 0, 0, 0.36)',
+  borderRadius: shape.extraLarge,
+  overflow: 'hidden',
+  maxWidth: 'calc(100vw - 32px)',
   minWidth: 480,
-  // minHeight: 420,
   // :focus-visible will set outline
   outline: 'none',
   position: 'relative',
+  pointerEvents: 'auto',
   zIndex: cssVar('zIndexModal'),
   willChange: 'transform, opacity',
+  transformOrigin: '50% 0',
   selectors: {
     '&[data-state=entered], &[data-state=entering]': {
-      animation: `${contentShow} ${animationTimeout} cubic-bezier(0.42, 0, 0.58, 1)`,
-      animationFillMode: 'forwards',
+      animation: `${contentShow} ${motion.spatialFast.duration} ${motion.spatialFast.easing} both`,
     },
     '&[data-state=exited], &[data-state=exiting]': {
-      animation: `${contentHide} ${animationTimeout} cubic-bezier(0.42, 0, 0.58, 1)`,
-      animationFillMode: 'forwards',
+      animation: `${contentHide} ${animationTimeout} ${motion.effectsFast.easing} both`,
     },
   },
   '@media': {
     'screen and (max-width: 520px)': {
       minWidth: 'auto',
+    },
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none !important',
     },
   },
 });

@@ -17,6 +17,13 @@ export type QuickSearchItem<S = any, P = any> = {
   disabled?: boolean;
   keyBinding?: string;
   timestamp?: number;
+  /** Where the result lives, such as a folder path. Shown under the title. */
+  location?: string;
   payload?: P;
   beforeSubmit?: () => boolean;
+  /**
+   * Runs while the item is highlighted. Returns a function that undoes the
+   * preview when the highlight moves on or the palette closes.
+   */
+  preview?: () => () => void;
 } & (P extends NonNullable<unknown> ? { payload: P } : unknown);

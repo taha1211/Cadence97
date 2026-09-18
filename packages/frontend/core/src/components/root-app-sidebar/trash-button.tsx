@@ -4,7 +4,6 @@ import {
   useConfirmModal,
   useDropTarget,
 } from '@affine/component';
-import { MenuLinkItem } from '@affine/core/modules/app-sidebar/views';
 import { DocsService } from '@affine/core/modules/doc';
 import { GlobalContextService } from '@affine/core/modules/global-context';
 import { GuardService } from '@affine/core/modules/permissions';
@@ -12,6 +11,8 @@ import type { AffineDNDData } from '@affine/core/types/dnd';
 import { UserFriendlyError } from '@affine/error';
 import { useI18n } from '@affine/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
+
+import { SidebarDockItem } from './sidebar-dock';
 
 export const TrashButton = () => {
   const t = useI18n();
@@ -74,15 +75,14 @@ export const TrashButton = () => {
   );
 
   return (
-    <MenuLinkItem
+    <SidebarDockItem
       ref={dropTargetRef}
+      data-testid="trash-page"
       icon={<AnimatedDeleteIcon closed={draggedOver} />}
-      active={trashActive || draggedOver}
+      label={t['com.affine.workspaceSubPath.trash']()}
+      active={!!trashActive}
+      draggedOver={draggedOver}
       to={'/trash'}
-    >
-      <span data-testid="trash-page">
-        {t['com.affine.workspaceSubPath.trash']()}
-      </span>
-    </MenuLinkItem>
+    />
   );
 };

@@ -15,24 +15,24 @@ export const scrollableContainerRoot = style({
     '--scrollbar-width': '10px',
   },
 });
+// Kept mounted for the scroll-position data attribute; the viewport's fade
+// mask replaces the hard line it used to draw.
 export const scrollTopBorder = style({
-  position: 'absolute',
-  top: 0,
-  left: '16px',
-  right: '16px',
-  height: '1px',
-  transition: 'opacity .3s .2s',
-  opacity: 0,
-  background: cssVar('black10'),
-  selectors: {
-    '&[data-has-scroll-top="true"]': {
-      opacity: 1,
-    },
-  },
+  display: 'none',
 });
 export const scrollableViewport = style({
   height: '100%',
   marginTop: '4px',
+  // Content dissolves into the frame at the bottom of the middle zone, and at
+  // the top once there is something scrolled away above it.
+  maskImage:
+    'linear-gradient(to bottom, #000 calc(100% - 16px), transparent 100%)',
+  selectors: {
+    '[data-has-scroll-top="true"] ~ &': {
+      maskImage:
+        'linear-gradient(to bottom, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%)',
+    },
+  },
   // safe area to avoid bottom clipping
   paddingBottom: 8,
 });

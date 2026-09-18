@@ -15,6 +15,7 @@ import type { DocRecord, DocsService } from '../../doc';
 import type { DocDisplayMetaService } from '../../doc-display-meta';
 import type { DocsSearchService } from '../../docs-search';
 import type { FeatureFlagService } from '../../feature-flag';
+import type { OrganizeService } from '../../organize';
 import type { WorkspaceService } from '../../workspace';
 import type { QuickSearchSession } from '../providers/quick-search-provider';
 import type { QuickSearchItem } from '../types/item';
@@ -36,7 +37,8 @@ export class DocsQuickSearchSession
     private readonly docsSearchService: DocsSearchService,
     private readonly docsService: DocsService,
     private readonly docDisplayMetaService: DocDisplayMetaService,
-    private readonly featureFlagService: FeatureFlagService
+    private readonly featureFlagService: FeatureFlagService,
+    private readonly organizeService: OrganizeService
   ) {
     super();
   }
@@ -175,6 +177,9 @@ export class DocsQuickSearchSession
                   score: doc.score,
                   icon,
                   timestamp: updatedDate,
+                  location: this.organizeService.folderTree
+                    .docFolderPath(docRecord.id)
+                    .join(' / '),
                   payload: doc,
                 } as QuickSearchItem<'docs', DocsPayload>;
               });

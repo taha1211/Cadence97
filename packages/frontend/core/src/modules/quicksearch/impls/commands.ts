@@ -200,6 +200,7 @@ export class CommandsQuickSearchSession
             score /* in fuse, the smaller the score, the better the match, so we need to reverse it */,
           icon: item.icon,
           keyBinding: item.keyBinding?.binding,
+          preview: item.preview,
           payload: item,
         };
       }

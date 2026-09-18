@@ -12,6 +12,8 @@ export interface ResizeHandleProps extends React.HtmlHTMLAttributes<HTMLDivEleme
   open: boolean;
   minWidth: number;
   maxWidth: number;
+  /** Double-clicking the handle snaps the panel back to this width. */
+  defaultWidth?: number;
   resizeHandlePos: 'left' | 'right';
   resizeHandleOffset?: number;
   resizeHandleVerticalPadding?: number;
@@ -32,6 +34,8 @@ export interface ResizePanelProps extends React.HtmlHTMLAttributes<HTMLDivElemen
   floating?: boolean;
   minWidth: number;
   maxWidth: number;
+  /** Double-clicking the handle snaps the panel back to this width. */
+  defaultWidth?: number;
   resizeHandlePos: 'left' | 'right';
   resizeHandleOffset?: number;
   resizeHandleVerticalPadding?: number;
@@ -56,6 +60,7 @@ const ResizeHandle = ({
   resizing,
   minWidth,
   maxWidth,
+  defaultWidth,
   resizeHandlePos,
   resizeHandleOffset,
   resizeHandleVerticalPadding,
@@ -160,6 +165,14 @@ const ResizeHandle = ({
         data-resizing={resizing}
         data-open={open}
         onMouseDown={onResizeStart}
+        onDoubleClick={
+          defaultWidth === undefined
+            ? undefined
+            : () => {
+                onWidthChange(defaultWidth);
+                onWidthChanged?.(defaultWidth);
+              }
+        }
       >
         <div className={styles.resizerInner} />
       </div>
@@ -178,6 +191,7 @@ export const ResizePanel = forwardRef<HTMLDivElement, ResizePanelProps>(
       resizing,
       minWidth,
       maxWidth,
+      defaultWidth,
       width,
       floating,
       enableAnimation = true,
@@ -234,6 +248,7 @@ export const ResizePanel = forwardRef<HTMLDivElement, ResizePanelProps>(
           tooltipShortcutClassName={resizeHandleTooltipShortcutClassName}
           maxWidth={maxWidth}
           minWidth={minWidth}
+          defaultWidth={defaultWidth}
           onOpen={onOpen}
           onResizing={onResizing}
           onWidthChange={onWidthChange}

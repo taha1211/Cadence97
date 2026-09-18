@@ -1064,6 +1064,10 @@ export function useAFFiNEI18N(): {
       */
     ["com.affine.ai.chat-panel.session.delete.toast.failed"](): string;
     /**
+      * `Plenty of room in here. Start another doc?`
+      */
+    ["com.affine.all-docs.sparse.message"](): string;
+    /**
       * `All docs`
       */
     ["com.affine.all-pages.header"](): string;
@@ -1665,6 +1669,60 @@ export function useAFFiNEI18N(): {
       * `Cadence97 Cloud`
       */
     ["com.affine.cloud-scroll-tip.title"](): string;
+    /**
+      * `Move`
+      */
+    ["com.affine.cmdk.hint.move"](): string;
+    /**
+      * `Open`
+      */
+    ["com.affine.cmdk.hint.open"](): string;
+    /**
+      * `Open in split view`
+      */
+    ["com.affine.cmdk.hint.split"](): string;
+    /**
+      * `Open in new tab`
+      */
+    ["com.affine.cmdk.hint.new-tab"](): string;
+    /**
+      * `Close`
+      */
+    ["com.affine.cmdk.hint.close"](): string;
+    /**
+      * `All`
+      */
+    ["com.affine.cmdk.filter.all"](): string;
+    /**
+      * `Docs`
+      */
+    ["com.affine.cmdk.filter.docs"](): string;
+    /**
+      * `Commands`
+      */
+    ["com.affine.cmdk.filter.commands"](): string;
+    /**
+      * `Tags`
+      */
+    ["com.affine.cmdk.filter.tags"](): string;
+    /**
+      * `Filter`
+      */
+    ["com.affine.cmdk.hint.filter"](): string;
+    /**
+      * `Nothing by that name yet.`
+      */
+    ["com.affine.cmdk.empty"](): string;
+    /**
+      * `Accent colour:`
+      */
+    ["com.affine.cmdk.affine.accent.to"](): string;
+    /**
+      * `{{count}} results`
+      */
+    ["com.affine.cmdk.result-count"](options: {
+        readonly count: string;
+    }): string;
     /**
       * `Collections`
       */
@@ -5091,7 +5149,7 @@ export function useAFFiNEI18N(): {
       */
     ["com.affine.rootAppSidebar.favorites"](): string;
     /**
-      * `No favorites`
+      * `Star a doc to keep it here`
       */
     ["com.affine.rootAppSidebar.favorites.empty"](): string;
     /**
@@ -5123,7 +5181,7 @@ export function useAFFiNEI18N(): {
       */
     ["com.affine.rootAppSidebar.migration-data.help.confirm"](): string;
     /**
-      * `Organize`
+      * `Folders`
       */
     ["com.affine.rootAppSidebar.organize"](): string;
     /**

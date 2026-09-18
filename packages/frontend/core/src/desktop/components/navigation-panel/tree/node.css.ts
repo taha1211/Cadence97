@@ -1,4 +1,5 @@
-import { cadence, shape } from '@affine/component/theme/tokens';
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, keyframes, style } from '@vanilla-extract/css';
@@ -13,16 +14,21 @@ export const itemRoot = style({
   textAlign: 'left',
   color: 'inherit',
   width: '100%',
-  minHeight: '30px',
+  minHeight: '32px',
   userSelect: 'none',
   cursor: 'pointer',
   padding: '0 6px',
   fontSize: cssVar('fontSm'),
   position: 'relative',
   marginTop: '0px',
+  transition: springTransition(motion.effectsFast, 'background-color'),
   selectors: {
     '&:hover': {
-      background: cssVar('hoverColor'),
+      background: cssVarV2.layer.background.hoverOverlay,
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: -2,
     },
     '&[data-active="true"]': {
       background: cssVar('hoverColor'),
@@ -105,6 +111,9 @@ export const iconContainer = style({
       opacity: 0,
       pointerEvents: 'none',
     },
+    [`${itemRoot}[data-active="true"] &`]: {
+      color: cadence.onPrimaryContainer,
+    },
   },
 });
 export const collapsedIconContainer = style({
@@ -114,7 +123,7 @@ export const collapsedIconContainer = style({
   alignItems: 'center',
   justifyContent: 'center',
   borderRadius: '2px',
-  transition: 'transform 0.2s',
+  transition: springTransition(motion.spatialFast, 'transform'),
   color: cssVarV2('icon/primary'),
   position: 'absolute',
   opacity: 0,
@@ -197,7 +206,9 @@ export const draggedOverEffect = style({
         content: '""',
         position: 'absolute',
         zIndex: 1,
-        background: cssVar('--affine-hover-color'),
+        background: cadence.primaryContainer,
+        opacity: 0.6,
+        borderRadius: shape.small,
         left: levelIndent,
         top: 0,
         width: `calc(100% - ${levelIndent})`,
@@ -207,5 +218,53 @@ export const draggedOverEffect = style({
       {
         animation: `${draggedOverAnimation} 1s infinite linear`,
       },
+  },
+});
+
+const expandChildren = keyframes({
+  from: { height: 0, opacity: 0, overflow: 'clip' },
+  to: {
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 1,
+    overflow: 'clip',
+  },
+});
+const collapseChildren = keyframes({
+  from: {
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 1,
+    overflow: 'clip',
+  },
+  to: { height: 0, opacity: 0, overflow: 'clip' },
+});
+// Matches the section collapse: a spatial spring on the way in, an effects
+// curve on the way out. The keyframes clip overflow only while animating.
+export const collapseContent = style({
+  position: 'relative',
+  selectors: {
+    // Indent guide: a hairline under the parent's icon, so nesting depth
+    // reads at a glance in a deep tree. `levelIndent` here is still the
+    // parent's, because each child sets its own on its own root.
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: `calc(${levelIndent} + 16px)`,
+      top: 2,
+      bottom: 2,
+      width: 1,
+      background: cadence.outlineVariant,
+      pointerEvents: 'none',
+    },
+    '&[data-state="open"]': {
+      animation: `${expandChildren} ${motion.spatialSlow.duration} ${motion.spatialSlow.easing}`,
+    },
+    '&[data-state="closed"]': {
+      animation: `${collapseChildren} ${motion.effectsDefault.duration} ${motion.effectsDefault.easing}`,
+    },
+  },
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none !important',
+    },
   },
 });

@@ -385,8 +385,10 @@ export const CardViewDoc = ({ docId }: DocListItemProps) => {
     >
       <li className={styles.cardViewRoot}>
         <DragHandle id={docId} className={styles.cardDragHandle} />
+        <div className={styles.cardViewCover}>
+          <DocIcon id={docId} className={styles.cardViewCoverIcon} />
+        </div>
         <header className={styles.cardViewHeader}>
-          <DocIcon id={docId} className={styles.cardViewIcon} />
           <DocTitle
             id={docId}
             className={styles.cardViewTitle}

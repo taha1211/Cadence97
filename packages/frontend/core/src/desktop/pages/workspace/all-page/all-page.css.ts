@@ -1,3 +1,5 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 export const scrollContainer = style({
@@ -34,6 +36,53 @@ export const scrollArea = style({
   height: 0,
   flex: 1,
   paddingTop: '12px',
+  position: 'relative',
+});
+
+// Sits in the empty lower half of a nearly empty page. A dashed outline, like
+// the sidebar's empty rows, because it marks a place where something can go.
+export const sparseInvitation = style({
+  position: 'absolute',
+  left: '50%',
+  bottom: '18%',
+  translate: '-50% 0',
+  display: 'flex',
+  alignItems: 'center',
+  gap: 12,
+  padding: '10px 12px 10px 18px',
+  borderRadius: shape.full,
+  border: `1px dashed ${cadence.outlineVariant}`,
+  color: cssVarV2('text/tertiary'),
+  fontSize: 13,
+  whiteSpace: 'nowrap',
+});
+export const sparseInvitationAction = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  height: 30,
+  padding: '0 14px 0 10px',
+  border: 'none',
+  borderRadius: shape.full,
+  cursor: 'pointer',
+  background: cadence.primaryContainer,
+  color: cadence.onPrimaryContainer,
+  fontSize: 13,
+  fontWeight: 500,
+  transition: springTransition(motion.spatialFast, 'border-radius', 'scale'),
+  selectors: {
+    '&:hover': {
+      borderRadius: 12,
+    },
+    '&:active': {
+      borderRadius: 10,
+      scale: '0.96',
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: 2,
+    },
+  },
 });
 
 // group

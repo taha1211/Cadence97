@@ -7,14 +7,22 @@ import * as styles from './index.css';
 
 interface SidebarContainerProps extends PropsWithChildren {
   className?: string;
+  /** Names a region that the active pill travels within. */
+  region?: string;
 }
 
 export function SidebarContainer({
   children,
   className,
+  region,
 }: SidebarContainerProps) {
   return (
-    <div className={clsx([styles.baseContainer, className])}>{children}</div>
+    <div
+      className={clsx([styles.baseContainer, className])}
+      data-sidebar-region={region}
+    >
+      {children}
+    </div>
   );
 }
 

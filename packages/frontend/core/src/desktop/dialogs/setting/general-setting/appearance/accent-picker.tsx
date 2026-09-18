@@ -5,19 +5,8 @@ import { DEFAULT_ACCENT_CHROMA, DEFAULT_ACCENT_HUE } from '@toeverything/infra';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 import { useAppSettingHelper } from '../../../../../components/hooks/affine/use-app-setting-helper';
+import { accents } from '../../../../../modules/theme/accent';
 import * as styles from './accent-picker.css';
-
-// Hue is an OKLCH angle. Chroma scales how saturated the frame gets, so
-// graphite is blueberry with most of the color drained out.
-const accents = [
-  { id: 'blueberry', hue: DEFAULT_ACCENT_HUE, chroma: DEFAULT_ACCENT_CHROMA },
-  { id: 'grape', hue: 305, chroma: 1 },
-  { id: 'flamingo', hue: 355, chroma: 1 },
-  { id: 'tangerine', hue: 55, chroma: 1 },
-  { id: 'matcha', hue: 140, chroma: 1 },
-  { id: 'lagoon', hue: 205, chroma: 1 },
-  { id: 'graphite', hue: DEFAULT_ACCENT_HUE, chroma: 0.12 },
-] as const;
 
 export const AccentPicker = () => {
   const t = useI18n();

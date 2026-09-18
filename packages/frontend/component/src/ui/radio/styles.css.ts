@@ -2,6 +2,9 @@ import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { createVar, globalStyle, style } from '@vanilla-extract/css';
 
+import { springTransition } from '../../theme/motion';
+import { cadence, motion } from '../../theme/tokens.css';
+
 export const outerPadding = createVar('radio-outer-padding');
 export const outerRadius = createVar('radio-outer-radius');
 export const itemGap = createVar('radio-item-gap');
@@ -21,9 +24,14 @@ export const radioButton = style({
   whiteSpace: 'nowrap',
   userSelect: 'none',
   fontWeight: 600,
+  transition: springTransition(motion.effectsFast, 'color', 'background'),
   selectors: {
     '&[data-state="checked"]': {
-      color: cssVarV2('switch/fontColor/primary'),
+      color: cadence.onPrimaryContainer,
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: 2,
     },
     '&[data-state="unchecked"]:hover:not([disabled])': {
       background: cssVarV2('switch/buttonBackground/hover'),
@@ -32,7 +40,7 @@ export const radioButton = style({
       color: cssVarV2('switch/iconColor/default'),
     },
     '[data-icon-mode=true] &[data-state="checked"]': {
-      color: cssVarV2('switch/iconColor/active'),
+      color: cadence.onPrimaryContainer,
     },
   },
 });
@@ -44,7 +52,7 @@ globalStyle(`${radioButtonContent} > svg`, { display: 'block' });
 export const radioButtonGroup = style({
   display: 'inline-flex',
   alignItems: 'center',
-  background: cssVarV2('switch/switchBackground/background'),
+  background: cadence.surfaceContainerHigh,
 
   borderRadius: outerRadius,
   padding: outerPadding,
@@ -60,8 +68,7 @@ export const indicator = style({
   height: '100%',
   left: 0,
   top: 0,
-  background: cssVarV2('switch/buttonBackground/active'),
-  boxShadow: cssVar('buttonShadow'),
+  background: cadence.primaryContainer,
   opacity: 0,
   transformOrigin: 'left',
   selectors: {

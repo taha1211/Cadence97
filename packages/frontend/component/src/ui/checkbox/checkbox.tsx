@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 
-import * as icons from './icons';
 import * as styles from './index.css';
 
 export type CheckboxProps = Omit<
@@ -58,11 +57,11 @@ export const Checkbox = ({
     }
   }, [indeterminate]);
 
-  const icon = indeterminate
-    ? icons.indeterminate
+  const state = indeterminate
+    ? 'indeterminate'
     : checked
-      ? icons.checked
-      : icons.unchecked;
+      ? 'checked'
+      : 'unchecked';
 
   return (
     <div
@@ -70,7 +69,19 @@ export const Checkbox = ({
       role="checkbox"
       {...otherProps}
     >
-      {icon}
+      <span className={styles.box} aria-hidden="true">
+        <span className={styles.mark} data-state={state}>
+          <svg className={styles.glyph} viewBox="0 0 24 24" fill="none">
+            <path
+              d={indeterminate ? 'M7 12h10' : 'M6.5 12.5l3.5 3.5 7.5-8'}
+              stroke="currentColor"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </span>
       <input
         ref={inputRef}
         data-testid="affine-checkbox"

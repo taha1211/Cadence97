@@ -1,4 +1,5 @@
 import { Button, usePromptModal } from '@affine/component';
+import { usePageHelper } from '@affine/core/blocksuite/block-suite-page-list/utils';
 import {
   createDocExplorerContext,
   DocExplorerContext,
@@ -12,8 +13,12 @@ import {
 } from '@affine/core/modules/collection';
 import { CollectionRulesService } from '@affine/core/modules/collection-rules';
 import type { FilterParams } from '@affine/core/modules/collection-rules/types';
-import { WorkspaceLocalState } from '@affine/core/modules/workspace';
+import {
+  WorkspaceLocalState,
+  WorkspaceService,
+} from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
+import { PlusIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -34,12 +39,7 @@ const DefaultDisplayPreference: {
 } = {
   grid: {
     view: 'grid',
-    displayProperties: [
-      'system:createdAt',
-      'system:updatedAt',
-      'system:createdBy',
-      'system:tags',
-    ],
+    displayProperties: ['system:updatedAt', 'system:createdBy', 'system:tags'],
     orderBy: {
       type: 'system',
       key: 'updatedAt',
@@ -54,12 +54,7 @@ const DefaultDisplayPreference: {
   },
   masonry: {
     view: 'masonry',
-    displayProperties: [
-      'system:createdAt',
-      'system:updatedAt',
-      'system:createdBy',
-      'system:tags',
-    ],
+    displayProperties: ['system:updatedAt', 'system:createdBy', 'system:tags'],
     orderBy: {
       type: 'system',
       key: 'updatedAt',
@@ -74,12 +69,7 @@ const DefaultDisplayPreference: {
   },
   list: {
     view: 'list',
-    displayProperties: [
-      'system:createdAt',
-      'system:updatedAt',
-      'system:createdBy',
-      'system:tags',
-    ],
+    displayProperties: ['system:updatedAt', 'system:createdBy', 'system:tags'],
     orderBy: {
       type: 'system',
       key: 'updatedAt',
@@ -98,6 +88,8 @@ const DefaultDisplayPreference: {
 };
 
 type ViewMode = NonNullable<ExplorerDisplayPreference['view']>;
+
+const SPARSE_DOC_COUNT = 3;
 
 export const AllPage = () => {
   const t = useI18n();
@@ -170,6 +162,26 @@ export const AllPage = () => {
   const [explorerContextValue] = useState(() =>
     createDocExplorerContext(displayPreference)
   );
+
+  // With only a few docs the page is mostly empty space, so that space
+  // offers the next step. It stays out of the way of filters, collections
+  // and multi-select.
+  const workspaceService = useService(WorkspaceService);
+  const { createPage } = usePageHelper(
+    workspaceService.workspace.docCollection
+  );
+  const explorerGroups = useLiveData(explorerContextValue.groups$);
+  const explorerSelectMode = useLiveData(explorerContextValue.selectMode$);
+  const listedDocCount = explorerGroups.reduce(
+    (count, group) => count + group.items.length,
+    0
+  );
+  const showSparseInvitation =
+    listedDocCount > 0 &&
+    listedDocCount <= SPARSE_DOC_COUNT &&
+    !selectedCollectionId &&
+    !tempFilters &&
+    !explorerSelectMode;
 
   useEffect(() => {
     explorerContextValue.displayPreference$.next(displayPreference);
@@ -400,6 +412,20 @@ export const AllPage = () => {
           </div>
           <div className={styles.scrollArea}>
             <DocsExplorer />
+            {showSparseInvitation ? (
+              <div className={styles.sparseInvitation}>
+                <span>{t['com.affine.all-docs.sparse.message']()}</span>
+                <button
+                  type="button"
+                  className={styles.sparseInvitationAction}
+                  data-testid="sparse-new-doc"
+                  onClick={() => createPage()}
+                >
+                  <PlusIcon />
+                  {t['New Page']()}
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </ViewBody>

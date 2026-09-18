@@ -1,47 +1,59 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
+// A dashed row at item height. The dashes say "something can land here",
+// which is true: every empty section is also a drop target.
 export const content = style({
   position: 'relative',
   display: 'flex',
-  flexDirection: 'column',
   alignItems: 'center',
-  gap: 4,
-  padding: '12px 0px',
-  borderRadius: 8,
+  gap: 8,
+  minHeight: 32,
+  padding: '0 8px',
+  borderRadius: shape.small,
+  border: `1px dashed ${cadence.outlineVariant}`,
+  color: cssVarV2('text/tertiary'),
+  transition: springTransition(
+    motion.effectsFast,
+    'background-color',
+    'border-color',
+    'color'
+  ),
   selectors: {
-    // assume that the section can be dragged over
-    '&[data-dragged-over="true"]': {
+    '&[data-actionable="true"]': {
+      cursor: 'pointer',
+    },
+    '&[data-actionable="true"]:hover': {
       backgroundColor: cssVarV2('layer/background/hoverOverlay'),
+      color: cssVarV2('text/primary'),
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${cadence.primary}`,
+      outlineOffset: 2,
+    },
+    '&[data-dragged-over="true"]': {
+      backgroundColor: cadence.primaryContainer,
+      borderColor: cadence.primary,
+      borderStyle: 'solid',
+      color: cadence.onPrimaryContainer,
     },
   },
 });
-export const iconWrapper = style({
-  width: 36,
-  height: 36,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: '50%',
-  backgroundColor: cssVarV2('button/emptyIconBackground'),
-});
 export const icon = style({
-  fontSize: 20,
-  color: cssVarV2('icon/secondary'),
+  flexShrink: 0,
+  fontSize: 16,
+  color: 'currentColor',
 });
 export const message = style({
   fontSize: cssVar('fontSm'),
-  textAlign: 'center',
-  color: cssVarV2('text/tertiary'),
+  color: 'currentColor',
   userSelect: 'none',
   fontWeight: 400,
   lineHeight: '22px',
-});
-
-export const newButton = style({
-  marginTop: 8,
-  padding: '4px 8px',
-  height: '30px',
-  fontSize: cssVar('fontSm'),
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });

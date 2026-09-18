@@ -35,7 +35,7 @@ export class CMDKQuickSearchService extends Service {
           this.framework.createEntity(LinksQuickSearchSession),
           this.framework.createEntity(TagsQuickSearchSession),
         ],
-        result => {
+        (result, submitOptions) => {
           if (!result) {
             return;
           }
@@ -80,7 +80,13 @@ export class CMDKQuickSearchService extends Service {
               options.blockIds = [doc.blockId];
             }
 
-            this.workbenchService.workbench.openDoc(options);
+            // Split view is a desktop feature; a new tab is its web equivalent.
+            this.workbenchService.workbench.openDoc(
+              options,
+              submitOptions?.aside
+                ? { at: BUILD_CONFIG.isElectron ? 'beside' : 'new-tab' }
+                : undefined
+            );
             return;
           }
 

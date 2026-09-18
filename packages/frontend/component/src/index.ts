@@ -28,6 +28,7 @@ export * from './ui/property';
 export * from './ui/radio';
 export * from './ui/safe-area';
 export * from './ui/scrollbar';
+export * from './ui/shape-loader';
 export * from './ui/skeleton';
 export * from './ui/slider';
 export * from './ui/switch';

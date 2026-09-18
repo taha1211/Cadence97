@@ -1,3 +1,5 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
@@ -8,8 +10,8 @@ export const groupHeader = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   position: 'relative',
-  padding: '0px 4px',
-  borderRadius: 4,
+  padding: '0px 8px',
+  borderRadius: shape.small,
   ':hover': {
     background: cssVarV2.layer.background.hoverOverlay,
   },
@@ -62,7 +64,7 @@ export const collapseButtonIcon = style({
   vars: {
     '--rotate': '90deg',
   },
-  transition: 'transform 0.23s cubic-bezier(.56,.15,.37,.97)',
+  transition: springTransition(motion.spatialFast, 'transform'),
   transform: 'rotate(var(--rotate))',
   selectors: {
     [`${groupHeader}[data-collapsed="true"] &`]: {
@@ -80,20 +82,25 @@ export const selectInfo = style({
   marginLeft: 12,
 });
 
+// The same voice as the sidebar's section headers.
 export const content = style({
   flexShrink: 0,
-  fontSize: 15,
+  fontSize: 13,
   lineHeight: '24px',
+  fontWeight: 600,
   color: cssVarV2.text.secondary,
 });
 
 export const selectAllButton = style([
   showOnHover,
   {
-    padding: '0px 4px',
+    padding: '0px 10px',
+    height: 24,
     fontSize: 12,
-    lineHeight: '20px',
+    lineHeight: '22px',
+    fontWeight: 500,
     color: cssVarV2.text.secondary,
-    borderRadius: 4,
+    border: `1px solid ${cadence.outlineVariant}`,
+    borderRadius: shape.full,
   },
 ]);

@@ -1,7 +1,7 @@
-import { cssVar } from '@toeverything/theme';
 import { createVar, style } from '@vanilla-extract/css';
 
-import { motion } from '../../theme/tokens.css';
+import { springTransition } from '../../theme/motion';
+import { cadence, motion } from '../../theme/tokens.css';
 export const panelWidthVar = createVar('panel-width');
 export const resizeHandleOffsetVar = createVar('resize-handle-offset');
 export const resizeHandleVerticalPadding = createVar(
@@ -107,18 +107,25 @@ export const resizeHandleContainer = style({
     },
   },
 });
+// A short grabber pill instead of a full-height line. It thickens and takes
+// the accent while the user drags it.
 export const resizerInner = style({
   position: 'absolute',
-  height: '100%',
-  width: '2px',
-  borderRadius: '2px',
-  backgroundColor: cssVar('primaryColor'),
-  transition: 'all 0.2s ease-in-out',
-  transform: 'translateX(0.5px)',
+  top: '50%',
+  height: 48,
+  width: 4,
+  borderRadius: 4,
+  backgroundColor: cadence.outline,
+  translate: '0.5px -50%',
+  transition: [
+    springTransition(motion.spatialFast, 'height', 'width'),
+    springTransition(motion.effectsFast, 'background-color'),
+  ].join(', '),
   selectors: {
     [`${resizeHandleContainer}[data-resizing="true"] &`]: {
-      width: '4px',
-      borderRadius: '4px',
+      height: 72,
+      width: 6,
+      backgroundColor: cadence.primary,
     },
   },
 });

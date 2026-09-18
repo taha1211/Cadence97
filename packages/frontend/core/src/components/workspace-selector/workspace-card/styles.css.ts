@@ -1,3 +1,8 @@
+import {
+  cadence,
+  expressiveShape,
+  shape,
+} from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { globalStyle, style } from '@vanilla-extract/css';
@@ -13,7 +18,7 @@ export const container = style({
   alignItems: 'center',
   gap: 8,
   padding: '4px 6px',
-  borderRadius: 4,
+  borderRadius: shape.medium,
   outline: 'none',
   width: '100%',
   maxWidth: 500,
@@ -23,6 +28,17 @@ export const container = style({
     cursor: 'pointer',
     background: cssVar('hoverColor'),
   },
+});
+// The sidebar header wears the accent: an expressive shape filled from the
+// seed color, so the workspace reads as the owner of the window's tint.
+export const headerAvatar = style({
+  clipPath: expressiveShape.cookie,
+});
+export const headerAvatarFallback = style({
+  backgroundColor: cadence.primaryContainer,
+  color: cadence.onPrimaryContainer,
+  fontWeight: 700,
+  fontSize: 14,
 });
 export const infoContainer = style({
   width: 0,

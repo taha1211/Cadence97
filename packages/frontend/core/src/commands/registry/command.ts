@@ -60,6 +60,11 @@ export interface AffineCommandOptions {
   // for both mac and windows
   keyBinding?: KeybindingOptions | string;
   run: () => void | Promise<void>;
+  /**
+   * Show what `run` would do while the command is highlighted in the palette,
+   * and return a function that undoes the preview.
+   */
+  preview?: () => () => void;
 }
 
 export interface AffineCommand {
@@ -73,6 +78,7 @@ export interface AffineCommand {
   readonly category: CommandCategory;
   readonly keyBinding?: KeybindingOptions;
   run(): void | Promise<void>;
+  preview?(): () => void;
 }
 
 export function createAffineCommand(
@@ -81,6 +87,7 @@ export function createAffineCommand(
   return {
     id: options.id,
     run: options.run,
+    preview: options.preview,
     icon: options.icon,
     preconditionStrategy:
       options.preconditionStrategy ?? PreconditionStrategy.Always,

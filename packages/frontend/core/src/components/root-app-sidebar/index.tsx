@@ -1,7 +1,6 @@
 import {
   AddPageButton,
   AppSidebar,
-  MenuItem,
   MenuLinkItem,
   QuickSearchInput,
   SidebarContainer,
@@ -19,7 +18,6 @@ import type { ReactElement } from 'react';
 import { memo, useCallback } from 'react';
 
 import {
-  CollapsibleSection,
   NavigationPanelCollections,
   NavigationPanelFavorites,
   NavigationPanelMigrationFavorites,
@@ -37,6 +35,7 @@ import {
 } from './index.css';
 import { AppSidebarJournalButton } from './journal-button';
 import { SidebarAudioPlayer } from './sidebar-audio-player';
+import { SidebarDock, SidebarDockItem } from './sidebar-dock';
 import { TemplateDocEntrance } from './template-doc-entrance';
 import { TrashButton } from './trash-button';
 
@@ -142,7 +141,7 @@ export const RootAppSidebar = memo((): ReactElement => {
 
   return (
     <AppSidebar>
-      <SidebarContainer>
+      <SidebarContainer region="top">
         <div className={workspaceAndUserWrapper}>
           <div className={workspaceWrapper}>
             <WorkspaceNavigator
@@ -163,41 +162,32 @@ export const RootAppSidebar = memo((): ReactElement => {
         </div>
         <AllDocsButton />
         <AppSidebarJournalButton />
-
-        <MenuItem
-          data-testid="slider-bar-workspace-setting-button"
-          icon={<SettingsIcon />}
-          onClick={onOpenSettingModal}
-        >
-          <span data-testid="settings-modal-trigger">
-            {t['com.affine.settingSidebar.title']()}
-          </span>
-        </MenuItem>
       </SidebarContainer>
       <SidebarScrollableContainer>
         <NavigationPanelFavorites />
         <NavigationPanelOrganize />
         <NavigationPanelMigrationFavorites />
-        <NavigationPanelTags />
         <NavigationPanelCollections />
-        <CollapsibleSection
-          path={['others']}
-          title={t['com.affine.rootAppSidebar.others']()}
-          contentStyle={{ padding: '6px 8px 0 8px' }}
-        >
-          <TrashButton />
-          <MenuItem
-            data-testid="slider-bar-import-button"
-            icon={<ImportIcon />}
-            onClick={onOpenImportModal}
-          >
-            <span data-testid="import-modal-trigger">{t['Import']()}</span>
-          </MenuItem>
-          <TemplateDocEntrance />
-        </CollapsibleSection>
+        <NavigationPanelTags />
       </SidebarScrollableContainer>
       <SidebarContainer className={bottomContainer}>
         <SidebarAudioPlayer />
+        <SidebarDock>
+          <SidebarDockItem
+            data-testid="slider-bar-workspace-setting-button"
+            icon={<SettingsIcon data-testid="settings-modal-trigger" />}
+            label={t['com.affine.settingSidebar.title']()}
+            onClick={onOpenSettingModal}
+          />
+          <TrashButton />
+          <SidebarDockItem
+            data-testid="slider-bar-import-button"
+            icon={<ImportIcon data-testid="import-modal-trigger" />}
+            label={t['Import']()}
+            onClick={onOpenImportModal}
+          />
+          <TemplateDocEntrance />
+        </SidebarDock>
       </SidebarContainer>
     </AppSidebar>
   );

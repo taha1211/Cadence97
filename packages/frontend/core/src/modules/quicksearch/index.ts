@@ -9,6 +9,7 @@ import { DocsSearchService } from '../docs-search';
 import { FeatureFlagService } from '../feature-flag';
 import { GlobalContextService } from '../global-context';
 import { JournalService } from '../journal';
+import { OrganizeService } from '../organize';
 import { TagService } from '../tag';
 import { WorkbenchService } from '../workbench';
 import {
@@ -63,6 +64,7 @@ export function configureQuickSearchModule(framework: Framework) {
       DocsService,
       DocDisplayMetaService,
       FeatureFlagService,
+      OrganizeService,
     ])
     .entity(LinksQuickSearchSession, [
       WorkspaceService,
@@ -76,6 +78,7 @@ export function configureQuickSearchModule(framework: Framework) {
     .entity(RecentDocsQuickSearchSession, [
       RecentDocsService,
       DocDisplayMetaService,
+      OrganizeService,
     ])
     .entity(JournalsQuickSearchSession, [
       JournalService,

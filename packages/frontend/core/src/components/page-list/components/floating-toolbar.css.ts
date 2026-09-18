@@ -1,9 +1,10 @@
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { keyframes, style } from '@vanilla-extract/css';
 const slideDownAndFade = keyframes({
   '0%': {
     opacity: 0,
-    transform: 'scale(0.95) translateY(20px)',
+    transform: 'scale(0.92) translateY(40px)',
   },
   '100%': {
     opacity: 1,
@@ -23,23 +24,26 @@ const slideUpAndFade = keyframes({
 export const root = style({
   display: 'flex',
   alignItems: 'center',
-  borderRadius: '10px',
-  padding: '4px',
-  border: `1px solid ${cssVar('borderColor')}`,
-  boxShadow: cssVar('menuShadow'),
+  borderRadius: shape.full,
+  padding: '6px 8px',
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  boxShadow:
+    '0 2px 6px rgba(0, 0, 0, 0.08), 0 16px 40px -8px rgba(0, 0, 0, 0.28)',
   gap: 4,
   minWidth: 'max-content',
   width: 'fit-content',
-  background: cssVar('backgroundPrimaryColor'),
+  background: cadence.surfaceContainer,
 });
 export const popoverContent = style({
   willChange: 'transform opacity',
   selectors: {
     '&[data-state="open"]': {
-      animation: `${slideDownAndFade} 0.2s ease-in-out`,
+      // Rises from the bottom edge on the spatial spring, and leaves faster
+      // than it arrived.
+      animation: `${slideDownAndFade} ${motion.spatialDefault.duration} ${motion.spatialDefault.easing}`,
     },
     '&[data-state="closed"]': {
-      animation: `${slideUpAndFade} 0.2s ease-in-out`,
+      animation: `${slideUpAndFade} ${motion.effectsFast.duration} ${motion.effectsFast.easing}`,
     },
   },
 });

@@ -10,6 +10,7 @@ import {
   useRef,
 } from 'react';
 
+import { motion } from '../../theme/tokens.css';
 import { withUnit } from '../../utils/with-unit';
 import * as styles from './styles.css';
 import type { RadioItem, RadioProps } from './types';
@@ -73,10 +74,10 @@ export const RadioGroup = memo(function RadioGroup({
   style,
   padding = 2,
   gap = 4,
-  borderRadius = 10,
+  borderRadius = 999,
   itemHeight = 28,
-  animationDuration = 250,
-  animationEasing = 'cubic-bezier(.18,.22,0,1)',
+  animationDuration,
+  animationEasing,
   activeItemClassName,
   activeItemStyle,
   indicatorClassName,
@@ -127,7 +128,13 @@ export const RadioGroup = memo(function RadioGroup({
       activeIndicator.style.transition = 'none';
       activeIndicator.style.width = `${oldRect.width}px`;
 
-      const animation = `${withUnit(animationDuration, 'ms')} ${animationEasing}`;
+      // The indicator travels on the spatial spring unless a caller asks for
+      // its own timing.
+      const animation = `${
+        animationDuration === undefined
+          ? motion.spatialFast.duration
+          : withUnit(animationDuration, 'ms')
+      } ${animationEasing ?? motion.spatialFast.easing}`;
 
       if (animationTImerRef.current) clearTimeout(animationTImerRef.current);
       animationTImerRef.current = setTimeout(() => {

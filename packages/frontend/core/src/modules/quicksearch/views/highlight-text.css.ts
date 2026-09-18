@@ -1,4 +1,4 @@
-import { cssVar } from '@toeverything/theme';
+import { cadence } from '@affine/component/theme/tokens';
 import { style } from '@vanilla-extract/css';
 
 export const highlightText = style({
@@ -9,7 +9,8 @@ export const highlightText = style({
 export const highlightKeyword = style({
   display: 'inline-block',
   verticalAlign: 'bottom',
-  color: cssVar('primaryColor'),
+  color: cadence.primary,
+  fontWeight: 600,
   whiteSpace: 'pre',
   overflow: 'hidden',
   textOverflow: 'ellipsis',

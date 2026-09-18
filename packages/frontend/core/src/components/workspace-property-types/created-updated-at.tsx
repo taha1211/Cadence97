@@ -1,6 +1,7 @@
 import { PropertyValue, Tooltip } from '@affine/component';
 import { type DocRecord, DocService } from '@affine/core/modules/doc';
 import { i18nTime, useI18n } from '@affine/i18n';
+import { DateTimeIcon, HistoryIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 
 import { PlainTextDocGroupHeader } from '../explorer/docs-view/group-header';
@@ -106,6 +107,7 @@ export const CreateAtDocListProperty = ({ doc }: { doc: DocRecord }) => {
       }
     >
       <div className={styles.dateDocListInlineProperty}>
+        <DateTimeIcon className={styles.dateDocListInlineIcon} />
         {i18nTime(createDate, { relative: true })}
       </div>
     </Tooltip>
@@ -128,6 +130,7 @@ export const UpdatedAtDocListProperty = ({ doc }: { doc: DocRecord }) => {
       }
     >
       <div className={styles.dateDocListInlineProperty}>
+        <HistoryIcon className={styles.dateDocListInlineIcon} />
         {i18nTime(updatedDate, { relative: true })}
       </div>
     </Tooltip>

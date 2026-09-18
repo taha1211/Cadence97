@@ -317,7 +317,7 @@ export const WorkspaceCard = forwardRef<
       hideTeamWorkspaceIcon,
       active,
       dense,
-      avatarSize = dense ? 20 : 32,
+      avatarSize = dense ? 30 : 32,
       ...props
     },
     ref
@@ -365,13 +365,16 @@ export const WorkspaceCard = forwardRef<
         <div className={clsx(styles.infoContainer, infoClassName)}>
           {information ? (
             <WorkspaceAvatar
-              className={styles.avatar}
+              className={clsx(styles.avatar, dense && styles.headerAvatar)}
               meta={workspaceMetadata}
-              rounded={3}
+              rounded={dense ? 0 : 3}
               data-testid="workspace-avatar"
               size={avatarSize}
               name={name}
-              colorfulFallback
+              colorfulFallback={!dense}
+              fallbackProps={
+                dense ? { className: styles.headerAvatarFallback } : undefined
+              }
             />
           ) : (
             <Skeleton width={avatarSize} height={avatarSize} />

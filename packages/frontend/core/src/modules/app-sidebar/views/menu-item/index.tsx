@@ -54,6 +54,7 @@ export const MenuItem = React.forwardRef<HTMLDivElement, MenuItemProps>(
         {...props}
         onClick={onClick}
         className={clsx([styles.root, props.className])}
+        data-sidebar-item
         data-active={active}
         data-disabled={disabled}
         data-collapsible={collapsible}

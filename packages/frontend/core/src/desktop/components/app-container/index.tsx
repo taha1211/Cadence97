@@ -1,3 +1,4 @@
+import { ShapeLoader } from '@affine/component';
 import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
 import { RootAppSidebar } from '@affine/core/components/root-app-sidebar';
 import { AppSidebarService } from '@affine/core/modules/app-sidebar';
@@ -79,7 +80,9 @@ const DesktopLayout = ({
         ) : (
           isInWorkspace && <RootAppSidebar />
         )}
-        <MainContainer>{children}</MainContainer>
+        <MainContainer>
+          {fallback ? <MainContainerFallback /> : children}
+        </MainContainer>
       </div>
     </div>
   );
@@ -95,7 +98,19 @@ const BrowserLayout = ({
   return (
     <div className={styles.browserAppViewContainer}>
       {fallback ? <AppSidebarFallback /> : isInWorkspace && <RootAppSidebar />}
-      <MainContainer>{children}</MainContainer>
+      <MainContainer>
+        {fallback ? <MainContainerFallback /> : children}
+      </MainContainer>
+    </div>
+  );
+};
+
+// Shown while the workspace loads: the document card is already in place, and
+// the loader sits where content is about to appear.
+const MainContainerFallback = () => {
+  return (
+    <div className={styles.mainContainerFallback}>
+      <ShapeLoader size={44} />
     </div>
   );
 };

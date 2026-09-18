@@ -112,3 +112,13 @@ export const mainContainerStyle = style({
     },
   },
 });
+
+export const mainContainerFallback = style({
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: shape.large,
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  backgroundColor: cssVar('backgroundPrimaryColor'),
+});

@@ -1,4 +1,4 @@
-import { Button } from '@affine/component';
+import { PlusIcon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
 import {
   cloneElement,
@@ -44,17 +44,34 @@ export const NavigationPanelEmptySection = forwardRef(
         cloneElement(Icon, { className: styles.icon })
       );
 
+    // One row instead of an icon block. With an action, the whole row is the
+    // action; without one, it says how the section gets filled.
+    const actionable = !!actionText;
     return (
-      <div className={clsx(styles.content, className)} ref={ref} {...attrs}>
-        <div className={styles.iconWrapper}>{icon}</div>
+      <div
+        className={clsx(styles.content, className)}
+        ref={ref}
+        role={actionable ? 'button' : undefined}
+        tabIndex={actionable ? 0 : undefined}
+        title={actionable ? message : undefined}
+        data-actionable={actionable}
+        onClick={onActionClick}
+        onKeyDown={
+          actionable
+            ? e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onActionClick?.();
+                }
+              }
+            : undefined
+        }
+        {...attrs}
+      >
+        {actionable ? <PlusIcon className={styles.icon} /> : icon}
         <div data-testid={messageTestId} className={styles.message}>
-          {message}
+          {actionText ?? message}
         </div>
-        {actionText ? (
-          <Button className={styles.newButton} onClick={onActionClick}>
-            {actionText}
-          </Button>
-        ) : null}
         {children}
       </div>
     );

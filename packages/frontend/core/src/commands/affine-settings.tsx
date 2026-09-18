@@ -1,11 +1,12 @@
 import type { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
-import { SettingsIcon } from '@blocksuite/icons/rc';
+import { PaletteIcon, SettingsIcon } from '@blocksuite/icons/rc';
 import { appSettingAtom } from '@toeverything/infra';
 import type { createStore } from 'jotai';
 import type { useTheme } from 'next-themes';
 
 import type { EditorSettingService } from '../modules/editor-setting';
+import { accents, previewAccent } from '../modules/theme/accent';
 import { registerAffineCommand } from './registry';
 
 export function registerAffineSettingsCommands({
@@ -24,6 +25,35 @@ export function registerAffineSettingsCommands({
     editorSettingService.editorSetting
   );
   const settings$ = editorSettingService.editorSetting.settings$;
+
+  // accent colours, previewed live while highlighted in the palette
+  for (const accent of accents) {
+    unsubs.push(
+      registerAffineCommand({
+        id: `affine:change-accent-to-${accent.id}`,
+        label: `${t['com.affine.cmdk.affine.accent.to']()} ${t[
+          `com.affine.appearanceSettings.accent.${accent.id}`
+        ]()}`,
+        category: 'affine:settings',
+        icon: <PaletteIcon />,
+        preconditionStrategy: () => {
+          const settings = store.get(appSettingAtom);
+          return (
+            settings.accentHue !== accent.hue ||
+            settings.accentChroma !== accent.chroma
+          );
+        },
+        preview: () => previewAccent(accent),
+        run() {
+          store.set(appSettingAtom, prev => ({
+            ...prev,
+            accentHue: accent.hue,
+            accentChroma: accent.chroma,
+          }));
+        },
+      })
+    );
+  }
 
   // color modes
   unsubs.push(

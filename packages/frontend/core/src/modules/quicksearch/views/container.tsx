@@ -6,7 +6,7 @@ import { useCallback, useMemo } from 'react';
 import { QuickSearchService } from '../services/quick-search';
 import type { QuickSearchGroup } from '../types/group';
 import type { QuickSearchItem } from '../types/item';
-import { CMDK } from './cmdk';
+import { CMDK, type SubmitOptions } from './cmdk';
 import { QuickSearchModal } from './modal';
 
 export const QuickSearchContainer = () => {
@@ -70,8 +70,8 @@ export const QuickSearchContainer = () => {
   );
 
   const handleSubmit = useCallback(
-    (item: QuickSearchItem) => {
-      quickSearch.submit(item);
+    (item: QuickSearchItem, submitOptions?: SubmitOptions) => {
+      quickSearch.submit(item, submitOptions);
     },
     [quickSearch]
   );
@@ -86,6 +86,8 @@ export const QuickSearchContainer = () => {
         loadingProgress={loadingProgress}
         onQueryChange={handleChangeQuery}
         onSubmit={handleSubmit}
+        // A label means a caller borrowed the palette as a picker.
+        showFilters={!options?.label}
         inputLabel={options?.label && i18n.t(options.label)}
         placeholder={options?.placeholder && i18n.t(options.placeholder)}
       />

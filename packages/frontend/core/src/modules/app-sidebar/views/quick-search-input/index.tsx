@@ -24,6 +24,9 @@ export function QuickSearchInput({ onClick, ...props }: QuickSearchInputProps) {
       <span className={styles.quickSearchBarEllipsisStyle}>
         {t['Quick search']()}
       </span>
+      <kbd className={styles.shortcutHint} aria-hidden="true">
+        {environment.isMacOs ? '⌘K' : 'Ctrl K'}
+      </kbd>
     </button>
   );
 }

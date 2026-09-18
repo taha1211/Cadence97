@@ -444,6 +444,7 @@ export const NavigationPanelTreeNode = ({
     <div
       onClick={handleClick}
       className={styles.itemRoot}
+      data-sidebar-item
       data-active={active}
       data-disabled={disabled}
       data-collapsible={collapsible}
@@ -566,7 +567,10 @@ export const NavigationPanelTreeNode = ({
             )}
         </div>
       </ContextMenu>
-      <Collapsible.Content style={{ display: dragging ? 'none' : undefined }}>
+      <Collapsible.Content
+        className={styles.collapseContent}
+        style={{ display: dragging ? 'none' : undefined }}
+      >
         {/* For lastInGroup check, the placeholder must be placed above all children in the dom */}
         <div className={styles.collapseContentPlaceholder}>
           {childCount === 0 && !collapsed ? childrenPlaceholder : null}

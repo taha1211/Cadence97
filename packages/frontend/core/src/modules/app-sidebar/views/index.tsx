@@ -150,6 +150,7 @@ export function AppSidebar({ children }: PropsWithChildren) {
         resizing={resizing}
         maxWidth={MAX_WIDTH}
         minWidth={MIN_WIDTH}
+        defaultWidth={MIN_WIDTH}
         width={width}
         resizeHandlePos="right"
         onOpen={handleOpenChange}
