@@ -103,7 +103,12 @@ export class FolderNode extends Entity<{
     if (this.type$.value !== 'folder') {
       throw new Error('Cannot create link on non-folder node');
     }
-    this.store.createLink(this.id, type, targetId, index);
+    return this.store.createLink(this.id, type, targetId, index);
+  }
+
+  fileDoc(docId: string, index: string, sourceLinkId?: string) {
+    if (!this.id) throw new Error('Cannot file a document at the root');
+    return this.store.fileDoc(this.id, docId, index, sourceLinkId);
   }
 
   delete() {

@@ -1,6 +1,7 @@
 import { Store } from '@toeverything/infra';
 
 import type { WorkspaceDBService } from '../../db';
+import type { FolderFilingChange } from '../types';
 
 export class FolderStore extends Store {
   constructor(private readonly dbService: WorkspaceDBService) {
@@ -83,12 +84,125 @@ export class FolderStore extends Store {
       throw new Error('Parent folder not found');
     }
 
-    this.dbService.db.folders.create({
+    return this.dbService.db.folders.create({
       parentId,
       type,
       data: nodeId,
       index: index,
-    });
+    }).id;
+  }
+
+  fileDoc(
+    parentId: string,
+    docId: string,
+    index: string,
+    sourceLinkId?: string
+  ): FolderFilingChange | null {
+    const folders = this.dbService.db.folders;
+    const parent = folders.get(parentId);
+    if (!parent || parent.type !== 'folder') {
+      throw new Error('Parent folder not found');
+    }
+    const source = sourceLinkId ? folders.get(sourceLinkId) : null;
+    if (
+      sourceLinkId &&
+      (!source || source.type !== 'doc' || source.data !== docId)
+    ) {
+      throw new Error('Source document link not found');
+    }
+    // Filing the same document twice should not create duplicate entries.
+    const duplicate = folders
+      .find({ parentId, type: 'doc', data: docId })
+      .some(link => link.id !== sourceLinkId);
+    if (duplicate) return null;
+
+    if (source?.parentId === parentId) {
+      const siblings = folders
+        .find({ parentId })
+        .filter(link => link.id !== source.id);
+      const oldPosition = siblings.filter(
+        link => link.index < source.index
+      ).length;
+      const newPosition = siblings.filter(link => link.index < index).length;
+      if (oldPosition === newPosition) return null;
+    }
+
+    const id = source
+      ? source.id
+      : this.createLink(parentId, 'doc', docId, index);
+    if (source) this.moveNode(id, parentId, index);
+
+    let undone = false;
+    return {
+      kind: source
+        ? source.parentId === parentId
+          ? 'reordered'
+          : 'moved'
+        : 'linked',
+      undo: () => {
+        if (undone) return false;
+        const current = folders.get(id);
+        // A later move, reorder, removal, or replacement wins over this Undo.
+        if (
+          !current ||
+          current.type !== 'doc' ||
+          current.data !== docId ||
+          current.parentId !== parentId ||
+          current.index !== index
+        )
+          return false;
+        if (source) {
+          const originalParent =
+            source.parentId && folders.get(source.parentId);
+          if (!originalParent || originalParent.type !== 'folder') return false;
+          if (
+            folders
+              .find({ parentId: source.parentId, type: 'doc', data: docId })
+              .some(link => link.id !== id)
+          )
+            return false;
+          this.moveNode(id, source.parentId ?? null, source.index);
+        } else {
+          this.removeLink(id);
+        }
+        undone = true;
+        return true;
+      },
+    };
+  }
+
+  removeDocLink(linkId: string, parentId: string | null): FolderFilingChange {
+    const folders = this.dbService.db.folders;
+    const original = folders.get(linkId);
+    if (
+      !original ||
+      original.type !== 'doc' ||
+      original.parentId !== parentId
+    ) {
+      throw new Error('Document link not found');
+    }
+    this.removeLink(linkId);
+    let undone = false;
+    return {
+      kind: 'removed',
+      undo: () => {
+        if (undone || folders.get(linkId)) return false;
+        const parent = original.parentId && folders.get(original.parentId);
+        if (!parent || parent.type !== 'folder') return false;
+        if (
+          folders.find({
+            parentId: parent.id,
+            type: 'doc',
+            data: original.data,
+          }).length
+        )
+          return false;
+        // Restore just the removed reference, keeping its identity and order.
+        folders.create(original);
+        undone = true;
+        return true;
+      },
+    };
   }
 
   renameNode(nodeId: string, name: string) {

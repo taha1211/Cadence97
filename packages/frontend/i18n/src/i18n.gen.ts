@@ -510,6 +510,106 @@ export function useAFFiNEI18N(): {
       */
     Undo(): string;
     /**
+      * `Link to {{name}}`
+      */
+    ["com.affine.filing.drag.link"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Move to {{name}}`
+      */
+    ["com.affine.filing.drag.move"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Copy to {{name}}`
+      */
+    ["com.affine.filing.drag.copy"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Linked to {{name}}`
+      */
+    ["com.affine.filing.linked"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Moved to {{name}}`
+      */
+    ["com.affine.filing.moved"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Reordered in {{name}}`
+      */
+    ["com.affine.filing.reordered"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Removed from {{name}}`
+      */
+    ["com.affine.filing.removed"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Updated {{name}}`
+      */
+    ["com.affine.filing.updated"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Already in {{name}}`
+      */
+    ["com.affine.filing.existing"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Already here`
+      */
+    ["com.affine.filing.already-here"](): string;
+    /**
+      * `{{count}} doc · Kept in All docs`
+      */
+    ["com.affine.filing.reference"](options: {
+        readonly count: string;
+    }): string;
+    /**
+      * `{{count}} docs · Kept in All docs`
+      */
+    ["com.affine.filing.references"](options: {
+        readonly count: string;
+    }): string;
+    /**
+      * `Filing undone`
+      */
+    ["com.affine.filing.undone"](): string;
+    /**
+      * `Later changes kept`
+      */
+    ["com.affine.filing.undo-changed"](): string;
+    /**
+      * `Only unchanged entries could be undone.`
+      */
+    ["com.affine.filing.undo-changed-detail"](): string;
+    /**
+      * `Dismiss filing receipt`
+      */
+    ["com.affine.filing.dismiss"](): string;
+    /**
+      * `This folder changed. Please try again.`
+      */
+    ["com.affine.filing.failed"](): string;
+    /**
+      * `Drop here to file`
+      */
+    ["com.affine.filing.drop-here"](): string;
+    /**
+      * `Actions for {{name}}`
+      */
+    ["com.affine.rootAppSidebar.explorer.item-actions"](options: {
+        readonly name: string;
+    }): string;
+    /**
       * `Unpin`
       */
     Unpin(): string;
@@ -10597,7 +10697,7 @@ export function useAFFiNEI18N(): {
         requiredVersion: string;
     }>): string;
     /**
-      * `This AFFiNE server is too old for this client. Please upgrade the server to {{requiredVersion}}.`
+      * `This Cadence97 server is too old for this client. Please upgrade the server to {{requiredVersion}}.`
       */
     ["error.UNSUPPORTED_SERVER_VERSION"](options: {
         readonly requiredVersion: string;

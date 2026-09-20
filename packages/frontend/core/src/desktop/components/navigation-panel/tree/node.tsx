@@ -44,7 +44,7 @@ import {
 } from 'react';
 
 import { NavigationPanelTreeContext } from './context';
-import { DropEffect } from './drop-effect';
+import { DropEffect, type DropEffectValue } from './drop-effect';
 import * as styles from './node.css';
 import type { NodeOperation } from './types';
 
@@ -56,7 +56,7 @@ export type NavigationPanelTreeNodeDropEffectData = {
 };
 export type NavigationPanelTreeNodeDropEffect = (
   data: NavigationPanelTreeNodeDropEffectData
-) => 'copy' | 'move' | 'link' | undefined;
+) => DropEffectValue | undefined;
 export type NavigationPanelTreeNodeIcon = React.ComponentType<{
   className?: string;
   draggedOver?: boolean;
@@ -488,6 +488,9 @@ export const NavigationPanelTreeNode = ({
               <IconButton
                 size="16"
                 data-testid="navigation-panel-tree-node-operation-button"
+                aria-label={t[
+                  'com.affine.rootAppSidebar.explorer.item-actions'
+                ]({ name: rawName || t.Untitled() })}
                 style={{ marginLeft: 4 }}
               >
                 <MoreHorizontalIcon />

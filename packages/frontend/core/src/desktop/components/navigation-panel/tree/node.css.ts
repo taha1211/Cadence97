@@ -90,7 +90,7 @@ export const postfix = style({
   opacity: 0,
   pointerEvents: 'none',
   selectors: {
-    [`${itemRoot}:hover &`]: {
+    [`${itemRoot}:is(:hover, :focus-within) &`]: {
       opacity: 1,
       pointerEvents: 'initial',
       position: 'initial',
@@ -111,6 +111,10 @@ export const iconContainer = style({
       opacity: 0,
       pointerEvents: 'none',
     },
+    [`[data-tree-instruction="make-child"] ${itemRoot}[data-collapsible="true"]:hover &`]:
+      {
+        opacity: 1,
+      },
     [`${itemRoot}[data-active="true"] &`]: {
       color: cadence.onPrimaryContainer,
     },
@@ -143,6 +147,11 @@ export const collapsedIconContainer = style({
       opacity: 1,
       pointerEvents: 'initial',
     },
+    [`[data-tree-instruction="make-child"] ${itemRoot}[data-collapsible="true"]:hover &`]:
+      {
+        opacity: 0,
+        pointerEvents: 'none',
+      },
   },
 });
 export const collapsedIcon = style({
@@ -161,27 +170,6 @@ export const collapseContentPlaceholder = style({
     '&:only-child': {
       display: 'initial',
     },
-  },
-});
-
-const draggedOverAnimation = keyframes({
-  '0%': {
-    opacity: 1,
-  },
-  '60%': {
-    opacity: 1,
-  },
-  '70%': {
-    opacity: 0,
-  },
-  '80%': {
-    opacity: 1,
-  },
-  '90%': {
-    opacity: 0,
-  },
-  '100%': {
-    opacity: 1,
   },
 });
 
@@ -207,16 +195,14 @@ export const draggedOverEffect = style({
         position: 'absolute',
         zIndex: 1,
         background: cadence.primaryContainer,
-        opacity: 0.6,
+        opacity: 0.35,
+        boxShadow: `inset 0 0 0 1px ${cadence.primary}`,
+        pointerEvents: 'none',
         borderRadius: shape.small,
         left: levelIndent,
         top: 0,
         width: `calc(100% - ${levelIndent})`,
         height: '100%',
-      },
-    '&[data-tree-instruction="make-child"][data-self-dragged-over="false"][data-open="false"]:after':
-      {
-        animation: `${draggedOverAnimation} 1s infinite linear`,
       },
   },
 });
