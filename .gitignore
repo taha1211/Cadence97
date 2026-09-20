@@ -53,6 +53,7 @@ tsconfig.tsbuildinfo
 !/AGENTS.md
 .codex
 .cursor
+/.tgrep/
 
 # System Files
 .DS_Store

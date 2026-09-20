@@ -37,7 +37,7 @@
   "lint-staged": {
     "*": "oxfmt --write --no-error-on-unmatched-pattern",
     "*.{ts,tsx,mjs,js,jsx}": [
-      "oxlint --fix --no-error-on-unmatched-pattern"
+      "oxlint --fix --deny-warnings --no-error-on-unmatched-pattern"
     ],
     "*.toml": [
       "taplo format"

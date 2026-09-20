@@ -3,6 +3,34 @@
 These instructions apply throughout this repository, including all packages,
 applications, and delegated agent work. Read them before making changes.
 
+## Repository search: prefer tgrep
+
+Use Microsoft's `tgrep` as the default for repository content searches and file
+discovery. Its local index and watcher support repeated searches without scanning
+the whole tree each time. Setup and lifecycle commands are in
+[docs/TGREP.md](docs/TGREP.md).
+
+- At the start of a search session, run `tgrep status .` from the repository root.
+  Reuse the existing server. If it is unavailable, follow the setup guide to start
+  one; do not create a second watcher for the same checkout.
+- Run searches from the repository root, keep flags before `--`, and specify the
+  search path: `tgrep -F -l -- 'DocBreadcrumb' .`. Use `-F` for literal symbols,
+  `-l` to locate files, and `-C 2` for a little surrounding context.
+- Use `tgrep --files .` for file discovery. Narrow searches with types or globs
+  instead of dumping large result sets. See the guide for TypeScript examples.
+- The index can lag behind edits, new files, or branch switches. When current
+  contents matter, use `tgrep --no-index` with a narrow path. Confirm an unexpected
+  absence this way before concluding that code does not exist. A complete index
+  is not proof that it is current.
+- If no server can run, `tgrep index .` creates an on-disk snapshot. Rebuild it
+  after changes that subsequent searches must see. Rebuilding on disk does not
+  refresh an already-running server.
+- Keep `.tgrep/` local and ignored. Do not add index rebuilding to commits, tests,
+  CI, or application startup. Search setup does not authorize new tests or checks.
+- Fall back to `rg` or `grep` when tgrep is unavailable or cannot support the
+  needed query. Honor any higher-priority tool requirements in the agent's
+  environment. Exit code `1` means no match; `2` means an error to investigate.
+
 ## New tests and automated checks require explicit approval
 
 The owner prioritizes meaningful product work over accumulating tests and the

@@ -31,6 +31,10 @@ The local web experience does not require the upstream hosted service. Legacy na
 Agents must follow [AGENTS.md](AGENTS.md). Adding or expanding any test or automated
 check requires a concrete justification and the owner's explicit approval first.
 
+Repository search uses Microsoft's `tgrep` with a local index and file watcher.
+See [the tgrep setup guide](docs/TGREP.md) for installation, startup, and search
+examples. Agents should prefer it for repository searches.
+
 The web entry point lives in `packages/frontend/apps/web`, application features in `packages/frontend/core`, and shared UI in `packages/frontend/component`. The editor is under `blocksuite`.
 
 When relevant to a change, run the existing workspace-creation regression tests with Node 22:
