@@ -28,9 +28,12 @@ The local web experience does not require the upstream hosted service. Legacy na
 
 ## Development
 
+Agents must follow [AGENTS.md](AGENTS.md). Adding or expanding any test or automated
+check requires a concrete justification and the owner's explicit approval first.
+
 The web entry point lives in `packages/frontend/apps/web`, application features in `packages/frontend/core`, and shared UI in `packages/frontend/component`. The editor is under `blocksuite`.
 
-Run the workspace-creation regression tests with Node 22:
+When relevant to a change, run the existing workspace-creation regression tests with Node 22:
 
 ```sh
 node node_modules/vitest/vitest.mjs run packages/frontend/core/src/utils/__tests__/first-app-data.spec.ts

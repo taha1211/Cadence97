@@ -1,5 +1,10 @@
 # Contributing to AFFiNE
 
+**Cadence97 agent policy:** Agents working in this fork must follow
+[AGENTS.md](../AGENTS.md). New or expanded tests and automated checks require a
+specific justification and the owner's explicit approval before implementation.
+The upstream guidance below does not override that requirement.
+
 Thank you for your interest in contributing! ❤️ AFFiNE welcomes contributions of all kinds — code, docs, bug reports, feature ideas and translations. See [types-of-contributions.md](./types-of-contributions.md) for the full picture.
 
 This page is the five-minute overview. The full contributor handbook lives at <https://docs.affine.pro/contributing>.
@@ -19,7 +24,7 @@ Already opened a PR? Sign, then click the **recheck** link in the CLA bot's comm
 
 1. **Find something to work on.** Browse [good first issues](https://github.com/toeverything/AFFiNE/contribute) or the [issue tracker](https://github.com/toeverything/AFFiNE/issues). Issues that are still in triage haven't been reviewed yet — better not to start work on those. For bigger changes, open a [discussion](https://github.com/toeverything/AFFiNE/discussions) or talk to us on [Discord](https://affine.pro/redirect/discord) first.
 2. **Set up your environment.** Follow [BUILDING.md](./BUILDING.md) for the web app. For the server (cloud features) see [developing-server.md](./developing-server.md); for the desktop client see [building-desktop-client-app.md](./building-desktop-client-app.md).
-3. **Make your change** on a branch created from `canary`. Add tests where it makes sense, and run `yarn lint`, `yarn typecheck` and the relevant tests locally.
+3. **Make your change** on a branch created from `canary`. Agents must obtain approval under [AGENTS.md](../AGENTS.md) before adding or expanding tests or automated checks. Run focused existing checks appropriate to the change and honor required hooks and checks.
 4. **Open a PR to `canary`** with a [Conventional Commits](https://www.conventionalcommits.org/) title, e.g. `fix(editor): keep selection after paste` — the title format is enforced by CI.
 5. **Get it merged.** A PR merges once the `license/cla` check is green, CI passes, and a maintainer approves the review.
 
