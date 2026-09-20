@@ -7855,6 +7855,10 @@ export function useAFFiNEI18N(): {
       */
     ["com.affine.shortcutsTitle.page"](): string;
     /**
+      * `Nothing to show beside this page yet.`
+      */
+    ["com.affine.sidebar.no-selection"](): string;
+    /**
       * `Collapse sidebar`
       */
     ["com.affine.sidebarSwitch.collapse"](): string;

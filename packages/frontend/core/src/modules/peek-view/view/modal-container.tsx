@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useLiveData, useService } from '@toeverything/infra';
-import { eases, waapi, type WAAPIAnimation } from 'animejs';
+import { createSpring, eases, waapi, type WAAPIAnimation } from 'animejs';
 import clsx from 'clsx';
 import {
   createContext,
@@ -17,6 +17,15 @@ import {
 import { EditorSettingService } from '../../editor-setting';
 import type { PeekViewAnimation, PeekViewMode } from '../entities/peek-view';
 import * as styles from './modal-container.css';
+
+// The preview settles into place on a spring (stiffness 700, damping ratio
+// about 0.7, the same feel as the `spatialDefault` token). Leaving uses a
+// plain curve and is faster, because an overshoot on the way out would swing
+// past the link it is shrinking back into.
+const peekSpring = createSpring({ stiffness: 700, damping: 37 });
+const PEEK_EXIT_DURATION = 180;
+const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 type WAAPIAnimationParams = Parameters<typeof waapi.animate>[1];
 
@@ -157,7 +166,7 @@ export const PeekViewModalContainer = forwardRef<
         iteration++;
       }
 
-      if (!target) {
+      if (!target || prefersReducedMotion()) {
         // fallback to fade animation
         return animateFade(!!zoomIn);
       }
@@ -215,8 +224,9 @@ export const PeekViewModalContainer = forwardRef<
           top: [fromRect.top, toRect.top],
           width: [fromRect.width, toRect.width],
           height: [fromRect.height, toRect.height],
-          ease: eases.inOutSine,
-          duration: 230,
+          ...(zoomIn
+            ? { ease: peekSpring }
+            : { ease: eases.inOutSine, duration: PEEK_EXIT_DURATION }),
           ...paramsMap?.contentWrapper,
           onComplete: (ins: WAAPIAnimation) => {
             paramsMap?.contentWrapper?.onComplete?.(ins);

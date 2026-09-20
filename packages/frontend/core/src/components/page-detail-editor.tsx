@@ -75,10 +75,14 @@ export const PageDetailEditor = ({
       )}
 
       <BlockSuiteEditor
-        className={clsx(styles.editor, {
-          'full-screen': !isSharedMode && fullWidthLayout,
-          'is-public': isSharedMode,
-        })}
+        className={clsx(
+          styles.editor,
+          mode === 'edgeless' ? styles.settleInEdgeless : styles.settleInPage,
+          {
+            'full-screen': !isSharedMode && fullWidthLayout,
+            'is-public': isSharedMode,
+          }
+        )}
         mode={mode}
         defaultOpenProperty={defaultOpenProperty}
         page={editor.doc.blockSuiteDoc}

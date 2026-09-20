@@ -1,3 +1,5 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { globalStyle, style } from '@vanilla-extract/css';
@@ -29,23 +31,29 @@ export const titleLine = style({
 });
 
 export const title = style({
-  fontWeight: 500,
-  fontSize: '15px',
+  fontWeight: 600,
+  fontSize: '13px',
   lineHeight: '24px',
-  color: cssVar('--affine-text-primary-color'),
+  color: cssVarV2('text/secondary'),
 });
 
 export const showButton = style({
   height: '28px',
-  borderRadius: '8px',
-  border: '1px solid ' + cssVar('--affine-border-color'),
-  backgroundColor: cssVarV2('button/secondary'),
+  padding: '0 12px',
+  borderRadius: shape.full,
+  border: `1px solid ${cadence.outlineVariant}`,
+  backgroundColor: 'transparent',
   textAlign: 'center',
   fontSize: '12px',
-  lineHeight: '28px',
+  lineHeight: '26px',
   fontWeight: '500',
-  color: cssVar('--affine-text-primary-color'),
+  color: cssVarV2('text/secondary'),
   cursor: 'pointer',
+  transition: springTransition(motion.effectsFast, 'background-color', 'color'),
+  ':hover': {
+    backgroundColor: cssVarV2('layer/background/hoverOverlay'),
+    color: cssVarV2('text/primary'),
+  },
 });
 
 export const linksContainer = style({
@@ -60,12 +68,14 @@ export const linksTitles = style({
 
 export const link = style({
   width: '100%',
-  height: '30px',
+  height: '34px',
+  padding: '0 6px',
   display: 'flex',
   alignItems: 'center',
-  gap: '4px',
+  gap: '6px',
   whiteSpace: 'nowrap',
-  borderRadius: '4px',
+  borderRadius: shape.small,
+  transition: springTransition(motion.effectsFast, 'background-color'),
   ':hover': {
     backgroundColor: cssVarV2('layer/background/hoverOverlay'),
   },
@@ -93,16 +103,17 @@ export const linkPreviewContainer = style({
 
 export const linkPreview = style({
   cursor: 'default',
-  border: `0.5px solid ${cssVarV2('backlinks/blockBorder')}`,
-  borderRadius: '8px',
-  padding: '8px',
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  borderRadius: shape.medium,
+  padding: '10px 12px',
   color: cssVarV2('text/primary'),
   vars: {
     [cssVar('fontFamily')]: cssVar('fontSansFamily'),
   },
-  backgroundColor: cssVarV2('backlinks/blockBackgroundColor'),
+  backgroundColor: cadence.surfaceContainer,
+  transition: springTransition(motion.effectsFast, 'background-color'),
   ':hover': {
-    backgroundColor: cssVarV2('backlinks/blockHover'),
+    backgroundColor: cadence.surfaceContainerHigh,
   },
 });
 

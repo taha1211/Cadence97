@@ -1,3 +1,5 @@
+import { useI18n } from '@affine/i18n';
+import { RightSidebarIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useCallback } from 'react';
@@ -13,6 +15,7 @@ export const SidebarContainer = ({
   className,
   ...props
 }: React.HtmlHTMLAttributes<HTMLDivElement>) => {
+  const t = useI18n();
   const workbenchService = useService(WorkbenchService);
   const workbench = workbenchService.workbench;
   const viewService = useService(ViewService);
@@ -44,7 +47,12 @@ export const SidebarContainer = ({
           />
         ))
       ) : (
-        <div className={styles.sidebarBodyNoSelection}>No Selection</div>
+        <div className={styles.sidebarBodyNoSelection}>
+          <div className={styles.sidebarBodyNoSelectionTile}>
+            <RightSidebarIcon />
+          </div>
+          {t['com.affine.sidebar.no-selection']()}
+        </div>
       )}
     </div>
   );

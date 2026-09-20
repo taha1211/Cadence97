@@ -1,3 +1,4 @@
+import { cadence } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
@@ -29,7 +30,7 @@ export const modalContentContainer = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: 12,
+  borderRadius: 16,
   '@media': {
     // for small screen
     'screen and (width <= 640px)': {
@@ -77,9 +78,13 @@ export const modalContentClip = style({
   overflow: 'hidden',
 });
 
+// The same card as the document it previews: 16px corners, a hairline, and a
+// deeper shadow because it floats above the page.
 export const dialog = style({
   backgroundColor: cssVar('backgroundOverlayPanelColor'),
-  boxShadow: cssVar('shadow3'),
+  border: `0.5px solid ${cadence.outlineVariant}`,
+  boxShadow:
+    '0 2px 6px rgba(0, 0, 0, 0.08), 0 24px 64px -12px rgba(0, 0, 0, 0.36)',
 });
 
 export const modalContent = style({

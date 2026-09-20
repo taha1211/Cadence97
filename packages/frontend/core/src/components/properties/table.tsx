@@ -444,7 +444,7 @@ const WorkspacePropertiesTableInner = ({
           open={expanded}
           onOpenChange={setExpanded}
         />
-        <Collapsible.Content>
+        <Collapsible.Content className={styles.tableBodyCollapsible}>
           <DocIntegrationPropertiesTable
             divider={<div className={styles.tableHeaderDivider} />}
           />

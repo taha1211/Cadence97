@@ -1,3 +1,5 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
@@ -28,9 +30,13 @@ export const badge = style({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
-  padding: '2px 8px',
-  borderRadius: 40,
-  backgroundColor: cssVarV2.layer.background.secondary,
+  // The chip the rest of the app uses for filters and quick choices.
+  height: 28,
+  padding: '0 12px 0 8px',
+  borderRadius: shape.full,
+  border: `1px solid ${cadence.outlineVariant}`,
+  backgroundColor: 'transparent',
+  transition: springTransition(motion.spatialFast, 'scale'),
   cursor: 'pointer',
   userSelect: 'none',
   position: 'relative',
@@ -42,13 +48,16 @@ export const badge = style({
     top: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,.04)',
+    backgroundColor: cssVarV2.layer.background.hoverOverlay,
     borderRadius: 'inherit',
     opacity: 0,
     transition: 'opacity 0.2s ease',
   },
 
   selectors: {
+    '&:active': {
+      scale: '0.96',
+    },
     '&:hover:before': {
       opacity: 1,
     },
@@ -59,9 +68,9 @@ export const badge = style({
 });
 
 export const badgeIcon = style({
-  fontSize: 20,
+  fontSize: 18,
   lineHeight: 0,
-  color: cssVarV2.icon.primary,
+  color: cadence.primary,
 });
 
 export const aiIcon = style({

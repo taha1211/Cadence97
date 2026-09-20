@@ -7,9 +7,9 @@ export const header = style({
   width: '100%',
   alignItems: 'center',
   flexShrink: 0,
-  padding: '0 16px',
+  padding: '0 12px',
   zIndex: 1,
-  gap: '12px',
+  gap: '8px',
   background: cadence.surfaceContainer,
   '@media': {
     print: {

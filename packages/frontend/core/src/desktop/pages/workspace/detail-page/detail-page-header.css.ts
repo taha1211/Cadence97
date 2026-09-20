@@ -1,3 +1,5 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
@@ -28,10 +30,63 @@ export const journalWeekPicker = style({
   justifyContent: 'center',
 });
 
+// Star, info and more belong together, so they share one quiet pill.
 export const iconButtonContainer = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 10,
+  flexShrink: 0,
+  gap: 2,
+  padding: 2,
+  borderRadius: shape.full,
+  border: `1px solid ${cadence.outlineVariant}`,
+});
+
+// At the top of a doc its name is already on screen as the heading, so the
+// header copy stays folded away. It unfolds once the heading scrolls out of
+// view, and whenever it is being edited. A grid track animates between 0fr
+// and 1fr, which folds the width without measuring it.
+export const titleReveal = style({
+  display: 'grid',
+  gridTemplateColumns: '0fr',
+  minWidth: 0,
+  opacity: 0,
+  transition: [
+    springTransition(motion.effectsDefault, 'grid-template-columns'),
+    springTransition(motion.effectsDefault, 'opacity'),
+  ].join(', '),
+  selectors: {
+    [`${root}[data-show-title="true"] &, &:has([data-editing="true"])`]: {
+      gridTemplateColumns: '1fr',
+      opacity: 1,
+    },
+  },
+});
+export const titleRevealInner = style({
+  minWidth: 0,
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+});
+
+// Reading progress on the header's bottom edge. The page sets the variable
+// while the user scrolls, so the line only ever moves with the user.
+export const progress = style({
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: 2,
+  borderRadius: 2,
+  background: cadence.primary,
+  transformOrigin: '0 50%',
+  scale: 'var(--doc-scroll-progress, 0) 1',
+  opacity: 0,
+  pointerEvents: 'none',
+  transition: springTransition(motion.effectsDefault, 'opacity'),
+  selectors: {
+    [`${root}[data-show-progress="true"] &`]: {
+      opacity: 1,
+    },
+  },
 });
 
 export const dragHandle = style({
@@ -60,9 +115,9 @@ export const dragPreview = style({
 });
 
 export const templateMark = style({
-  backgroundColor: cssVarV2.button.templateLabelBackground,
-  color: cssVarV2.button.primary,
-  borderRadius: 4,
+  backgroundColor: cadence.tertiaryContainer,
+  color: cadence.onTertiaryContainer,
+  borderRadius: shape.full,
   padding: '2px 8px',
   fontSize: 12,
   fontWeight: 500,

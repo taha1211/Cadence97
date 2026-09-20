@@ -1,6 +1,8 @@
+import { springTransition } from '@affine/component/theme/motion';
+import { cadence, motion, shape } from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
-import { createVar, globalStyle, style } from '@vanilla-extract/css';
+import { createVar, globalStyle, keyframes, style } from '@vanilla-extract/css';
 
 const propertyNameCellWidth = createVar();
 export const fontSize = createVar();
@@ -30,7 +32,8 @@ export const tableHeader = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   color: cssVarV2('text/secondary'),
-  fontWeight: 500,
+  fontSize: 13,
+  fontWeight: 600,
   '@media': {
     print: {
       display: 'none',
@@ -77,7 +80,7 @@ export const tableHeaderTimestamp = style({
 
 export const tableHeaderDivider = style({
   height: 0,
-  borderTop: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
+  borderTop: `0.5px solid ${cadence.outlineVariant}`,
   width: '100%',
   margin: '8px 0',
   '@media': {
@@ -122,12 +125,14 @@ export const actionContainer = style({
 export const propertyActionButton = style({
   fontSize: cssVar('fontSm'),
   color: `${cssVarV2.text.tertiary}`,
-  padding: '0 4px',
   height: 30,
   fontWeight: 400,
   gap: 6,
   width: '160px',
-  borderRadius: '4px',
+  // Dashed, like every other "something can go here" row in the app.
+  padding: '0 8px',
+  border: `1px dashed ${cadence.outlineVariant}`,
+  borderRadius: shape.small,
   justifyContent: 'start',
   '@media': {
     print: {
@@ -153,7 +158,7 @@ export const propertyConfigButton = style({
 });
 
 export const collapsedIcon = style({
-  transition: 'transform 0.2s ease-in-out',
+  transition: springTransition(motion.spatialFast, 'transform'),
   selectors: {
     '&[data-collapsed="true"]': {
       transform: 'rotate(90deg)',
@@ -173,6 +178,43 @@ export const propertyRootHideEmpty = style({
   selectors: {
     '&:has([data-property-value][data-empty="true"])': {
       display: 'none',
+    },
+  },
+});
+
+const expandInfo = keyframes({
+  from: { height: 0, opacity: 0, overflow: 'clip' },
+  to: {
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 1,
+    overflow: 'clip',
+  },
+});
+const collapseInfo = keyframes({
+  from: {
+    height: 'var(--radix-collapsible-content-height)',
+    opacity: 1,
+    overflow: 'clip',
+  },
+  to: { height: 0, opacity: 0, overflow: 'clip' },
+});
+// The same open and close as the sidebar's sections: a gentle spring in, an
+// effects curve out, and overflow clipped only while the height animates.
+export const tableBodyCollapsible = style({
+  selectors: {
+    '&[data-state="open"]': {
+      animation: `${expandInfo} ${motion.spatialSlow.duration} ${motion.spatialSlow.easing}`,
+    },
+    '&[data-state="closed"]': {
+      animation: `${collapseInfo} ${motion.effectsDefault.duration} ${motion.effectsDefault.easing}`,
+    },
+  },
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none !important',
+    },
+    print: {
+      animation: 'none !important',
     },
   },
 });

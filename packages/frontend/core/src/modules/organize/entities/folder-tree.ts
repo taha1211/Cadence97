@@ -15,6 +15,11 @@ export class FolderTree extends Entity {
 
   isLoading$ = this.folderStore.watchIsLoading();
 
+  /** The folders from the root down to the one holding `docId`. */
+  docFolderChain(docId: string) {
+    return this.folderStore.getDocFolderChain(docId);
+  }
+
   /** Folder names from the root down to the folder holding `docId`. */
   docFolderPath(docId: string) {
     return this.folderStore.getDocFolderPath(docId);

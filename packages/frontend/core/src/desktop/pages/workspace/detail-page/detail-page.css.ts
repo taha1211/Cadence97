@@ -8,16 +8,9 @@ export const mainContainer = style({
   flexDirection: 'column',
   flex: 1,
   overflow: 'hidden',
+  // No hairline under the header. Scrolled content dissolves beneath it
+  // instead, the same way the sidebar's list does.
   borderTop: `0.5px solid transparent`,
-  transition: 'border-color 0.2s',
-  selectors: {
-    '&[data-dynamic-top-border="false"]': {
-      borderColor: cssVar('borderColor'),
-    },
-    '&[data-has-scroll-top="true"]': {
-      borderColor: cssVar('borderColor'),
-    },
-  },
 });
 
 export const editorContainer = style({
@@ -41,6 +34,9 @@ export const affineDocViewport = style({
     },
   },
   selectors: {
+    [`${mainContainer}[data-has-scroll-top="true"] &`]: {
+      maskImage: 'linear-gradient(to bottom, transparent 0, #000 24px)',
+    },
     '&[data-dragging="true"]': {
       backgroundColor: cssVarV2.layer.background.hoverOverlay,
     },

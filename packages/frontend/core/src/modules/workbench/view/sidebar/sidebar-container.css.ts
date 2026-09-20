@@ -1,4 +1,8 @@
-import { cadence, shape } from '@affine/component/theme/tokens';
+import {
+  cadence,
+  expressiveShape,
+  shape,
+} from '@affine/component/theme/tokens';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
@@ -36,7 +40,22 @@ export const borderTop = style({
   borderTop: `0.5px solid ${cssVarV2.layer.insideBorder.border}`,
 });
 
+export const sidebarBodyNoSelectionTile = style({
+  width: 48,
+  height: 48,
+  marginBottom: 12,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: 22,
+  clipPath: expressiveShape.scallop,
+  background: cadence.surfaceContainerHigh,
+  color: cssVarV2('icon/secondary'),
+});
 export const sidebarBodyNoSelection = style({
+  padding: '0 24px',
+  textAlign: 'center',
+  fontSize: 13,
   display: 'flex',
   flexDirection: 'column',
   flex: 1,

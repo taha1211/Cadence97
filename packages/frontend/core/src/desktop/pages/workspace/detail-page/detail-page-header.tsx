@@ -33,12 +33,14 @@ import {
   forwardRef,
   type HTMLAttributes,
   memo,
+  type MutableRefObject,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
 
+import { DocBreadcrumb } from './breadcrumb';
 import * as styles from './detail-page-header.css';
 import { useDetailPageHeaderResponsive } from './use-header-responsive';
 
@@ -156,7 +158,12 @@ export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
       <ViewTitle title={title} />
       <ViewIcon icon={currentMode ?? 'page'} />
       <EditorModeSwitch />
-      <BlocksuiteHeaderTitle inputHandleRef={titleInputHandleRef} />
+      <DocBreadcrumb docId={page.id} />
+      <div className={styles.titleReveal}>
+        <div className={styles.titleRevealInner}>
+          <BlocksuiteHeaderTitle inputHandleRef={titleInputHandleRef} />
+        </div>
+      </div>
       <TemplateMark />
       <div className={styles.iconButtonContainer}>
         {hideCollect ? null : (
@@ -190,9 +197,14 @@ export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
 export function DetailPageHeader(
   props: PageHeaderProps & {
     onDragging?: (dragging: boolean) => void;
+    /**
+     * Receives the header's root element. The page writes its scroll state
+     * onto it directly, so scrolling never re-renders the header.
+     */
+    headerRef?: MutableRefObject<HTMLDivElement | null>;
   }
 ) {
-  const { page, workspace, onDragging } = props;
+  const { page, workspace, onDragging, headerRef } = props;
   const journalService = useService(JournalService);
   const isJournal = !!useLiveData(journalService.journalDate$(page.id));
   const isInTrash = page.meta?.trash;
@@ -242,9 +254,17 @@ export function DetailPageHeader(
 
   return (
     <>
-      <div className={styles.root} ref={dragRef} data-dragging={dragging}>
+      <div
+        className={styles.root}
+        ref={node => {
+          dragRef.current = node;
+          if (headerRef) headerRef.current = node;
+        }}
+        data-dragging={dragging}
+      >
         <DragHandle dragging={dragging} className={styles.dragHandle} />
         {inner}
+        <div className={styles.progress} aria-hidden="true" />
       </div>
       <CustomDragPreview>
         <div className={styles.dragPreview}>{inner}</div>

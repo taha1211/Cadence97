@@ -1953,6 +1953,7 @@
   "com.affine.shortcutsTitle.general": "General",
   "com.affine.shortcutsTitle.markdownSyntax": "Markdown syntax",
   "com.affine.shortcutsTitle.page": "Page",
+  "com.affine.sidebar.no-selection": "Nothing to show beside this page yet.",
   "com.affine.sidebarSwitch.collapse": "Collapse sidebar",
   "com.affine.sidebarSwitch.expand": "Expand sidebar",
   "com.affine.snapshot.import-export.enable": "Snapshot Imp. & Exp.",

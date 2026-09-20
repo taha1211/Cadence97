@@ -1,7 +1,9 @@
 // Copyright: https://github.com/toeverything/blocksuite/commit/8032ef3ab97aefce01664b36502fc392c5db8b78#diff-bf5b41be21936f9165a8400c7f20e24d3dbc49644ba57b9258e0943f0dc1c464
 import { DebugLogger } from '@affine/debug';
 import type { TemplateResult } from 'lit';
-import { css, html } from 'lit';
+import { css, html, unsafeCSS } from 'lit';
+
+import { cadence, expressiveShape, motion } from '../../theme/tokens.css';
 
 const logger = new DebugLogger('toast');
 
@@ -69,35 +71,56 @@ const createAndShowNewToast = (
     ToastContainer = createToastContainer(portal);
   }
 
+  // Lit's `css` tag rejects plain strings, so token values go through
+  // `unsafeCSS`. They are constants from our own theme, never user input.
+  //
+  // A small card that rises from the bottom edge on the spatial spring, with
+  // an accent shape in front so it reads as the app speaking.
   const toastStyles = css`
     position: absolute;
     bottom: 0;
     max-width: 480px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
     font-family: var(--affine-font-family);
     font-size: var(--affine-font-sm);
-    padding: 10px 16px;
+    font-weight: 500;
+    padding: 10px 18px 10px 12px;
     margin: 0;
-    color: var(--affine-white);
-    background: var(--affine-tooltip);
-    box-shadow: var(--affine-float-button-shadow);
-    border-radius: 8px;
+    color: var(--affine-text-primary-color);
+    background: ${unsafeCSS(cadence.surfaceContainerHigh)};
+    border: 0.5px solid ${unsafeCSS(cadence.outlineVariant)};
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.08),
+      0 16px 40px -8px rgba(0, 0, 0, 0.28);
+    border-radius: 999px;
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(100%) scale(0.92);
     transition:
-      transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
-      opacity 0.3s ease;
+      transform ${unsafeCSS(motion.spatialDefault.duration)}
+        ${unsafeCSS(motion.spatialDefault.easing)},
+      opacity ${unsafeCSS(motion.effectsDefault.duration)}
+        ${unsafeCSS(motion.effectsDefault.easing)};
+  `;
+  const tileStyles = css`
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    background: ${unsafeCSS(cadence.primary)};
+    clip-path: ${unsafeCSS(expressiveShape.cookie)};
   `;
 
   const toastTemplate = html`<div
     style="${toastStyles}"
     data-testid="affine-toast"
   >
-    ${message}
+    <span style="${tileStyles}" aria-hidden="true"></span><span></span>
   </div>`;
   const toastElement = htmlToElement<HTMLDivElement>(toastTemplate);
   // message is not trusted
-  toastElement.textContent = message;
+  (toastElement.lastElementChild as HTMLElement).textContent = message;
   ToastContainer.append(toastElement);
   logger.debug(`toast with message: "${message}"`);
   window.dispatchEvent(
@@ -106,7 +129,7 @@ const createAndShowNewToast = (
 
   setTimeout(() => {
     toastElement.style.opacity = '1';
-    toastElement.style.transform = 'translateY(0)';
+    toastElement.style.transform = 'translateY(0) scale(1)';
   }, 100);
 
   setTimeout(() => {

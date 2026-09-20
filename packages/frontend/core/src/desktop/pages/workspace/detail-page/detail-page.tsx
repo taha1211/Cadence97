@@ -306,12 +306,59 @@ const DetailPageImpl = memo(function DetailPageImpl() {
 
   const scrollViewportRef = useRef<HTMLDivElement | null>(null);
 
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const scrollTop = e.currentTarget.scrollTop;
-
-    const hasScrollTop = scrollTop > 0;
-    setHasScrollTop(hasScrollTop);
+  // The header shows scroll state (title, reading progress). It is written
+  // straight onto the header element, so scrolling re-renders nothing.
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const modeRef = useRef(mode);
+  modeRef.current = mode;
+  const syncHeaderScrollState = useCallback((viewport: HTMLElement) => {
+    const header = headerRef.current;
+    if (!header) return;
+    const max = viewport.scrollHeight - viewport.clientHeight;
+    // Progress only earns its place on docs longer than two screens.
+    const isLong = viewport.scrollHeight > viewport.clientHeight * 2;
+    header.style.setProperty(
+      '--doc-scroll-progress',
+      isLong && max > 0 ? String(Math.min(1, viewport.scrollTop / max)) : '0'
+    );
+    header.dataset.showProgress = String(isLong && viewport.scrollTop > 0);
+    // Edgeless has no heading on the canvas, so the header keeps the name.
+    // Ask the mode directly: right after a switch the page heading can still
+    // be in the DOM for a moment.
+    const heading =
+      modeRef.current === 'edgeless'
+        ? null
+        : viewport.querySelector('doc-title');
+    header.dataset.showTitle = String(
+      !heading ||
+        heading.getBoundingClientRect().bottom <
+          viewport.getBoundingClientRect().top + 8
+    );
   }, []);
+
+  const handleScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const scrollTop = e.currentTarget.scrollTop;
+
+      const hasScrollTop = scrollTop > 0;
+      setHasScrollTop(hasScrollTop);
+      syncHeaderScrollState(e.currentTarget);
+    },
+    [syncHeaderScrollState]
+  );
+
+  // Scrolling keeps the header in sync, but a freshly opened doc or a mode
+  // switch has not scrolled yet. The second pass catches the editor, which
+  // mounts its heading a moment after the page does.
+  useEffect(() => {
+    const sync = () => {
+      if (scrollViewportRef.current) {
+        syncHeaderScrollState(scrollViewportRef.current);
+      }
+    };
+    const timers = [setTimeout(sync, 0), setTimeout(sync, 400)];
+    return () => timers.forEach(clearTimeout);
+  }, [mode, doc.id, syncHeaderScrollState]);
 
   const [dragging, setDragging] = useState(false);
 
@@ -326,6 +373,7 @@ const DetailPageImpl = memo(function DetailPageImpl() {
           page={doc.blockSuiteDoc}
           workspace={workspace}
           onDragging={setDragging}
+          headerRef={headerRef}
         />
       </ViewHeader>
       <ViewBody>

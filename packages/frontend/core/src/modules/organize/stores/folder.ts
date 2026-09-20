@@ -22,26 +22,31 @@ export class FolderStore extends Store {
   }
 
   /**
-   * Folder names from the root down to the folder holding `docId`, or an
-   * empty array when the doc sits in no folder. A doc linked from several
-   * folders reports the first link.
+   * The folders from the root down to the one holding `docId`, or an empty
+   * array when the doc sits in no folder. A doc linked from several folders
+   * reports the first link.
    */
-  getDocFolderPath(docId: string): string[] {
+  getDocFolderChain(docId: string): { id: string; name: string }[] {
     const link = this.dbService.db.folders.find({
       type: 'doc',
       data: docId,
     })[0];
-    const path: string[] = [];
+    const chain: { id: string; name: string }[] = [];
     const visited = new Set<string>();
     let current = link?.parentId;
     while (current && !visited.has(current)) {
       visited.add(current);
       const folder = this.dbService.db.folders.get(current);
       if (!folder) break;
-      path.unshift(folder.data);
+      chain.unshift({ id: folder.id, name: folder.data });
       current = folder.parentId;
     }
-    return path;
+    return chain;
+  }
+
+  /** Folder names from the root down to the folder holding `docId`. */
+  getDocFolderPath(docId: string): string[] {
+    return this.getDocFolderChain(docId).map(folder => folder.name);
   }
 
   isAncestor(childId: string, ancestorId: string): boolean {
