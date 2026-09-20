@@ -10780,6 +10780,136 @@ export function useAFFiNEI18N(): {
       * `You have exceeded the comment attachment size quota.`
       */
     ["error.COMMENT_ATTACHMENT_QUOTA_EXCEEDED"](): string;
+    /**
+      * `Dismiss action receipt`
+      */
+    ["com.affine.selection.dismiss-receipt"](): string;
+    /**
+      * `No tags yet. A workspace owner can create one.`
+      */
+    ["com.affine.selection.no-tags-readonly"](): string;
+    /**
+      * `Actions for selected docs`
+      */
+    ["com.affine.selection.label"](): string;
+    /**
+      * `selected`
+      */
+    ["com.affine.selection.selected"](): string;
+    /**
+      * `Tag`
+      */
+    ["com.affine.selection.tag"](): string;
+    /**
+      * `Add a tag`
+      */
+    ["com.affine.selection.tag-heading"](): string;
+    /**
+      * `Add to folder`
+      */
+    ["com.affine.selection.folder"](): string;
+    /**
+      * `Favorite`
+      */
+    ["com.affine.selection.favorite"](): string;
+    /**
+      * `Clear selection`
+      */
+    ["com.affine.selection.clear"](): string;
+    /**
+      * `Move selected docs to Trash`
+      */
+    ["com.affine.selection.delete"](): string;
+    /**
+      * `All selected`
+      */
+    ["com.affine.selection.all"](): string;
+    /**
+      * `Find or create a tag…`
+      */
+    ["com.affine.selection.search-tags"](): string;
+    /**
+      * `Find a folder…`
+      */
+    ["com.affine.selection.search-folders"](): string;
+    /**
+      * `Add a tag. Keep the ones already there.`
+      */
+    ["com.affine.selection.tag-hint"](): string;
+    /**
+      * `Originals stay in All docs.`
+      */
+    ["com.affine.selection.originals-stay"](): string;
+    /**
+      * `Selection kept. Ready for your next action.`
+      */
+    ["com.affine.selection.kept-selected"](): string;
+    /**
+      * `Create “{{name}}”`
+      */
+    ["com.affine.selection.create-tag"](options: {
+        readonly name: string;
+    }): string;
+    /**
+      * `Type a name to create your first tag.`
+      */
+    ["com.affine.selection.no-tags"](): string;
+    /**
+      * `Create a folder in the sidebar, then add your selection here.`
+      */
+    ["com.affine.selection.no-folders"](): string;
+    /**
+      * `No matches. Try another name.`
+      */
+    ["com.affine.selection.no-results"](): string;
+    /**
+      * `{{count}} already set`
+      */
+    ["com.affine.selection.already-count"](options: {
+        readonly count: string;
+    }): string;
+    /**
+      * `{{count}} unavailable or not editable`
+      */
+    ["com.affine.selection.skipped-count"](options: {
+        readonly count: string;
+    }): string;
+    /**
+      * `Already set for every selected doc.`
+      */
+    ["com.affine.selection.already-done"](): string;
+    /**
+      * `No changes made. Some docs are unavailable or not editable.`
+      */
+    ["com.affine.selection.unavailable"](): string;
+    /**
+      * `Couldn’t apply this action. Please try again.`
+      */
+    ["com.affine.selection.failed"](): string;
+    /**
+      * `Added to favorites · {{count}}`
+      */
+    ["com.affine.selection.favorited"](options: {
+        readonly count: string;
+    }): string;
+    /**
+      * `Added to {{name}} · {{count}}`
+      */
+    ["com.affine.selection.filed"](options: Readonly<{
+        name: string;
+        count: string;
+    }>): string;
+    /**
+      * `Tagged {{name}} · {{count}}`
+      */
+    ["com.affine.selection.tagged"](options: Readonly<{
+        name: string;
+        count: string;
+    }>): string;
+    /**
+      * `Batch undone`
+      */
+    ["com.affine.selection.undone"](): string;
 } { const { t } = useTranslation(); return useMemo(() => createProxy((key) => t.bind(null, key)), [t]); }
 function createComponent(i18nKey: string) {
     return (props) => createElement(Trans, { i18nKey, shouldUnescape: true, ...props });

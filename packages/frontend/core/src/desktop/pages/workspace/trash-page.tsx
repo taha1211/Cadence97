@@ -217,6 +217,7 @@ export const TrashPage = () => {
             <EmptyPageList type="trash" />
           ) : (
             <DocsExplorer
+              disableSelectionActions
               disableMultiDelete={!canManageTrash}
               onRestore={canManageTrash ? handleMultiRestore : undefined}
               onDelete={canManageTrash ? onConfirmPermanentlyDelete : undefined}

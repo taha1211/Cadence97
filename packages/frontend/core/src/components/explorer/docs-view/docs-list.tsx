@@ -18,6 +18,7 @@ import { WorkspacePropertyTypes } from '../../workspace-property-types';
 import { DocExplorerContext } from '../context';
 import { DocListItem } from './doc-list-item';
 import * as styles from './docs-list.css';
+import { SelectionTray } from './selection-tray';
 
 const GroupHeader = memo(function GroupHeader({
   groupId,
@@ -98,6 +99,7 @@ export const DocsExplorer = ({
   className,
   disableMultiSelectToolbar,
   disableMultiDelete,
+  disableSelectionActions,
   masonryItemWidthMin,
   onRestore,
   onDelete,
@@ -105,6 +107,7 @@ export const DocsExplorer = ({
   className?: string;
   disableMultiSelectToolbar?: boolean;
   disableMultiDelete?: boolean;
+  disableSelectionActions?: boolean;
   masonryItemWidthMin?: number;
   onRestore?: (ids: string[]) => void;
   /** Override the default delete action */
@@ -159,6 +162,7 @@ export const DocsExplorer = ({
   const handleCloseFloatingToolbar = useCallback(() => {
     contextValue.selectMode$?.next(false);
     contextValue.selectedDocIds$.next([]);
+    contextValue.prevCheckAnchorId$?.next(null);
   }, [contextValue]);
 
   const handleMultiDelete = useCallback(() => {
@@ -223,15 +227,29 @@ export const DocsExplorer = ({
   ]);
 
   useEffect(() => {
+    // Remember overlays before Radix closes and unmounts them during Escape.
+    // The same key press must not also discard the underlying selection.
+    const overlayEscapes = new WeakSet<KeyboardEvent>();
+    const captureKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === 'Escape' &&
+        document.querySelector(
+          '[data-selection-tray-popup], [role="dialog"], [role="alertdialog"], [role="menu"]'
+        )
+      )
+        overlayEscapes.add(e);
+    };
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && !e.defaultPrevented && !overlayEscapes.has(e)) {
         contextValue.selectMode$?.next(false);
         contextValue.selectedDocIds$.next([]);
         contextValue.prevCheckAnchorId$?.next(null);
       }
     };
+    document.addEventListener('keydown', captureKeyDown, true);
     document.addEventListener('keydown', onKeyDown);
     return () => {
+      document.removeEventListener('keydown', captureKeyDown, true);
       document.removeEventListener('keydown', onKeyDown);
     };
   }, [contextValue]);
@@ -243,29 +261,45 @@ export const DocsExplorer = ({
 
   const isEmpty = masonryItems.length === 0;
 
-  if (isEmpty) {
-    return <EmptyDocs allowCreate={false} style={{ height: '100%' }} />;
-  }
+  const showSelectionTray =
+    !BUILD_CONFIG.isMobileEdition &&
+    !disableSelectionActions &&
+    !disableMultiSelectToolbar;
 
   return (
     <>
-      <Masonry
-        className={className}
-        items={masonryItems}
-        gapY={BUILD_CONFIG.isMobileEdition ? 12 : view === 'list' ? 4 : 24}
-        gapX={BUILD_CONFIG.isMobileEdition ? 12 : 24}
-        groupsGap={12}
-        groupHeaderGapWithItems={12}
-        columns={view === 'list' ? 1 : undefined}
-        itemWidthMin={masonryItemWidthMin ?? 220}
-        preloadHeight={100}
-        itemWidth={'stretch'}
-        virtualScroll
-        collapsedGroups={collapsedGroups}
-        paddingY={BUILD_CONFIG.isMobileEdition ? 12 : 0}
-        paddingX={BUILD_CONFIG.isMobileEdition ? 16 : responsivePaddingX}
-      />
-      {!disableMultiSelectToolbar || onRestore ? (
+      {isEmpty ? (
+        <EmptyDocs allowCreate={false} style={{ height: '100%' }} />
+      ) : (
+        <Masonry
+          style={
+            showSelectionTray && selectMode ? { paddingBottom: 132 } : undefined
+          }
+          className={className}
+          items={masonryItems}
+          gapY={BUILD_CONFIG.isMobileEdition ? 12 : view === 'list' ? 4 : 24}
+          gapX={BUILD_CONFIG.isMobileEdition ? 12 : 24}
+          groupsGap={12}
+          groupHeaderGapWithItems={12}
+          columns={view === 'list' ? 1 : undefined}
+          itemWidthMin={masonryItemWidthMin ?? 220}
+          preloadHeight={100}
+          itemWidth={'stretch'}
+          virtualScroll
+          collapsedGroups={collapsedGroups}
+          paddingY={BUILD_CONFIG.isMobileEdition ? 12 : 0}
+          paddingX={BUILD_CONFIG.isMobileEdition ? 16 : responsivePaddingX}
+        />
+      )}
+      {showSelectionTray ? (
+        selectMode && (
+          <SelectionTray
+            selectedDocIds={selectedDocIds}
+            onClose={handleCloseFloatingToolbar}
+            onDelete={disableMultiDelete ? undefined : handleMultiDelete}
+          />
+        )
+      ) : !disableMultiSelectToolbar || onRestore ? (
         <ListFloatingToolbar
           open={!!selectMode}
           onDelete={disableMultiDelete ? undefined : handleMultiDelete}

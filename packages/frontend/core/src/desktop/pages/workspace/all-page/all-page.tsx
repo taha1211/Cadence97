@@ -269,20 +269,6 @@ export const AllPage = () => {
     tempFilters,
   ]);
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        explorerContextValue.selectMode$.next(false);
-        explorerContextValue.selectedDocIds$.next([]);
-        explorerContextValue.prevCheckAnchorId$.next(null);
-      }
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [explorerContextValue]);
-
   const handleFilterChange = useCallback((filters: FilterParams[]) => {
     setTempFilters(filters);
   }, []);

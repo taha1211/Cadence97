@@ -1,90 +1,11 @@
 import { notify } from '@affine/component';
+import { UndoableActionReceipt } from '@affine/core/components/undoable-action/receipt';
 import type { FolderFilingChange } from '@affine/core/modules/organize/types';
 import { useI18n } from '@affine/i18n';
-import {
-  CloseIcon,
-  SingleSelectCheckSolidIcon as CheckIcon,
-  UndoIcon,
-} from '@blocksuite/icons/rc';
+import { SingleSelectCheckSolidIcon as CheckIcon } from '@blocksuite/icons/rc';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import * as styles from './filing-feedback.css';
-
-function FilingReceipt({
-  title,
-  detail,
-  changes,
-  onDismiss,
-  onUndo,
-}: {
-  title: string;
-  detail: string;
-  changes: FolderFilingChange[];
-  onDismiss?: () => void;
-  onUndo: () => void;
-}) {
-  const t = useI18n();
-  const [outcome, setOutcome] = useState<'undone' | 'changed' | null>(null);
-  const undoing = useRef(false);
-  const handleUndo = () => {
-    if (undoing.current) return;
-    undoing.current = true;
-    let restored = 0;
-    for (const change of [...changes].reverse()) {
-      try {
-        if (change.undo()) restored++;
-      } catch (error) {
-        console.error('Could not undo folder filing', error);
-      }
-    }
-    setOutcome(restored === changes.length ? 'undone' : 'changed');
-    onUndo();
-  };
-
-  return (
-    <div className={styles.receipt} data-testid="folder-filing-receipt">
-      <div className={styles.receiptIcon} aria-hidden="true">
-        {outcome ? (
-          <UndoIcon width={18} height={18} />
-        ) : (
-          <CheckIcon width={18} height={18} />
-        )}
-      </div>
-      <div
-        className={styles.text}
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <div className={styles.title}>
-          {outcome === 'undone'
-            ? t['com.affine.filing.undone']()
-            : outcome === 'changed'
-              ? t['com.affine.filing.undo-changed']()
-              : title}
-        </div>
-        <div className={styles.detail} title={detail}>
-          {outcome === 'changed'
-            ? t['com.affine.filing.undo-changed-detail']()
-            : detail}
-        </div>
-      </div>
-      {!outcome && changes.length > 0 && (
-        <button className={styles.undo} onClick={handleUndo} type="button">
-          {t.Undo()}
-        </button>
-      )}
-      <button
-        className={styles.dismiss}
-        onClick={onDismiss}
-        type="button"
-        aria-label={t['com.affine.filing.dismiss']()}
-      >
-        <CloseIcon width={16} height={16} />
-      </button>
-    </div>
-  );
-}
 
 export function useFilingFeedback(workspaceId: string, folderName: string) {
   const t = useI18n();
@@ -127,7 +48,9 @@ export function useFilingFeedback(workspaceId: string, folderName: string) {
       const receiptId = `folder-filing:${workspaceId}`;
       notify.custom(
         ({ onDismiss }) => (
-          <FilingReceipt
+          <UndoableActionReceipt
+            undoneTitle={t['com.affine.filing.undone']()}
+            testId="folder-filing-receipt"
             key={id}
             title={title}
             detail={detail}
